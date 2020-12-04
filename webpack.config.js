@@ -1,7 +1,7 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin"),
-  path = require("path");
+const path = require("path"),
+  { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 module.exports = {
-  mode: "development",
   entry: {
     index: "./lib/index.tsx",
   },
@@ -15,13 +15,16 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: "awesome-typescript-loader",
+        exclude: /node_modules\/(?!(my_main_package\/what_i_need_to_include)\/).*/,
       },
     ],
   },
-
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "index.html",
+    new CleanWebpackPlugin({
+      dangerouslyAllowCleanPatternsOutsideProject: true,
     }),
   ],
 };
