@@ -4,7 +4,7 @@ import React from "react";
 
 describe("button", () => {
   it("is div", () => {
-    const json = render.create(<Button />).toJSON();
+    const json = render.create(<Button/>).toJSON();
     expect(json).toMatchSnapshot();
   });
 });
