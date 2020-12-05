@@ -1,54 +1,51 @@
 import React, { FC, useReducer } from "react";
-const initState = {
-  n: 0,
+import Users from "./users";
+import Books from "./books";
+import Context from "./Context";
+import { Action, State } from "./types";
+import UserReducer from "./users.reducer";
+import BooksReducer from "./books.reducer";
+
+const Store: State = {
+  users: [],
+  books: [],
 };
-interface State {
-  n: number;
-}
-interface Action {
-  type: string;
-}
 
 const reducer = (state: State, action: Action) => {
-  switch (action.type) {
-    case "add":
-      return {
-        ...state,
-        n: state.n + 1,
-      };
-    case "remove":
-      return {
-        ...state,
-        n: state.n - 1,
-      };
-    default:
-      return state;
+    console.log(action)
+  if (action.type === "setUsers") {
+    return UserReducer(state, action);
+  } else {
+    return BooksReducer(state, action);
   }
 };
 
 const Counter: FC = function () {
-  const [state, dispatch] = useReducer(reducer, initState);
-  const { n } = state;
-  console.log(n);
+  const [state, dispatch] = useReducer(reducer, Store);
+
   return (
     <div>
-      <div>{n}</div>
-      <button
-        onClick={() => {
-          dispatch({
-            type: "add",
-          });
-        }}
-      >
-        add
-      </button>
-      <button
-        onClick={() => {
-          dispatch({ type: "remove" });
-        }}
-      >
-        remove
-      </button>
+      <Context.Provider value={{ state, dispatch }}>
+        <Users />
+        <Books />
+      </Context.Provider>
+      {/*<div>{n}</div>*/}
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    dispatch({*/}
+      {/*      type: "add",*/}
+      {/*    });*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  add*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    dispatch({ type: "remove" });*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  remove*/}
+      {/*</button>*/}
     </div>
   );
 };
