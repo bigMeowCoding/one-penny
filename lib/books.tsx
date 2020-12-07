@@ -29,8 +29,8 @@ const Books = function () {
   const { books } = state;
   return (
     <ul>
-      {books.map((book) => {
-        return <li>{book.name}</li>;
+      {books.map((book, i) => {
+        return <li key={i}>{book.name}</li>;
       })}
     </ul>
   );

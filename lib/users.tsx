@@ -19,10 +19,10 @@ const Users = function () {
     dispatch: any;
   }>(Context);
   const { users } = state;
-  console.log(users)
+  console.log(users);
   useEffect(() => {
     getUsers().then((data) => {
-      console.log(data)
+      console.log(data);
       dispatch({
         type: "setUsers",
         payload: data,
@@ -31,8 +31,8 @@ const Users = function () {
   }, []);
   return (
     <ul>
-      {users.map((user) => {
-        return <li>{user.name}</li>;
+      {users.map((user, i) => {
+        return <li key={i}>{user.name}</li>;
       })}
     </ul>
   );
