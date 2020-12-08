@@ -1,7 +1,11 @@
-import Button from "./button";
-
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import Counter from "./counter";
+import Icon from "./icon";
 
-ReactDOM.render(<Counter />, document.body);
+ReactDOM.render(
+  <Fragment>
+    <Icon name="wechat" /> <Icon name="cat" />
+    <Icon name="dog" />
+  </Fragment>,
+  document.querySelector("#root")
+);

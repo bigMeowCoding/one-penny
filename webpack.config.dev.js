@@ -8,7 +8,14 @@ module.exports = Object.assign({}, config, {
       {
         test: /\.tsx?$/,
         loader: "awesome-typescript-loader",
-        exclude: /node_modules\/(?!(my_main_package\/what_i_need_to_include)\/).*/,
+        exclude: [
+          /node_modules\/(?!(my_main_package\/what_i_need_to_include)\/).*/,
+          /__test__/,
+        ],
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-sprite-loader",
       },
     ],
   },
