@@ -1,15 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, MouseEventHandler, SVGAttributes } from "react";
 import "./importAllIcons";
 import "./icon.scss";
-interface Props {
+interface Props extends SVGAttributes<SVGElement> {
   name: string;
 }
 
-const Icon: FC<Props> = function ({ name }) {
+const Icon: FC<Props> = function ({ name, ...props }) {
+  console.log(props);
   return (
-      <svg className='zyj-ui-icon'>
-        <use xlinkHref={`#${name}`} />
-      </svg>
+    <svg className="zyj-ui-icon" {...props}>
+      <use xlinkHref={`#${name}`} />
+    </svg>
   );
 };
 export default Icon;
