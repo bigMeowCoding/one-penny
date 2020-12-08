@@ -7,11 +7,9 @@ interface Props {
 
 const Icon: FC<Props> = function ({ name }) {
   return (
-    <span className='icon'>
-      <svg>
+      <svg className='zyj-ui-icon'>
         <use xlinkHref={`#${name}`} />
       </svg>
-    </span>
   );
 };
 export default Icon;
