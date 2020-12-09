@@ -15,7 +15,7 @@ describe("组合class name", () => {
     );
   });
   it("class 前边有多余空格", () => {
-      expect(classNames(" a ")).toEqual("a");
-      expect(classNames(" a ", "b")).toEqual("a b");
+    expect(classNames(" a ")).toEqual("a");
+    expect(classNames(" a ", "b")).toEqual("a b");
   });
 });
