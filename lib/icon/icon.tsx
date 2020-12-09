@@ -6,6 +6,7 @@ interface Props extends SVGAttributes<SVGElement> {
   name: string;
 }
 
+
 const Icon: FC<Props> = function ({ name, className, ...rest }) {
   return (
     <svg className={classNames("zyj-ui-icon", className)} {...rest}>

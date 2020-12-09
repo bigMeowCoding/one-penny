@@ -1,5 +1,10 @@
-function classNames(...names: (string | undefined)[]): string {
-  return names.filter(Boolean).join(" ");
+function classNames(...names: (string | undefined | null)[]): string {
+  return names
+    .filter(Boolean)
+    .map((item) => {
+      return item?.trim();
+    })
+    .join(" ");
 }
 
 export default classNames;
