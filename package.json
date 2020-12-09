@@ -4,6 +4,9 @@
   "main": "dist/lib/index",
   "license": "MIT",
   "types": "dist/lib/index",
+  "files": [
+    "/dist/**/*"
+  ],
   "scripts": {
     "serve": "cross-env NODE_ENV=development webpack serve  --config webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
