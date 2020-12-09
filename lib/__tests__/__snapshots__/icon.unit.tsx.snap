@@ -9,13 +9,3 @@ exports[`icon组件 render correctly 1`] = `
   />
 </svg>
 `;
-
-exports[`icon组件 x 1`] = `
-<svg
-  className="zyj-ui-icon"
->
-  <use
-    xlinkHref="#wechat"
-  />
-</svg>
-`;
