@@ -1,7 +1,3 @@
-/*
- * For a detailed explanation regarding each configuration property and type check, visit:
- * https://jestjs.io/docs/en/configuration.html
- */
 export default {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -16,14 +12,8 @@ export default {
   // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
-  reporters: ["default",'jest-junit'],
-
-  // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["lib/**/*.{ts,tsx}", "!**/node_modules/**"],
-
-  // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  collectCoverage: false,
+  reporters: ["default"],
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -34,7 +24,6 @@ export default {
   // coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: ["text", "lcov"],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
