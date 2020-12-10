@@ -6,13 +6,16 @@ module.exports = Object.assign({}, config, {
   devServer: {
     open: true,
   },
+  entry: {
+    example: "./example/example.tsx",
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
     ...plugins,
     new HtmlWebpackPlugin({
-      template: "index.html",
+      template: "./example/example.html",
     }),
   ],
 });
