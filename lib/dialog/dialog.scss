@@ -1,0 +1,20 @@
+@use "sass:color";
+
+.zui-dialog {
+  background: white;
+  position: fixed;
+  width: 10em;
+  height: 10em;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+  &-mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
