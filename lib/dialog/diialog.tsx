@@ -12,15 +12,17 @@ const Dialog: FC<Props> = function (props) {
     <Fragment>
       <div className={addPrefixForClassName("mask")} />
       <div className={addPrefixForClassName()}>
-        <div className={addPrefixForClassName("close")}>
-          <Icon name="close" />
-        </div>
-        <header>提示</header>
-        <main>{props.children}</main>
-          <footer>
-              <button>ok</button>
-              <button>cancel</button>
-          </footer>
+        <header className={addPrefixForClassName('header')}>
+          提示
+          <div className={addPrefixForClassName("close")}>
+            <Icon name="close" />
+          </div>
+        </header>
+        <main className={addPrefixForClassName('body')}>{props.children}</main>
+        <footer className={addPrefixForClassName('footer')}>
+          <button>ok</button>
+          <button>cancel</button>
+        </footer>
       </div>
     </Fragment>
   );
