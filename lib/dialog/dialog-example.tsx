@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FC } from "react";
 import Dialog from "./diialog";
-
+import './example.scss'
 const DialogExample: FC = function () {
   const [visible, setVisible] = useState(false);
   const onOk: React.MouseEventHandler = (e) => {
