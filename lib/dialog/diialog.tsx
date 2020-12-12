@@ -1,4 +1,10 @@
-import React, { FC, Fragment, ReactElement } from "react";
+import React, {
+  FC,
+  Fragment,
+  ReactElement,
+  ReactFragment,
+  ReactNode,
+} from "react";
 import "./dialog.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import { Icon } from "../index";
@@ -26,9 +32,11 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
           </div>
         </header>
         <main className={addPrefixForClassName("body")}>{props.children}</main>
-        <footer className={addPrefixForClassName("footer")}>
-          {props.footer && props.footer.length ? props.footer : null}
-        </footer>
+        {props.footer && props.footer.length ? (
+          <footer className={addPrefixForClassName("footer")}>
+            {props.footer}
+          </footer>
+        ) : null}
       </div>
     </Fragment>
   );
@@ -100,5 +108,28 @@ export const confirm = function (
     );
   ReactDOM.render(dialogComponent, div);
   document.body.append(div);
+};
+
+export const modal = function (
+  content: ReactNode | ReactFragment
+): { close: () => void } {
+  function close() {
+    ReactDOM.render(
+      React.cloneElement(dialogComponent, { visible: false }),
+      div
+    );
+    ReactDOM.unmountComponentAtNode(div);
+    div.remove();
+  }
+
+  const div = document.createElement("div"),
+    dialogComponent = (
+      <Dialog visible={true} onCancel={close} onOk={close}>
+        {content}
+      </Dialog>
+    );
+  ReactDOM.render(dialogComponent, div);
+  document.body.append(div);
+  return { close };
 };
 export default Dialog;
