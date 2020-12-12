@@ -7,8 +7,8 @@ const addPrefixForClassName = makeClassByPrefix("zui-dialog");
 interface Props {
   visible: boolean;
   buttons?: ReactElement[];
-  onCancel: (e: React.MouseEvent<HTMLElement>) => void;
-  onOk: (e: React.MouseEvent<HTMLElement>) => void;
+  onCancel: React.MouseEventHandler;
+  onOk: React.MouseEventHandler;
 }
 const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
   if (!visible) {
@@ -34,7 +34,11 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
           {props.buttons && props.buttons.length ? (
             props.buttons
           ) : (
-            <Fragment>{DefaultFooter}</Fragment>
+            <Fragment>
+              {DefaultFooter.map((item, index) => {
+                return React.cloneElement(item, { key: index });
+              })}
+            </Fragment>
           )}
         </footer>
       </div>

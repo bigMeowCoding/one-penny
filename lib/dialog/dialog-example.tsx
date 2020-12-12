@@ -4,12 +4,15 @@ import Dialog from "./diialog";
 
 const DialogExample: FC = function () {
   const [visible, setVisible] = useState(false);
-  function onOk() {
+  const onOk: React.MouseEventHandler = (e) => {
+    console.log(e);
     setVisible(false);
-  }
-  function onCancel() {
+  };
+  const onCancel: React.MouseEventHandler = (e) => {
+    console.log(e);
+
     setVisible(false);
-  }
+  };
   return (
     <div>
       <button onClick={() => setVisible((visible) => !visible)}>toggle</button>
