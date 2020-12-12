@@ -46,5 +46,22 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
   );
   return ReactDOM.createPortal(diaglog, document.body);
 };
-
+export const alert = function (message: string) {
+  function closeDialog() {
+    ReactDOM.render(
+      React.cloneElement(dialogComponent, { visible: false }),
+      div
+    );
+    ReactDOM.unmountComponentAtNode(div);
+    div.remove();
+  }
+  const div = document.createElement("div"),
+    dialogComponent = (
+      <Dialog visible={true} onCancel={closeDialog} onOk={closeDialog}>
+        {message}
+      </Dialog>
+    );
+  ReactDOM.render(dialogComponent, div);
+  document.body.append(div);
+};
 export default Dialog;
