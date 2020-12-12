@@ -13,9 +13,12 @@ const DialogExample: FC = function () {
 
     setVisible(false);
   };
+  // React.CSSProperties;
   return (
     <div>
-      <button onClick={() => setVisible((visible) => !visible)}>toggle</button>
+      <button style={{ position: "relative", zIndex: 1 }} onClick={() => setVisible((visible) => !visible)}>
+        toggle
+      </button>
       <Dialog visible={visible} onOk={onOk} onCancel={onCancel} />
     </div>
   );

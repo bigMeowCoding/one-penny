@@ -2,6 +2,7 @@ import React, { FC, Fragment, ReactElement } from "react";
 import "./dialog.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import { Icon } from "../index";
+import ReactDOM from "react-dom";
 
 const addPrefixForClassName = makeClassByPrefix("zui-dialog");
 interface Props {
@@ -18,8 +19,7 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
     <button onClick={onCancel}>cancel</button>,
     <button onClick={onCancel}>ok</button>,
   ];
-
-  return (
+  const diaglog = (
     <Fragment>
       <div className={addPrefixForClassName("mask")} />
       <div className={addPrefixForClassName()}>
@@ -44,6 +44,7 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
       </div>
     </Fragment>
   );
+  return ReactDOM.createPortal(diaglog, document.body);
 };
 
 export default Dialog;
