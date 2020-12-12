@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 const addPrefixForClassName = makeClassByPrefix("zui-dialog");
 interface Props {
   visible: boolean;
-  buttons?: ReactElement[];
+  footer?: ReactElement[];
   onCancel: React.MouseEventHandler;
   onOk: React.MouseEventHandler;
 }
@@ -15,10 +15,6 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
   if (!visible) {
     return null;
   }
-  const DefaultFooter = [
-    <button onClick={onCancel}>cancel</button>,
-    <button onClick={onCancel}>ok</button>,
-  ];
   const diaglog = (
     <Fragment>
       <div className={addPrefixForClassName("mask")} />
@@ -31,21 +27,14 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
         </header>
         <main className={addPrefixForClassName("body")}>{props.children}</main>
         <footer className={addPrefixForClassName("footer")}>
-          {props.buttons && props.buttons.length ? (
-            props.buttons
-          ) : (
-            <Fragment>
-              {DefaultFooter.map((item, index) => {
-                return React.cloneElement(item, { key: index });
-              })}
-            </Fragment>
-          )}
+          {props.footer && props.footer.length ? props.footer : null}
         </footer>
       </div>
     </Fragment>
   );
   return ReactDOM.createPortal(diaglog, document.body);
 };
+
 export const alert = function (message: string) {
   function closeDialog() {
     ReactDOM.render(
@@ -57,7 +46,55 @@ export const alert = function (message: string) {
   }
   const div = document.createElement("div"),
     dialogComponent = (
-      <Dialog visible={true} onCancel={closeDialog} onOk={closeDialog}>
+      <Dialog
+        visible={true}
+        onCancel={closeDialog}
+        onOk={closeDialog}
+        footer={[<button onClick={closeDialog}>ok</button>]}
+      >
+        {message}
+      </Dialog>
+    );
+  ReactDOM.render(dialogComponent, div);
+  document.body.append(div);
+};
+export const confirm = function (
+  message: string,
+  onOk?: () => void,
+  onCancel?: () => void
+) {
+  function close() {
+    ReactDOM.render(
+      React.cloneElement(dialogComponent, { visible: false }),
+      div
+    );
+    ReactDOM.unmountComponentAtNode(div);
+    div.remove();
+  }
+
+  function cancelHandle() {
+    if (onCancel) {
+      onCancel();
+    }
+    close();
+  }
+  function confirmHandle() {
+    if (onOk) {
+      onOk();
+    }
+    close();
+  }
+  const div = document.createElement("div"),
+    dialogComponent = (
+      <Dialog
+        visible={true}
+        onCancel={cancelHandle}
+        onOk={confirmHandle}
+        footer={[
+          <button onClick={confirmHandle}>确认</button>,
+          <button onClick={cancelHandle}>关闭</button>,
+        ]}
+      >
         {message}
       </Dialog>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FC } from "react";
-import Dialog, { alert } from "./diialog";
+import Dialog, { alert, confirm } from "./diialog";
 import "./example.scss";
 const DialogExample: FC = function () {
   const [visible, setVisible] = useState(false);
@@ -28,7 +28,22 @@ const DialogExample: FC = function () {
           alert("hhhh");
         }}
       >
-        example2
+        alert
+      </button>
+      <button
+        onClick={() => {
+          confirm(
+            "hhhh",
+            () => {
+              console.log("ok");
+            },
+            () => {
+              console.log("cancel");
+            }
+          );
+        }}
+      >
+        confirm
       </button>
     </div>
   );
