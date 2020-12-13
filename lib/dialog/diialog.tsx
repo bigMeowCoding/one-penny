@@ -1,27 +1,22 @@
-import React, {
-  FC,
-  Fragment,
-  ReactElement,
-  ReactFragment,
-  ReactNode,
-} from "react";
+import React, { FC, Fragment, ReactElement, ReactNode } from "react";
 import "./dialog.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import { Icon } from "../index";
 import ReactDOM from "react-dom";
+import { ModalRef } from "./dialog.types";
 
 const addPrefixForClassName = makeClassByPrefix("zui-dialog");
 interface Props {
   visible: boolean;
   footer?: ReactElement[];
-  onCancel: React.MouseEventHandler;
-  onOk: React.MouseEventHandler;
+  onCancel?: React.MouseEventHandler;
+  onOk?: React.MouseEventHandler;
 }
-const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
+const Dialog: FC<Props> = function ({ visible, onCancel, ...props }) {
   if (!visible) {
     return null;
   }
-  const diaglog = (
+  const dialog = (
     <Fragment>
       <div className={addPrefixForClassName("mask")} />
       <div className={addPrefixForClassName()}>
@@ -40,46 +35,26 @@ const Dialog: FC<Props> = function ({ visible, onCancel, onOk, ...props }) {
       </div>
     </Fragment>
   );
-  return ReactDOM.createPortal(diaglog, document.body);
+  return ReactDOM.createPortal(dialog, document.body);
 };
 
 export const alert = function (message: string) {
-  function closeDialog() {
-    ReactDOM.render(
-      React.cloneElement(dialogComponent, { visible: false }),
-      div
-    );
-    ReactDOM.unmountComponentAtNode(div);
-    div.remove();
-  }
-  const div = document.createElement("div"),
-    dialogComponent = (
-      <Dialog
-        visible={true}
-        onCancel={closeDialog}
-        onOk={closeDialog}
-        footer={[<button onClick={closeDialog}>ok</button>]}
-      >
-        {message}
-      </Dialog>
-    );
-  ReactDOM.render(dialogComponent, div);
-  document.body.append(div);
+  const { close } = modal(message, [
+    <button
+      onClick={() => {
+        close();
+      }}
+    >
+      ok
+    </button>,
+  ]);
 };
+
 export const confirm = function (
   message: string,
   onOk?: () => void,
   onCancel?: () => void
 ) {
-  function close() {
-    ReactDOM.render(
-      React.cloneElement(dialogComponent, { visible: false }),
-      div
-    );
-    ReactDOM.unmountComponentAtNode(div);
-    div.remove();
-  }
-
   function cancelHandle() {
     if (onCancel) {
       onCancel();
@@ -92,27 +67,22 @@ export const confirm = function (
     }
     close();
   }
-  const div = document.createElement("div"),
-    dialogComponent = (
-      <Dialog
-        visible={true}
-        onCancel={cancelHandle}
-        onOk={confirmHandle}
-        footer={[
-          <button onClick={confirmHandle}>确认</button>,
-          <button onClick={cancelHandle}>关闭</button>,
-        ]}
-      >
-        {message}
-      </Dialog>
-    );
-  ReactDOM.render(dialogComponent, div);
-  document.body.append(div);
+
+  const { close } = modal(
+    message,
+    [
+      <button onClick={confirmHandle}>确认</button>,
+      <button onClick={cancelHandle}>关闭</button>,
+    ],
+    onCancel
+  );
 };
 
 export const modal = function (
-  content: ReactNode | ReactFragment
-): { close: () => void } {
+  content: ReactNode,
+  buttons?: ReactElement[],
+  afterClose?: () => void
+): ModalRef {
   function close() {
     ReactDOM.render(
       React.cloneElement(dialogComponent, { visible: false }),
@@ -124,7 +94,15 @@ export const modal = function (
 
   const div = document.createElement("div"),
     dialogComponent = (
-      <Dialog visible={true} onCancel={close} onOk={close}>
+      <Dialog
+        visible={true}
+        onCancel={() => {
+          afterClose && afterClose();
+          close();
+        }}
+        onOk={close}
+        footer={buttons}
+      >
         {content}
       </Dialog>
     );

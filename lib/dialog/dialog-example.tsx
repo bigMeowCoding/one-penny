@@ -13,7 +13,6 @@ const DialogExample: FC = function () {
 
     setVisible(false);
   };
-  // React.CSSProperties;
   return (
     <div>
       <button
@@ -22,7 +21,9 @@ const DialogExample: FC = function () {
       >
         toggle
       </button>
-      <Dialog visible={visible} onOk={onOk} onCancel={onCancel} />
+      <Dialog visible={visible} onOk={onOk} onCancel={onCancel}>
+        example case
+      </Dialog>
       <button
         onClick={() => {
           alert("hhhh");
