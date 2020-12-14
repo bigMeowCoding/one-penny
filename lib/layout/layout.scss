@@ -1,0 +1,10 @@
+.zyj-layout {
+  display: flex;
+  flex-flow: column;
+  & & {
+    flex: 1;
+  }
+  &.has-aside {
+    flex-flow: row;
+  }
+}
