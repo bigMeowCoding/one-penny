@@ -51,7 +51,6 @@ const DialogExample: FC = function () {
         onClick={() => {
           const { close } = modal(
             <div>
-              shsdfsd
               <button
                 onClick={() => {
                   close();
