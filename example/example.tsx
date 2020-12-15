@@ -4,9 +4,8 @@ import { HashRouter, Link, Route } from "react-router-dom";
 import IconExample from "../lib/icon/icon-example";
 import DialogExample from "../lib/dialog/dialog-example";
 import LayoutExample from "../lib/layout/layout-example";
-function ButtonExample() {
-  return <div>button example</div>;
-}
+import ButtonExample from "../lib/button/button-example";
+
 ReactDOM.render(
   <HashRouter>
     <div>
@@ -27,6 +26,7 @@ ReactDOM.render(
             <li>
               <Link to="/layout">layout</Link>
             </li>
+
           </ul>
         </aside>
         <main>
