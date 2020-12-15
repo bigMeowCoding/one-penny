@@ -30,6 +30,11 @@
     background-color: #fff;
     border-color: #40a9ff;
   }
+  &:active {
+    color: #096dd9;
+    background: #fff;
+    border-color: #096dd9;
+  }
   &-primary {
     color: #fff;
     background-color: #1890ff;
@@ -42,6 +47,11 @@
       color: #fff;
       background-color: #40a9ff;
       border-color: #40a9ff;
+    }
+    &:active {
+      color: #fff;
+      background: #096dd9;
+      border-color: #096dd9;
     }
   }
 }
