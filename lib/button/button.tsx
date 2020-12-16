@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import "./button.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import classNames from "../common/utils/classNames";

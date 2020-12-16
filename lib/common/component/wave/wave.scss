@@ -1,6 +1,6 @@
 @import "../../styles/variable";
 
-.ant-click-animating-without-extra-node {
+[ant-click-animating-without-extra-node=true] {
   &:after {
     position: absolute;
     top: 0;
