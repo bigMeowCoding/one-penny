@@ -11,13 +11,12 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 const addClassByPrefix = makeClassByPrefix(LAYOUT_PREFIX);
 
 export const Layout: FC<Props> = function ({ className, ...rest }) {
-  let hasAside = false;
   const children = rest.children as ReactElement[];
-  if (children.length) {
-    hasAside = children.some((item) => {
+  const hasAside =
+    children.length &&
+    children.some((item) => {
       return item.type === Aside;
     });
-  }
   return (
     <div
       className={classNames(
