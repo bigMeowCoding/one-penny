@@ -14,7 +14,7 @@ const addClassByPrefix = makeClassByPrefix("zyj-ui-wave");
 
 const Wave: FC<Props> = function ({ children }) {
   const ref = useRef<HTMLDivElement>(null);
-  let clickWaveTimerId: number = -1;
+  let clickWaveTimerId = -1;
 
   useEffect(() => {
     return () => {
