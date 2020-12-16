@@ -19,7 +19,7 @@ const Dialog: FC<Props> = function ({ visible, onCancel, ...props }) {
   const dialog = (
     <Fragment>
       <div className={addPrefixForClassName("mask")} />
-      <div className={addPrefixForClassName()}>
+      <div className={addPrefixForClassName("")}>
         <header className={addPrefixForClassName("header")}>
           提示
           <div className={addPrefixForClassName("close")} onClick={onCancel}>

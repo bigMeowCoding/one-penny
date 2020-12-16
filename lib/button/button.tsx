@@ -21,7 +21,7 @@ const Button: FC<Props> = function ({ children, className, type, ...rest }) {
     <button
       className={classNames(
         className,
-        addClassNamePrefix(),
+        addClassNamePrefix(""),
         makeButtonTypeClassName(type)
       )}
       {...rest}

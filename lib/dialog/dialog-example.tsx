@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FC } from "react";
-import Dialog, { alert, confirm, modal } from "./diialog";
+import Dialog, { alert, confirm, modal } from "./dialog";
 import "./example.scss";
 const DialogExample: FC = function () {
   const [visible, setVisible] = useState(false);
