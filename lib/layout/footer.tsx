@@ -1,8 +1,7 @@
 import React, { FC, HTMLAttributes } from "react";
-import makeClassByPrefix from "../common/utils/makeClassByPrefix";
+import classNames from "../common/utils/classNames";
 interface Props extends HTMLAttributes<HTMLElement> {}
-const addClassByPrefix = makeClassByPrefix("zyj-layout");
 
 export const Footer: FC<Props> = function ({ className, ...rest }) {
-  return <div>{rest.children}</div>;
+  return <div className={classNames(className)}>{rest.children}</div>;
 };

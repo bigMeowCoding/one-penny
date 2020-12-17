@@ -13,9 +13,9 @@ const LayoutExample: FC = function () {
           <h2>example 1</h2>
           <section>
             <Layout className="example-layout example-layout-1">
-              <Header>header</Header>
-              <Content>content</Content>
-              <Footer>footer</Footer>
+              <Header className='header'>header</Header>
+              <Content className='content'>content</Content>
+              <Footer className='footer'>footer</Footer>
             </Layout>
           </section>
         </article>
@@ -23,12 +23,12 @@ const LayoutExample: FC = function () {
           <h2>example 2</h2>
           <section>
             <Layout className="example-layout example-layout-2">
-              <Header>header</Header>
+              <Header className='header'>header</Header>
               <Layout>
-                <Aside>aside</Aside>
-                <Content>content</Content>
+                <Aside className='aside'>aside</Aside>
+                <Content className='content'>content</Content>
               </Layout>
-              <Footer>footer</Footer>
+              <Footer className='footer'>footer</Footer>
             </Layout>
           </section>
         </article>
