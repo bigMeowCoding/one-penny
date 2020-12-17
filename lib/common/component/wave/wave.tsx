@@ -9,13 +9,15 @@ import {
   onTransitionStart,
   resetEffect,
 } from "./_util";
-interface Props {}
+interface Props {
+  waveColor: string;
+}
 const addClassByPrefix = makeClassByPrefix("zyj-ui-wave");
 
-const Wave: FC<Props> = function ({ children }) {
-  const ref = useRef<HTMLDivElement>(null);
+const Wave: FC<Props> = function ({ children, waveColor }) {
+  const ref = useRef<HTMLDivElement>(null),
+    styleRef = useRef<HTMLStyleElement>(document.createElement("style"));
   let clickWaveTimerId = -1;
-
   useEffect(() => {
     return () => {
       if (clickWaveTimerId) {
@@ -23,6 +25,19 @@ const Wave: FC<Props> = function ({ children }) {
       }
     };
   }, []);
+  useEffect(() => {
+    const styleElement = styleRef.current
+    if(styleElement && waveColor) {
+      styleElement.innerHTML = `
+      [ant-click-animating-without-extra-node='true']::after {
+        --antd-wave-shadow-color: ${waveColor};
+      }`;
+      if (!document.body.contains(styleElement)) {
+        document.body.append(styleElement);
+      }
+    }
+
+  }, [waveColor]);
   return (
     <div
       ref={ref}

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import "./button.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import classNames from "../common/utils/classNames";
@@ -17,8 +17,30 @@ function makeButtonTypeClassName(type: ButtonType): string {
   return addClassNamePrefix(type);
 }
 const Button: FC<Props> = function ({ children, className, type, ...rest }) {
+  const ref = useRef<HTMLButtonElement>(null),
+    [waveColor, setWaveColor] = useState("");
+  useEffect(() => {
+    const btnElement = ref.current;
+    if (btnElement) {
+      btnElement.addEventListener(
+        "click",
+        () => {
+          const node = ref.current;
+          if (node) {
+            const color =
+              getComputedStyle(node).getPropertyValue("border-top-color") || // Firefox Compatible
+              getComputedStyle(node).getPropertyValue("border-color") ||
+              getComputedStyle(node).getPropertyValue("background-color");
+            setWaveColor(color);
+          }
+        },
+        false
+      );
+    }
+  }, []);
   const buttonNode = (
     <button
+      ref={ref}
       className={classNames(
         className,
         addClassNamePrefix(""),
@@ -29,6 +51,6 @@ const Button: FC<Props> = function ({ children, className, type, ...rest }) {
       {children}
     </button>
   );
-  return <Wave>{buttonNode}</Wave>;
+  return <Wave waveColor={waveColor}>{buttonNode}</Wave>;
 };
 export default Button;
