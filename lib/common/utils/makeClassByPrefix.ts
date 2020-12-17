@@ -2,12 +2,9 @@ interface ClassToggle {
   [K: string]: boolean;
 }
 interface Options {
-  extra: string;
+  extra: string; // 直接添加的className
 }
 export default function (prefix: string) {
-  /**
-   * @param options 直接添加的className
-   */
   return (className: string | ClassToggle, options?: Options) => {
     const namesObject =
       typeof className === "string" ? { [className]: true } : className;
