@@ -20,6 +20,10 @@ module.exports = {
         loader: "svg-sprite-loader",
       },
       {
+        test: /\.(png|jpe?g|gif)$/,
+        loader: "file-loader",
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings

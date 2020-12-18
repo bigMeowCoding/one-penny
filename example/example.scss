@@ -1,0 +1,61 @@
+@import "./reset";
+@import "../lib/common/styles/variable.scss";
+$aside-pad-left: 40px;
+
+.page {
+  .site-header {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    box-shadow: 0 2px 8px #f0f1f2;
+    img {
+      padding-left: $aside-pad-left;
+    }
+    span {
+      font-size: 32px;
+      color: $blue-base;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 8px;
+    }
+  }
+  .site-content {
+    padding-top: 40px;
+    .case-content {
+      padding: 0 48px;
+    }
+  }
+  .site-footer {
+    border-top: 1px solid $border-color;
+    text-align: center;
+    padding: 16px 0;
+  }
+  .site-aside {
+    min-width: 260px;
+    border-right: 1px solid $border-color;
+    h2 {
+      padding-left: $aside-pad-left;
+    }
+    ul {
+      padding: 0;
+      li {
+        height: 40px;
+        line-height: 40px;
+        color: $color-font-content;
+        a {
+          padding-left: $aside-pad-left;
+          color: inherit;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+        }
+        &:hover {
+          background: $hover-background-color;
+          a {
+            color: $blue-base;
+          }
+        }
+      }
+    }
+  }
+}
