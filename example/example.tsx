@@ -8,6 +8,7 @@ import ButtonExample from "../lib/button/button-example";
 import { Aside, Content, Footer, Header, Layout } from "../lib/layout";
 import "./example.scss";
 import logo from "./logo.png";
+import IconDemo from "../lib/icon/icon-demo";
 console.log(logo);
 ReactDOM.render(
   <HashRouter>
@@ -36,7 +37,7 @@ ReactDOM.render(
             </ul>
           </Aside>
           <Content className="case-content">
-            <Route path="/icon" component={IconExample} />
+            <Route path="/icon" component={IconDemo} />
             <Route path="/dialog" component={DialogExample} />
             <Route path="/button" component={ButtonExample} />
             <Route path="/layout" component={LayoutExample} />
