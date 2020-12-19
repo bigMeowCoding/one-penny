@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter, Link, Route } from "react-router-dom";
+import { HashRouter, NavLink, Route } from "react-router-dom";
 import IconExample from "../lib/icon/icon-example";
 import DialogExample from "../lib/dialog/dialog-example";
 import LayoutExample from "../lib/layout/layout-example";
@@ -16,26 +16,26 @@ ReactDOM.render(
         <img src={logo} width="40" alt="" />
         <span>ZYJ-UI</span>
       </Header>
-      <Content className='site-content'>
+      <Content className="site-content">
         <Layout>
           <Aside className="site-aside">
             <h2>组件</h2>
             <ul>
               <li>
-                <Link to="/icon">Icon</Link>
+                <NavLink to="/icon">Icon</NavLink>
               </li>
               <li>
-                <Link to="/button">button</Link>
+                <NavLink to="/button">button</NavLink>
               </li>
               <li>
-                <Link to="/dialog">dialog</Link>
+                <NavLink to="/dialog">dialog</NavLink>
               </li>
               <li>
-                <Link to="/layout">layout</Link>
+                <NavLink to="/layout">layout</NavLink>
               </li>
             </ul>
           </Aside>
-          <Content className='case-content'>
+          <Content className="case-content">
             <Route path="/icon" component={IconExample} />
             <Route path="/dialog" component={DialogExample} />
             <Route path="/button" component={ButtonExample} />
