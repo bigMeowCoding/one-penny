@@ -9,6 +9,7 @@ import { Aside, Content, Footer, Header, Layout } from "../lib/layout";
 import "./example.scss";
 import logo from "./logo.png";
 import IconDemo from "../lib/icon/icon-demo";
+import FormExample from "../lib/form/form.example";
 console.log(logo);
 ReactDOM.render(
   <HashRouter>
@@ -34,6 +35,9 @@ ReactDOM.render(
               <li>
                 <NavLink to="/layout">layout</NavLink>
               </li>
+              <li>
+                <NavLink to="/form">form</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -41,6 +45,7 @@ ReactDOM.render(
             <Route path="/dialog" component={DialogExample} />
             <Route path="/button" component={ButtonExample} />
             <Route path="/layout" component={LayoutExample} />
+            <Route path="/form" component={FormExample} />
           </Content>
         </Layout>
       </Content>
