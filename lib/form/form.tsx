@@ -1,16 +1,35 @@
 import React, { FC } from "react";
+import { FormProps } from "./types";
 
-interface Props {
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-}
-
-const Layout: FC<Props> = function ({onSubmit}) {
+const Form: FC<FormProps> = function ({
+  onSubmit,
+  fields,
+  value,
+  onChange,
+  buttons,
+}) {
   const onSubmitHandle: React.FormEventHandler<HTMLFormElement> = (e) => {
-      e.preventDefault()
-      onSubmit(e);
+    e.preventDefault(); // 防止表单提交刷新页面
+    onSubmit(e);
   };
-  return <form onSubmit={onSubmitHandle}>
-
-  </form>;
+  return (
+    <form onSubmit={onSubmitHandle}>
+      {fields.map((field) => {
+        return (
+          <div key={field.name}>
+            {field.label}
+            <input
+              type={field.input.type}
+              value={value[field.name]}
+              onChange={(e) => {
+                onChange({ ...value, [field.name]: e.target.value });
+              }}
+            />
+          </div>
+        );
+      })}
+      <div>{buttons}</div>
+    </form>
+  );
 };
-export default Layout;
+export default Form;
