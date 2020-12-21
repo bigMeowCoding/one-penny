@@ -12,7 +12,8 @@ import { ButtonProps } from "./types";
 const Button: FC<ButtonProps> = function ({
   children,
   className,
-  type,
+  type = "default",
+  defaultType,
   ...rest
 }) {
   const ref = useRef<HTMLButtonElement>(null),
@@ -28,6 +29,7 @@ const Button: FC<ButtonProps> = function ({
   const buttonNode = (
     <button
       ref={ref}
+      type={defaultType ? defaultType : "button"}
       className={classNames(
         className,
         addButtonClassNamePrefix(""),
