@@ -2,6 +2,8 @@ import React, { FC, Fragment, useState } from "react";
 import Form from "./form";
 import { FormValue, InputType } from "./types";
 import Button from "../button/button";
+import validate = WebAssembly.validate;
+import Validator from "./validator";
 
 interface Props {}
 
@@ -35,7 +37,24 @@ const FormExample: FC<Props> = function () {
             value={formData}
             fields={fields}
             onSubmit={() => {
-              console.log(formData);
+              // console.log(formData);
+              console.log(
+                Validator(formData, [
+                  {
+                    key: "username",
+                    required: true,
+                    minLength: 3,
+                    maxLength: 5,
+                    pattern: /^\d+$/,
+                  },
+                  {
+                    key: "password",
+                    required: true,
+                    pattern: /^\D+$/,
+
+                  },
+                ])
+              );
             }}
             onChange={(value) => {
               setFormData(value);

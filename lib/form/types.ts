@@ -21,3 +21,14 @@ export interface FormProps {
   onChange: (value: FormValue) => void;
   buttons: ReactFragment;
 }
+export interface FormRule {
+  key: string;
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+}
+export type FormRules = FormRule[];
+export interface FormErrors {
+  [key: string]: string[];
+}
