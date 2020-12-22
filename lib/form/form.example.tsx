@@ -1,8 +1,7 @@
 import React, { FC, Fragment, useState } from "react";
 import Form from "./form";
-import { FormValue, InputType } from "./types";
+import { FormErrors, FormValue, InputType } from "./types";
 import Button from "../button/button";
-import validate = WebAssembly.validate;
 import Validator from "./validator";
 
 interface Props {}
@@ -28,6 +27,7 @@ const FormExample: FC<Props> = function () {
       },
     },
   ]);
+  const [errors, setErrors] = useState<FormErrors>({});
   return (
     <div>
       <article>
@@ -36,25 +36,28 @@ const FormExample: FC<Props> = function () {
           <Form
             value={formData}
             fields={fields}
+            errors={errors}
             onSubmit={() => {
               // console.log(formData);
-              console.log(
-                Validator(formData, [
-                  {
-                    key: "username",
-                    required: true,
-                    minLength: 3,
-                    maxLength: 5,
-                    pattern: /^\d+$/,
-                  },
-                  {
-                    key: "password",
-                    required: true,
-                    pattern: /^\D+$/,
-
-                  },
-                ])
-              );
+              setErrors({});
+              const errors = Validator(formData, [
+                {
+                  key: "username",
+                  required: true,
+                  minLength: 3,
+                  maxLength: 5,
+                  pattern: /^\d+$/,
+                },
+                {
+                  key: "password",
+                  required: true,
+                  pattern: /^\D+$/,
+                },
+              ]);
+              if (Object.keys(errors).length > 0) {
+                setErrors(errors);
+              }
+              console.log(errors);
             }}
             onChange={(value) => {
               setFormData(value);

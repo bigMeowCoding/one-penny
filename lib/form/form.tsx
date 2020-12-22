@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import { FormProps } from "./types";
 
 const Form: FC<FormProps> = function ({
@@ -7,6 +7,7 @@ const Form: FC<FormProps> = function ({
   value,
   onChange,
   buttons,
+  errors,
 }) {
   const onSubmitHandle: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault(); // 防止表单提交刷新页面
@@ -25,6 +26,13 @@ const Form: FC<FormProps> = function ({
                 onChange({ ...value, [field.name]: e.target.value });
               }}
             />
+            <div>
+              {errors && errors[field.name]?.length > 0
+                ? errors[field.name].map((item, index) => {
+                    return <div key={index}>{item}</div>;
+                  })
+                : null}
+            </div>
           </div>
         );
       })}

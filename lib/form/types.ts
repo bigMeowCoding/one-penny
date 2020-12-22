@@ -20,6 +20,7 @@ export interface FormProps {
   }[];
   onChange: (value: FormValue) => void;
   buttons: ReactFragment;
+  errors?: FormErrors;
 }
 export interface FormRule {
   key: string;
