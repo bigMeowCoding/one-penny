@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, NavLink, Route } from "react-router-dom";
-import IconExample from "../lib/icon/icon-example";
 import DialogExample from "../lib/dialog/dialog-example";
 import LayoutExample from "../lib/layout/layout-example";
 import ButtonExample from "../lib/button/button-example";
@@ -15,7 +14,7 @@ ReactDOM.render(
   <HashRouter>
     <Layout className="page">
       <Header className="site-header">
-        <img src={logo} width="40" alt="" />
+        <img src={logo} width="80" height="40" alt='icon'/>
         <span>ZYJ-UI</span>
       </Header>
       <Content className="site-content">
