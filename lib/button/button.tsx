@@ -8,6 +8,7 @@ import {
   makeButtonTypeClassName,
 } from "./_util";
 import { ButtonProps } from "./types";
+import useWave from "../common/hooks/useWave";
 
 const Button: FC<ButtonProps> = function ({
   children,
@@ -16,16 +17,7 @@ const Button: FC<ButtonProps> = function ({
   defaultType,
   ...rest
 }) {
-  const ref = useRef<HTMLButtonElement>(null),
-    [waveColor, setWaveColor] = useState("");
-
-  useEffect(() => {
-    const btnElement = ref.current;
-    if (btnElement) {
-      changeWaveBaseColorOnClick(btnElement, setWaveColor);
-    }
-  }, []);
-
+  const { waveColor, ref } = useWave();
   const buttonNode = (
     <button
       ref={ref}
@@ -40,6 +32,7 @@ const Button: FC<ButtonProps> = function ({
       {children}
     </button>
   );
+
   return (
     <Wave waveColor={waveColor} isInline={true}>
       {buttonNode}

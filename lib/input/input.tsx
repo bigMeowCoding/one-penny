@@ -2,22 +2,15 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./input.scss";
 import Wave from "../common/component/wave/wave";
-import { changeWaveBaseColorOnClick } from "../button/_util";
+import useWave from "../common/hooks/useWave";
 interface Props {
   placeholder?: string;
 }
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-input");
 const Input: FC<Props> = function ({ placeholder }) {
-  const [waveColor, setWaveColor] = useState(""),
-    ref = useRef(null);
+  const { waveColor, ref } = useWave();
 
-  useEffect(() => {
-    const btnElement = ref.current;
-    if (btnElement) {
-      changeWaveBaseColorOnClick(btnElement, setWaveColor);
-    }
-  }, []);
   return (
     <Wave waveColor={waveColor}>
       <input
