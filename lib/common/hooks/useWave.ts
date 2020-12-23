@@ -7,7 +7,6 @@ const useWave: () => { waveColor: string; ref: MutableRefObject<any> } = () => {
 
   useEffect(() => {
     const btnElement = ref.current;
-    console.log(btnElement);
     if (btnElement) {
       changeWaveBaseColorOnClick(btnElement, setWaveColor);
     }

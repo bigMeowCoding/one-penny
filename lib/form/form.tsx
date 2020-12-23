@@ -1,7 +1,9 @@
 import React, { FC, Fragment } from "react";
 import { FormProps } from "./types";
 import Input from "../input/input";
-
+import makeClassByPrefix from "../common/utils/makeClassByPrefix";
+import "./form.scss";
+const addClassByPrefix = makeClassByPrefix("zyj-ui-form");
 const Form: FC<FormProps> = function ({
   onSubmit,
   fields,
@@ -16,28 +18,32 @@ const Form: FC<FormProps> = function ({
   };
   return (
     <form onSubmit={onSubmitHandle}>
-      {fields.map((field) => {
-        return (
-          <div key={field.name}>
-            {field.label}
-            <Input
-              type={field.input.type}
-              value={value[field.name]}
-              onChange={(e) => {
-                onChange({ ...value, [field.name]: e.target.value });
-              }}
-            />
-            <div>
-              {errors && errors[field.name]?.length > 0
-                ? errors[field.name].map((item, index) => {
-                    return <div key={index}>{item}</div>;
-                  })
-                : null}
+      <div>
+        {fields.map((field) => {
+          return (
+            <div className={addClassByPrefix('row')} key={field.name}>
+              <div className={addClassByPrefix('label')}>{field.label}</div>
+              <div className={addClassByPrefix('control')}>
+                <Input
+                  type={field.input.type}
+                  value={value[field.name]}
+                  onChange={(e) => {
+                    onChange({ ...value, [field.name]: e.target.value });
+                  }}
+                />
+                <div>
+                  {errors && errors[field.name]?.length > 0
+                    ? errors[field.name].map((item, index) => {
+                        return <div key={index}>{item}</div>;
+                      })
+                    : null}
+                </div>
+              </div>
             </div>
-          </div>
-        );
-      })}
-      <div>{buttons}</div>
+          );
+        })}
+        <div className={addClassByPrefix('buttons')}>{buttons}</div>
+      </div>
     </form>
   );
 };

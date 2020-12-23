@@ -1,0 +1,9 @@
+.zyj-ui-form {
+  &-row {
+    display: table-row;
+  }
+  &-label,
+  &-control {
+    display: table-cell;
+  }
+}
