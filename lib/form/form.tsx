@@ -1,5 +1,6 @@
 import React, { FC, Fragment } from "react";
 import { FormProps } from "./types";
+import Input from "../input/input";
 
 const Form: FC<FormProps> = function ({
   onSubmit,
@@ -19,7 +20,7 @@ const Form: FC<FormProps> = function ({
         return (
           <div key={field.name}>
             {field.label}
-            <input
+            <Input
               type={field.input.type}
               value={value[field.name]}
               onChange={(e) => {
