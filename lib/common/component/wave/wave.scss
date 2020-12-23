@@ -4,7 +4,7 @@ html {
   //--scroll-bar: 0;
 }
 [ant-click-animating-without-extra-node='true'] {
-  &::after {
+  &:after {
     position: absolute;
     top: 0;
     right: 0;
@@ -33,8 +33,14 @@ html {
     box-shadow: 0 0 0 $wave-animation-width var(--antd-wave-shadow-color);
   }
 }
-
-.zyj-ui-wave-box {
-  display: inline-flex;
+.zyj-ui-wave {
   position: relative;
+  &-box {
+    display: flex;
+  }
+  &-inline-box{
+    display: inline-flex;
+  }
 }
+
+

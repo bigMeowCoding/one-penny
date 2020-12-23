@@ -6,11 +6,12 @@ import { changeWaveShadowVariable, waveClickHandle } from "./_util";
 
 interface Props {
   waveColor: string;
+  isInline?: boolean;
 }
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-wave");
 
-const Wave: FC<Props> = function ({ children, waveColor }) {
+const Wave: FC<Props> = function ({ children, isInline, waveColor }) {
   const ref = useRef<HTMLDivElement>(null),
     styleRef = useRef<HTMLStyleElement>(document.createElement("style"));
   let clickWaveTimerId = -1;
@@ -21,7 +22,7 @@ const Wave: FC<Props> = function ({ children, waveColor }) {
         clearTimeout(clickWaveTimerId);
       }
     };
-   }, []);
+  }, []);
 
   useEffect(() => {
     changeWaveShadowVariable(styleRef, waveColor);
@@ -30,7 +31,11 @@ const Wave: FC<Props> = function ({ children, waveColor }) {
   return (
     <div
       ref={ref}
-      className={classNames(addClassByPrefix("box"))}
+      className={
+        isInline
+          ? classNames(addClassByPrefix("inline-box"))
+          : classNames(addClassByPrefix("box"))
+      }
       onClick={() => {
         if (!ref.current) {
           return;
