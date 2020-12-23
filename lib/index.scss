@@ -4,4 +4,7 @@ body {
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   font-size: 14px;
 }
-button:focus {outline:0;}
+button:focus,
+input:focus {
+  outline: 0;
+}

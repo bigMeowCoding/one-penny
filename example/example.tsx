@@ -9,6 +9,7 @@ import "./example.scss";
 import logo from "./logo.png";
 import IconDemo from "../lib/icon/icon-demo";
 import FormExample from "../lib/form/form.example";
+import InputExample from "../lib/input/input-example";
 console.log(logo);
 ReactDOM.render(
   <HashRouter>
@@ -37,6 +38,9 @@ ReactDOM.render(
               <li>
                 <NavLink to="/form">form</NavLink>
               </li>
+              <li>
+                <NavLink to="/input">input</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -45,6 +49,7 @@ ReactDOM.render(
             <Route path="/button" component={ButtonExample} />
             <Route path="/layout" component={LayoutExample} />
             <Route path="/form" component={FormExample} />
+            <Route path="/input" component={InputExample} />
           </Content>
         </Layout>
       </Content>
