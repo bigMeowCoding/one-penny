@@ -40,6 +40,10 @@ const Button: FC<ButtonProps> = function ({
       {children}
     </button>
   );
-  return <Wave waveColor={waveColor}>{buttonNode}</Wave>;
+  return (
+    <Wave waveColor={waveColor} isInline={true}>
+      {buttonNode}
+    </Wave>
+  );
 };
 export default Button;
