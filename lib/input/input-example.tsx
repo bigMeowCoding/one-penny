@@ -11,6 +11,9 @@ const InputExample: FC<Props> = function () {
         <div>
           <Input placeholder='占位符'/>
         </div>
+          <div>
+              <Input placeholder='占位符占位符占位符占位符占位符占位符占位符占位符占位符占位符占位符'/>
+          </div>
       </section>
     </article>
   );

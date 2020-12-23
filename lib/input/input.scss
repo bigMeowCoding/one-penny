@@ -25,4 +25,7 @@
     border-color: $blue-base;
     border-right-width: 1px !important;
   }
+  &:placeholder-shown {
+    text-overflow: ellipsis;
+  }
 }
