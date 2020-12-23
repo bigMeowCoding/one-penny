@@ -1,10 +1,10 @@
 @import "../../styles/variable";
 html {
-  --antd-wave-shadow-color:  #{$primary-color};
-  //--scroll-bar: 0;
+  --antd-wave-shadow-color: #{$primary-color};
+  --scroll-bar: 0;
 }
-[ant-click-animating-without-extra-node='true'] {
-  &:after {
+[ant-click-animating-without-extra-node="true"] {
+  &::after {
     position: absolute;
     top: 0;
     right: 0;
@@ -33,14 +33,16 @@ html {
     box-shadow: 0 0 0 $wave-animation-width var(--antd-wave-shadow-color);
   }
 }
-.zyj-ui-wave {
+@mixin waveBox {
   position: relative;
+}
+.zyj-ui-wave {
   &-box {
+    @include waveBox;
     display: flex;
   }
-  &-inline-box{
+  &-inline-box {
+    @include waveBox;
     display: inline-flex;
   }
 }
-
-
