@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC} from "react";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./input.scss";
 import Wave from "../common/component/wave/wave";

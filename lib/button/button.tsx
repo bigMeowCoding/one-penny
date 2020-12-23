@@ -1,12 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC } from "react";
 import "./button.scss";
 import classNames from "../common/utils/classNames";
 import Wave from "../common/component/wave/wave";
-import {
-  addButtonClassNamePrefix,
-  changeWaveBaseColorOnClick,
-  makeButtonTypeClassName,
-} from "./_util";
+import { addButtonClassNamePrefix, makeButtonTypeClassName } from "./_util";
 import { ButtonProps } from "./types";
 import useWave from "../common/hooks/useWave";
 
