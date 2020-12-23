@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC } from "react";
 import { FormProps } from "./types";
 import Input from "../input/input";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
@@ -21,9 +21,9 @@ const Form: FC<FormProps> = function ({
       <div>
         {fields.map((field) => {
           return (
-            <div className={addClassByPrefix('row')} key={field.name}>
-              <div className={addClassByPrefix('label')}>{field.label}</div>
-              <div className={addClassByPrefix('control')}>
+            <div className={addClassByPrefix("row")} key={field.name}>
+              <div className={addClassByPrefix("label")}>{field.label}</div>
+              <div className={addClassByPrefix("control")}>
                 <Input
                   type={field.input.type}
                   value={value[field.name]}
@@ -42,7 +42,7 @@ const Form: FC<FormProps> = function ({
             </div>
           );
         })}
-        <div className={addClassByPrefix('buttons')}>{buttons}</div>
+        <div className={addClassByPrefix("buttons")}>{buttons}</div>
       </div>
     </form>
   );
