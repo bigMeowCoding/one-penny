@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from "react";
 import "./wave.scss";
 import classNames from "../../utils/classNames";
 import makeClassByPrefix from "../../utils/makeClassByPrefix";
-import { changeWaveShadowVariable, waveClickHandle } from "./_util";
+import { waveClickHandle } from "./_util";
 
 interface Props {
   waveColor: string;
@@ -24,10 +24,6 @@ const Wave: FC<Props> = function ({ children, isInline, waveColor }) {
     };
   }, []);
 
-  useEffect(() => {
-    changeWaveShadowVariable(styleRef, waveColor);
-  }, [styleRef, waveColor]);
-
   return (
     <div
       ref={ref}
@@ -40,7 +36,11 @@ const Wave: FC<Props> = function ({ children, isInline, waveColor }) {
         if (!ref.current) {
           return;
         }
-        clickWaveTimerId = waveClickHandle(ref.current);
+        clickWaveTimerId = waveClickHandle(
+          ref.current,
+          styleRef.current,
+          waveColor
+        );
       }}
     >
       {children}

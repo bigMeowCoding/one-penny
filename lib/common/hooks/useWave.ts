@@ -1,8 +1,8 @@
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { changeWaveBaseColorOnClick } from "../../button/_util";
 
-const useWave: () => { waveColor: string; ref: MutableRefObject<any> } = () => {
-  const ref = useRef(null),
+const useWave: () => [string, MutableRefObject<any>] = () => {
+  const ref = useRef<HTMLElement>(null),
     [waveColor, setWaveColor] = useState("");
 
   useEffect(() => {
@@ -10,8 +10,9 @@ const useWave: () => { waveColor: string; ref: MutableRefObject<any> } = () => {
     if (btnElement) {
       changeWaveBaseColorOnClick(btnElement, setWaveColor);
     }
-  }, []);
-  return { waveColor, ref };
+  }, [ref, setWaveColor]);
+
+  return [waveColor, ref];
 };
 
 export default useWave;
