@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import {  FormProps } from "./types";
+import { FormProps } from "./types";
 import Input from "../input/input";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./form.scss";
@@ -21,37 +21,38 @@ const Form: FC<FormProps> = function ({
 
   return (
     <form onSubmit={onSubmitHandle}>
-      <div>
-        {fields.map((field) => {
-          return (
-            <div className={addClassByPrefix("row")} key={field.name}>
-              <div className={addClassByPrefix("label")}>{field.label}</div>
-              <div className={addClassByPrefix("control")}>
-                <Input
-                  type={field.input.type}
-                  value={value[field.name]}
-                  className={
-                    errors && controlHasError(errors, field.name)
-                      ? "has-error"
-                      : ""
-                  }
-                  onChange={(e) => {
-                    onChange({ ...value, [field.name]: e.target.value });
-                  }}
-                />
-                <div className={addClassByPrefix('error-message')}>
-                  {errors && controlHasError(errors, field.name)
-                    ? errors[field.name].map((item, index) => {
-                        return <div key={index}>{item}</div>;
-                      })
-                    : null}
-                </div>
+      {fields.map((field) => {
+        return (
+          <div className={addClassByPrefix("row")} key={field.name}>
+            <div className={addClassByPrefix("label")}>{field.label}</div>
+            <div className={addClassByPrefix("control")}>
+              <Input
+                type={field.input.type}
+                value={value[field.name]}
+                className={
+                  errors && controlHasError(errors, field.name)
+                    ? "has-error"
+                    : ""
+                }
+                onChange={(e) => {
+                  onChange({ ...value, [field.name]: e.target.value });
+                }}
+              />
+              <div className={addClassByPrefix("error-message")}>
+                {errors && controlHasError(errors, field.name) ? (
+                  <span>{errors[field.name].join(",")}</span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </div>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
+      <div className={addClassByPrefix("row")}>
+        <div className={addClassByPrefix("label")}>&nbsp;</div>
+        <div className={addClassByPrefix("buttons")}>{buttons}</div>
       </div>
-      <div className={addClassByPrefix("buttons")}>{buttons}</div>
     </form>
   );
 };

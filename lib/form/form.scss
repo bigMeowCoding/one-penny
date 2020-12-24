@@ -5,7 +5,7 @@
     display: table-row;
     &:not(:last-child) {
       & .zyj-ui-form-control {
-        padding-bottom: 16px;
+        //padding-bottom: 8px;
       }
     }
   }
@@ -13,11 +13,13 @@
   &-control {
     display: table-cell;
   }
-  &-control {
+  &-label + &-control, &-label + &-buttons {
     padding-left: 8px;
   }
   &-buttons {
-    margin-top: 16px;
+    //margin-top: 16px;
+    display: table-cell;
+
     & > * {
       &:not(:last-child) {
         margin-right: 8px;
@@ -26,5 +28,10 @@
   }
   &-error-message {
     color:$color-error-message;
+    line-height: 24px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
