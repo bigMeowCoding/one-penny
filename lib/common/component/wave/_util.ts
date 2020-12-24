@@ -1,5 +1,4 @@
 import { Event } from "css-animation";
-import React from "react";
 
 export function getAttributeName() {
   return "ant-click-animating-without-extra-node";
@@ -11,11 +10,17 @@ export function onTransitionStart(e: AnimationEvent, node: HTMLDivElement) {
   }
 }
 
-export function onTransitionEnd(e: AnimationEvent) {
+export function onTransitionEnd(
+  e: AnimationEvent,
+  styleElement: HTMLStyleElement
+) {
   if (!e || e.animationName !== "fadeEffect") {
     return;
   }
   resetEffect(e.target as HTMLDivElement);
+  if (styleElement) {
+    document.body.removeChild(styleElement);
+  }
 }
 
 export function resetEffect(node: HTMLDivElement) {
@@ -30,10 +35,9 @@ export function resetEffect(node: HTMLDivElement) {
 }
 
 export function changeWaveShadowVariable(
-  styleRef: React.MutableRefObject<HTMLStyleElement>,
+  styleElement: HTMLStyleElement,
   waveColor: string
 ) {
-  const styleElement = styleRef.current;
   if (styleElement && waveColor) {
     styleElement.innerHTML = `
       [ant-click-animating-without-extra-node='true']::after {
@@ -45,7 +49,11 @@ export function changeWaveShadowVariable(
   }
 }
 
-export function waveClickHandle(waveElement: HTMLDivElement): number {
+export function waveClickHandle(
+  waveElement: HTMLDivElement,
+  styleElement: HTMLStyleElement,
+  waveColor: string
+): number {
   if (!waveElement) {
     return -1;
   }
@@ -58,12 +66,12 @@ export function waveClickHandle(waveElement: HTMLDivElement): number {
     }
 
     node.setAttribute(attribute, "true");
-    Event.addStartEventListener(node, (e: any) => {
-      if (!waveElement) {
-        return;
-      }
+    Event.addStartEventListener(node, (e: AnimationEvent) => {
+      changeWaveShadowVariable(styleElement, waveColor);
       onTransitionStart(e, waveElement);
     });
-    Event.addEndEventListener(node, onTransitionEnd);
+    Event.addEndEventListener(node, (e: AnimationEvent) => {
+      onTransitionEnd(e, styleElement);
+    });
   }, 0);
 }

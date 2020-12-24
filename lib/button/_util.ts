@@ -1,7 +1,7 @@
 import { ButtonType } from "./types";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 
-export function getWaveBaseColor(node: HTMLButtonElement): string {
+export function getWaveBaseColor(node: HTMLElement): string {
   return (
     getComputedStyle(node).getPropertyValue("border-top-color") || // Firefox Compatible
     getComputedStyle(node).getPropertyValue("border-color") ||
@@ -10,14 +10,13 @@ export function getWaveBaseColor(node: HTMLButtonElement): string {
 }
 
 export function changeWaveBaseColorOnClick(
-  btnElement: HTMLButtonElement,
+  btnElement: HTMLElement,
   setWaveColor: (color: string) => void
 ) {
   btnElement.addEventListener(
     "click",
     () => {
-      const color = getWaveBaseColor(btnElement);
-      setWaveColor(color);
+      setWaveColor(getWaveBaseColor(btnElement));
     },
     false
   );
