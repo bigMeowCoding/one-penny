@@ -1,9 +1,25 @@
 .zyj-ui-form {
   &-row {
     display: table-row;
+    &:not(:last-child) {
+      & .zyj-ui-form-control {
+        padding-bottom: 16px;
+      }
+    }
   }
   &-label,
   &-control {
     display: table-cell;
+  }
+  &-control {
+    padding-left: 8px;
+  }
+  &-buttons {
+    margin-top: 16px;
+    & > * {
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
   }
 }

@@ -42,8 +42,9 @@ const Form: FC<FormProps> = function ({
             </div>
           );
         })}
-        <div className={addClassByPrefix("buttons")}>{buttons}</div>
       </div>
+      <div className={addClassByPrefix("buttons")}>{buttons}</div>
+
     </form>
   );
 };
