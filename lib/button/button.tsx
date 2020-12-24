@@ -13,7 +13,7 @@ const Button: FC<ButtonProps> = function ({
   defaultType,
   ...rest
 }) {
-  const { waveColor, ref } = useWave();
+  const [waveColor, ref] = useWave();
   const buttonNode = (
     <button
       ref={ref}

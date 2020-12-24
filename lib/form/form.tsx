@@ -1,8 +1,10 @@
 import React, { FC } from "react";
-import { FormProps } from "./types";
+import {  FormProps } from "./types";
 import Input from "../input/input";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./form.scss";
+import { controlHasError } from "./utils";
+
 const addClassByPrefix = makeClassByPrefix("zyj-ui-form");
 const Form: FC<FormProps> = function ({
   onSubmit,
@@ -16,6 +18,7 @@ const Form: FC<FormProps> = function ({
     e.preventDefault(); // 防止表单提交刷新页面
     onSubmit(e);
   };
+
   return (
     <form onSubmit={onSubmitHandle}>
       <div>
@@ -27,12 +30,17 @@ const Form: FC<FormProps> = function ({
                 <Input
                   type={field.input.type}
                   value={value[field.name]}
+                  className={
+                    errors && controlHasError(errors, field.name)
+                      ? "has-error"
+                      : ""
+                  }
                   onChange={(e) => {
                     onChange({ ...value, [field.name]: e.target.value });
                   }}
                 />
-                <div>
-                  {errors && errors[field.name]?.length > 0
+                <div className={addClassByPrefix('error-message')}>
+                  {errors && controlHasError(errors, field.name)
                     ? errors[field.name].map((item, index) => {
                         return <div key={index}>{item}</div>;
                       })
@@ -44,7 +52,6 @@ const Form: FC<FormProps> = function ({
         })}
       </div>
       <div className={addClassByPrefix("buttons")}>{buttons}</div>
-
     </form>
   );
 };
