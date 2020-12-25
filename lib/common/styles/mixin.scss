@@ -1,0 +1,5 @@
+@import "./animation";
+//noinspection CssInvalidPropertyValue
+@mixin loading-icon {
+  animation:  loading  1s linear infinite;
+}

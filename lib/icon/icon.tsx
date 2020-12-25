@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, SVGAttributes } from "react";
+import React, { FC, SVGAttributes } from "react";
 import "./importAllIcons";
 import "./icon.scss";
 import classNames from "../common/utils/classNames";
