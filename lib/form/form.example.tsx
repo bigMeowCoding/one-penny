@@ -6,6 +6,16 @@ import Validator from "./validator";
 
 interface Props {}
 
+const names = ["lilei", "jame", "zhouyijun"];
+
+const hasUser = function (username: string): Promise<boolean> {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(!names.includes(username));
+    }, 3000);
+  });
+};
+
 const FormExample: FC<Props> = function () {
   const [formData, setFormData] = useState<FormValue>({
     username: "",
@@ -27,6 +37,7 @@ const FormExample: FC<Props> = function () {
       },
     },
   ]);
+
   const [errors, setErrors] = useState<FormErrors>({});
   return (
     <div>
@@ -38,26 +49,31 @@ const FormExample: FC<Props> = function () {
             fields={fields}
             errors={errors}
             onSubmit={() => {
-              // console.log(formData);
               setErrors({});
-              const errors = Validator(formData, [
+              Validator(formData, [
                 {
                   key: "username",
                   required: true,
-                  minLength: 3,
-                  maxLength: 5,
+                  minLength: 5,
                   pattern: /^\d+$/,
+                  validator: {
+                    name: "unique",
+                    message: "用户名已经存在",
+                    validate: (value) => {
+                      return hasUser(value);
+                    },
+                  },
                 },
                 {
                   key: "password",
                   required: true,
                   pattern: /^\D+$/,
                 },
-              ]);
-              if (Object.keys(errors).length > 0) {
-                setErrors(errors);
-              }
-              console.log(errors);
+              ],(errors)=>{
+                if (Object.keys(errors).length > 0) {
+                  setErrors(errors);
+                }
+              });
             }}
             onChange={(value) => {
               setFormData(value);

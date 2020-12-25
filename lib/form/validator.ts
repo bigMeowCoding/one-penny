@@ -1,10 +1,18 @@
-import { FormErrors, FormRules, FormValue } from "./types";
+import { ErrorMessage, FormErrors, FormRules, FormValue } from "./types";
 function isEmpty(value: any): boolean {
   return value == null || value === "";
 }
-const Validator = (formValue: FormValue, rules: FormRules): FormErrors => {
-  let errors: FormErrors = {};
-  function addErrors(ruleName: string, msg: string) {
+
+const Validator = (
+  formValue: FormValue,
+  rules: FormRules,
+  callback: (errors: FormErrors) => void
+): void => {
+  let errors: {
+    [key: string]: ErrorMessage[];
+  } = {};
+
+  function addErrors(ruleName: string, msg: ErrorMessage) {
     if (!errors[ruleName]) {
       errors[ruleName] = [];
     }
@@ -13,27 +21,85 @@ const Validator = (formValue: FormValue, rules: FormRules): FormErrors => {
 
   rules.map((rule) => {
     const value = formValue[rule.key];
+    if (rule.validator) {
+      addErrors(rule.key, {
+        message: rule.validator.message,
+        promise: rule.validator.validate(value),
+      });
+    }
     if (rule.required) {
       if (isEmpty(value)) {
-        addErrors(rule.key, "必填");
+        addErrors(rule.key, {
+          message: "必填",
+        });
       }
     }
+
     if (rule.minLength != null) {
       if (!isEmpty(value) && value?.length < rule.minLength) {
-        addErrors(rule.key, "太短");
+        addErrors(rule.key, {
+          message: "太短",
+        });
       }
     }
+
     if (rule.maxLength != null) {
       if (!isEmpty(value) && value?.length > rule.maxLength) {
-        addErrors(rule.key, "太长");
+        addErrors(rule.key, {
+          message: "太长",
+        });
       }
     }
+
     if (rule.pattern) {
       if (!rule.pattern.test(value)) {
-        addErrors(rule.key, "格式不正确");
+        addErrors(rule.key, {
+          message: "格式不正确",
+        });
       }
     }
   });
-  return errors;
+  const promiseList: Promise<any>[] = [];
+  Object.keys(errors).forEach((key) => {
+    const errorRule = errors[key];
+    errorRule.forEach((item, index) => {
+      if (item.promise) {
+        const promise = item.promise.then(
+          (d) => {
+            if (d) {
+              errorRule.splice(index, 1);
+            } else {
+              delete item.promise;
+            }
+            return d;
+          },
+          (error) => {
+            console.error(error);
+
+            return error;
+          }
+        );
+        promiseList.push(promise);
+      }
+    });
+  });
+
+  Promise.all(promiseList).then(
+    () => {
+      let newErrors: FormErrors = {};
+      const entries = Object.entries(errors);
+
+      entries.map(([key, errorMessages]) => {
+        const messages = errorMessages.map((item) => {
+          return item.message || "";
+        });
+        newErrors[key] = messages;
+      });
+      callback(newErrors);
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 };
 export default Validator;

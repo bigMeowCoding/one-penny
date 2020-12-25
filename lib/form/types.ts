@@ -28,6 +28,15 @@ export interface FormRule {
   minLength?: number;
   maxLength?: number;
   pattern?: RegExp;
+  validator?: {
+    name: string;
+    message: string;
+    validate: (value: string) => Promise<any>;
+  };
+}
+export interface ErrorMessage {
+  message?: string;
+  promise?: Promise<any>;
 }
 export type FormRules = FormRule[];
 export interface FormErrors {
