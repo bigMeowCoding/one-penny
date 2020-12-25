@@ -39,6 +39,7 @@ const FormExample: FC<Props> = function () {
   ]);
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [submitting,setSubmitting] = useState<boolean>(false);
   return (
     <div>
       <article>
@@ -50,6 +51,7 @@ const FormExample: FC<Props> = function () {
             errors={errors}
             onSubmit={() => {
               setErrors({});
+              setSubmitting(true);
               Validator(formData, [
                 {
                   key: "username",
@@ -70,6 +72,7 @@ const FormExample: FC<Props> = function () {
                   pattern: /^\D+$/,
                 },
               ],(errors)=>{
+                setSubmitting(false);
                 if (Object.keys(errors).length > 0) {
                   setErrors(errors);
                 }
@@ -80,7 +83,7 @@ const FormExample: FC<Props> = function () {
             }}
             buttons={
               <Fragment>
-                <Button type="primary" defaultType="submit">
+                <Button type="primary" defaultType="submit" loading={submitting}>
                   提交
                 </Button>
                 <Button> 返回</Button>
