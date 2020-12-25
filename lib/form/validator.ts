@@ -90,10 +90,9 @@ const Validator = (
       const entries = Object.entries(errors);
 
       entries.map(([key, errorMessages]) => {
-        const messages = errorMessages.map((item) => {
+        newErrors[key] = errorMessages.map((item) => {
           return item.message || "";
         });
-        newErrors[key] = messages;
       });
       callback(newErrors);
     },
