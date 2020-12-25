@@ -7,4 +7,5 @@ export interface ButtonProps
   type?: ButtonType;
   defaultType?: "submit" | "reset" | "button";
   onClick?: React.MouseEventHandler<HTMLElement>;
+  loading?: boolean;
 }
