@@ -4,6 +4,7 @@ import Input from "../input/input";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./form.scss";
 import { controlHasError } from "./utils";
+import { DefaultErrorMessage } from "./cofig";
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-form");
 const Form: FC<FormProps> = function ({
@@ -12,6 +13,7 @@ const Form: FC<FormProps> = function ({
   value,
   onChange,
   buttons,
+  transformError,
   errors,
 }) {
   const onSubmitHandle: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -40,7 +42,17 @@ const Form: FC<FormProps> = function ({
               />
               <div className={addClassByPrefix("error-message")}>
                 {errors && controlHasError(errors, field.name) ? (
-                  <span>{errors[field.name].join(",")}</span>
+                  <span>
+                    {errors[field.name]
+                      .map((item) => {
+                        return (
+                          (transformError && transformError(item)) ||
+                          DefaultErrorMessage[item] ||
+                          "未知错误"
+                        );
+                      })
+                      .join(",")}
+                  </span>
                 ) : (
                   <span>&nbsp;</span>
                 )}

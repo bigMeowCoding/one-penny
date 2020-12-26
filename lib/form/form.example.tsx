@@ -39,7 +39,7 @@ const FormExample: FC<Props> = function () {
   ]);
 
   const [errors, setErrors] = useState<FormErrors>({});
-  const [submitting,setSubmitting] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
   return (
     <div>
       <article>
@@ -49,41 +49,57 @@ const FormExample: FC<Props> = function () {
             value={formData}
             fields={fields}
             errors={errors}
+            transformError={(msg) => {
+              const map: { [key: string]: string } = {
+                minLength: "字段太短",
+                unique: "用户名已经存在",
+              };
+              return map[msg];
+            }}
             onSubmit={() => {
               setErrors({});
               setSubmitting(true);
-              Validator(formData, [
-                {
-                  key: "username",
-                  required: true,
-                  minLength: 5,
-                  pattern: /^\d+$/,
-                  validator: {
-                    name: "unique",
-                    message: "用户名已经存在",
-                    validate: (value) => {
-                      return hasUser(value);
+              Validator(
+                formData,
+                [
+                  {
+                    key: "username",
+                    required: true,
+                    minLength: 5,
+                    pattern: /^\d+$/,
+                    validator: {
+                      name: "unique",
+                      message: "用户名已经存在",
+                      validate: (value) => {
+                        return hasUser(value);
+                      },
                     },
                   },
-                },
-                {
-                  key: "password",
-                  required: true,
-                  pattern: /^\D+$/,
-                },
-              ],(errors)=>{
-                setSubmitting(false);
-                if (Object.keys(errors).length > 0) {
-                  setErrors(errors);
+                  {
+                    key: "password",
+                    required: true,
+                    pattern: /^\D+$/,
+                  },
+                ],
+                (errors) => {
+                  setSubmitting(false);
+                  if (Object.keys(errors).length > 0) {
+                    setErrors(errors);
+                    console.log(errors)
+                  }
                 }
-              });
+              );
             }}
             onChange={(value) => {
               setFormData(value);
             }}
             buttons={
               <Fragment>
-                <Button type="primary" defaultType="submit" loading={submitting}>
+                <Button
+                  type="primary"
+                  defaultType="submit"
+                  loading={submitting}
+                >
                   提交
                 </Button>
                 <Button> 返回</Button>

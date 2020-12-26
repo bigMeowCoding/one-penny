@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import "./button.scss";
 import classNames from "../common/utils/classNames";
 import Wave from "../common/component/wave/wave";
@@ -16,22 +16,28 @@ const Button: FC<ButtonProps> = function ({
   ...rest
 }) {
   const [waveColor, ref] = useWave();
+  const preventLoadingClick = useCallback(
+    (e) => {
+      if (loading) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    [loading]
+  );
   useEffect(() => {
     const target = ref.current;
-
-    if (target) {
-      target.addEventListener(
-        "click",
-        (e: MouseEvent) => {
-          if (loading) {
-            e.stopPropagation();
-            e.preventDefault();
-          }
-        },
-        false
-      );
+    if (!target) {
+      return;
     }
-  }, [loading]);
+    target.addEventListener(
+      "click",
+      (e: MouseEvent) => {
+        preventLoadingClick(e);
+      },
+      false
+    );
+  }, []);
   const buttonNode = (
     <button
       ref={ref}

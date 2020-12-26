@@ -23,14 +23,14 @@ const Validator = (
     const value = formValue[rule.key];
     if (rule.validator) {
       addErrors(rule.key, {
-        message: rule.validator.message,
+        message: rule.validator.name,
         promise: rule.validator.validate(value),
       });
     }
     if (rule.required) {
       if (isEmpty(value)) {
         addErrors(rule.key, {
-          message: "必填",
+          message: "required",
         });
       }
     }
@@ -38,7 +38,7 @@ const Validator = (
     if (rule.minLength != null) {
       if (!isEmpty(value) && value?.length < rule.minLength) {
         addErrors(rule.key, {
-          message: "太短",
+          message: "minLength",
         });
       }
     }
@@ -46,7 +46,7 @@ const Validator = (
     if (rule.maxLength != null) {
       if (!isEmpty(value) && value?.length > rule.maxLength) {
         addErrors(rule.key, {
-          message: "太长",
+          message: "maxLength",
         });
       }
     }
@@ -54,7 +54,7 @@ const Validator = (
     if (rule.pattern) {
       if (!rule.pattern.test(value)) {
         addErrors(rule.key, {
-          message: "格式不正确",
+          message: "pattern",
         });
       }
     }
@@ -88,7 +88,6 @@ const Validator = (
     () => {
       let newErrors: FormErrors = {};
       const entries = Object.entries(errors);
-
       entries.map(([key, errorMessages]) => {
         newErrors[key] = errorMessages.map((item) => {
           return item.message || "";

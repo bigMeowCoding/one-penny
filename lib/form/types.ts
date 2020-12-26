@@ -21,6 +21,7 @@ export interface FormProps {
   onChange: (value: FormValue) => void;
   buttons: ReactFragment;
   errors?: FormErrors;
+  transformError?: (msg: string) => string;
 }
 export interface FormRule {
   key: string;
