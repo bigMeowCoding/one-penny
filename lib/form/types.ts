@@ -36,7 +36,7 @@ export interface FormRule {
 }
 export interface ErrorMessage {
   message?: string;
-  promise?: Promise<any>;
+  promise?: Promise<boolean>;
 }
 export type FormRules = FormRule[];
 export interface FormErrors {

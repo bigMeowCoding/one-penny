@@ -30,28 +30,34 @@ const Validator = (
       }
     });
   });
-  const promiseList: Promise<any>[] = [];
+  const promiseList: Promise<boolean>[] = [];
   Object.keys(errors).forEach((key) => {
     const errorRule = errors[key];
-    errorRule.forEach((item, index) => {
-      if (item.promise) {
-        const promise = item.promise.then(
-          (d) => {
-            if (d) {
+    errorRule.forEach((errorRuleItem, index) => {
+      if (!errorRuleItem.promise) {
+        return;
+      }
+      promiseList.push(
+        errorRuleItem.promise.then(
+          (ruleResult) => {
+            if (ruleResult) {
+              // 异步校验规则通过，删除promise和检验错误信息
               errorRule.splice(index, 1);
             } else {
-              delete item.promise;
+              // 异步校验规则不通过，删除promise展示检验错误信息
+              delete errorRuleItem.promise;
             }
-            return d;
+            return ruleResult;
           },
           (error) => {
+            // 异步校验规则不通过，删除promise展示检验错误信息
+            delete errorRuleItem.promise;
+            // 可能是网络或者异常错误打印
             console.error(error);
-            delete item.promise;
             return error;
           }
-        );
-        promiseList.push(promise);
-      }
+        )
+      );
     });
   });
 
