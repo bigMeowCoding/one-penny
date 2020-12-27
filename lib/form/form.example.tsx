@@ -53,6 +53,7 @@ const FormExample: FC<Props> = function () {
               const map: { [key: string]: string } = {
                 minLength: "字段太短",
                 unique: "用户名已经存在",
+                safe: "密码不安全",
               };
               return map[msg];
             }}
@@ -69,7 +70,6 @@ const FormExample: FC<Props> = function () {
                     pattern: /^\d+$/,
                     validator: {
                       name: "unique",
-                      message: "用户名已经存在",
                       validate: (value) => {
                         return hasUser(value);
                       },
@@ -78,14 +78,24 @@ const FormExample: FC<Props> = function () {
                   {
                     key: "password",
                     required: true,
-                    pattern: /^\D+$/,
+                    pattern: /^\d+$/,
+                    validator: {
+                      name: "safe",
+                      validate: (value) => {
+                        return new Promise((res) => {
+                          setTimeout(() => {
+                            res(value.length > 3);
+                          }, 2000);
+                        });
+                      },
+                    },
                   },
                 ],
                 (errors) => {
                   setSubmitting(false);
                   if (Object.keys(errors).length > 0) {
                     setErrors(errors);
-                    console.log(errors)
+                    console.log(errors);
                   }
                 }
               );

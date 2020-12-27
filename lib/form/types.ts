@@ -6,7 +6,7 @@ export enum InputType {
   text = "text",
 }
 export interface FormValue {
-  [key: string]: any;
+  [key: string]: string;
 }
 export interface FormProps {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
@@ -31,7 +31,6 @@ export interface FormRule {
   pattern?: RegExp;
   validator?: {
     name: string;
-    message: string;
     validate: (value: string) => Promise<any>;
   };
 }
@@ -43,3 +42,9 @@ export type FormRules = FormRule[];
 export interface FormErrors {
   [key: string]: string[];
 }
+export type formRuleType =
+  | "required"
+  | "minLength"
+  | "maxLength"
+  | "pattern"
+  | "validator";

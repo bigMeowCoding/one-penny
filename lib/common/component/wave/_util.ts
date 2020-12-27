@@ -19,7 +19,7 @@ export function onTransitionEnd(
   }
   resetEffect(e.target as HTMLDivElement);
   if (styleElement) {
-    document.body.removeChild(styleElement);
+    styleElement.parentElement?.removeChild(styleElement);
   }
 }
 
