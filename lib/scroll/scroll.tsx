@@ -1,6 +1,7 @@
 import React, {
   FC,
   HTMLAttributes,
+  MouseEventHandler,
   UIEventHandler,
   useEffect,
   useRef,
@@ -14,10 +15,15 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 const addClassByPrefix = makeClassByPrefix("zyj-ui-scroll");
 
 const Scroll: FC<Props> = ({ className, children, ...rest }) => {
-  const [scrollBarHeight, setScrollBarHeight] = useState<number>(),
-    [scrollBarWidth, setScrollBarWidth] = useState<number>(),
+  const [scrollBarHeight, setScrollBarHeight] = useState<number>(0),
+    [scrollBarWidth, setScrollBarWidth] = useState<number>(0),
     ref = useRef<HTMLDivElement>(null),
-    [scrollBarTop, setScrollBarTop] = useState<number>();
+    [scrollBarTop, setScrollBarTop] = useState<number>(),
+    firstBarTopRef = useRef<number>(),
+    mouseDownYRef = useRef<number>(),
+    beginDragRef = useRef<boolean>(),
+    dragDeltaRef = useRef<number>();
+
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -37,8 +43,50 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     setScrollBarHeight((clientHeight * clientHeight) / scrollHeight);
     setScrollBarTop((scrollTop * clientHeight) / scrollHeight);
   };
+
+  const mouseDownHandle: MouseEventHandler = (e) => {
+    beginDragRef.current = true;
+    mouseDownYRef.current = e.clientY;
+    firstBarTopRef.current = scrollBarTop;
+  };
+
+  function restrictScrollBarTopValue(value: number): number {
+    if (!ref.current) {
+      return 0;
+    }
+    if (value < 0) {
+      value = 0;
+    }
+    const clientHeight = ref.current.getBoundingClientRect().height;
+    if (value + scrollBarHeight > clientHeight) {
+      value = clientHeight - scrollBarHeight;
+    }
+    return value;
+  }
+
+  const mouseMoveHandle: MouseEventHandler = (e) => {
+    if (beginDragRef.current) {
+      const beginBarTop = mouseDownYRef.current || 0;
+      dragDeltaRef.current = e.clientY - beginBarTop;
+      setScrollBarTop(
+        restrictScrollBarTopValue(
+          (firstBarTopRef.current || 0) + (dragDeltaRef.current || 0)
+        )
+      );
+    }
+  };
+
+  const mouseUpHandle: MouseEventHandler = () => {
+    beginDragRef.current = false;
+  };
+
   return (
-    <div className={addClassByPrefix("wrapper")} {...rest}>
+    <div
+      className={addClassByPrefix("wrapper")}
+      onMouseUp={mouseUpHandle}
+      onMouseMove={mouseMoveHandle}
+      {...rest}
+    >
       <div
         ref={ref}
         onScroll={onScroll}
@@ -50,6 +98,7 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
       <div className={addClassByPrefix("bar-wrapper")}>
         <div
           className={addClassByPrefix("bar")}
+          onMouseDown={mouseDownHandle}
           style={{
             height: scrollBarHeight,
             transform: `translateY(${scrollBarTop}px)`,
