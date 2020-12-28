@@ -10,12 +10,13 @@ import logo from "./logo.png";
 import IconDemo from "../lib/icon/icon-demo";
 import FormExample from "../lib/form/form.example";
 import InputExample from "../lib/input/input-example";
+import ScrollExample from "../lib/scroll/scroll-example";
 console.log(logo);
 ReactDOM.render(
   <HashRouter>
     <Layout className="page">
       <Header className="site-header">
-        <img src={logo} width="80" height="40" alt='icon'/>
+        <img src={logo} width="80" height="40" alt="icon" />
         <span>ZYJ-UI</span>
       </Header>
       <Content className="site-content">
@@ -41,6 +42,9 @@ ReactDOM.render(
               <li>
                 <NavLink to="/input">input</NavLink>
               </li>
+              <li>
+                <NavLink to="/scroll">scroll</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -50,6 +54,7 @@ ReactDOM.render(
             <Route path="/layout" component={LayoutExample} />
             <Route path="/form" component={FormExample} />
             <Route path="/input" component={InputExample} />
+            <Route path="/scroll" component={ScrollExample} />
           </Content>
         </Layout>
       </Content>
