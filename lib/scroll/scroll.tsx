@@ -18,11 +18,13 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
   const [scrollBarHeight, setScrollBarHeight] = useState<number>(0),
     [scrollBarWidth, setScrollBarWidth] = useState<number>(0),
     ref = useRef<HTMLDivElement>(null),
+    [scrollBarVisible, setScrollBarVisible] = useState<boolean>(false),
     [scrollBarTop, setScrollBarTop] = useState<number>(),
     firstBarTopRef = useRef<number>(),
     mouseDownYRef = useRef<number>(),
     beginDragRef = useRef<boolean>(),
-    dragDeltaRef = useRef<number>();
+    dragDeltaRef = useRef<number>(),
+    timerRef = useRef<number>();
   function selectStart(e: Event) {
     if (mouseDownYRef.current) {
       e.preventDefault();
@@ -39,7 +41,6 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     document.addEventListener("mouseup", mouseUpHandle, false);
     document.addEventListener("mousemove", mouseMoveHandle, false);
     document.addEventListener("selectstart", selectStart, false);
-
     return () => {
       document.removeEventListener("mouseup", mouseUpHandle, false);
       document.removeEventListener("mousemove", mouseMoveHandle, false);
@@ -50,11 +51,18 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     if (!ref.current) {
       return;
     }
+    setScrollBarVisible(true);
     const scrollHeight = ref.current.scrollHeight,
       scrollTop = ref.current.scrollTop,
       clientHeight = ref.current.getBoundingClientRect().height;
     setScrollBarHeight((clientHeight * clientHeight) / scrollHeight);
     setScrollBarTop((scrollTop * clientHeight) / scrollHeight);
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
+      setScrollBarVisible(false);
+    }, 300);
   };
 
   const mouseDownHandle: MouseEventHandler = (e) => {
@@ -106,16 +114,18 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
       >
         {children}
       </div>
-      <div className={addClassByPrefix("bar-wrapper")}>
-        <div
-          className={addClassByPrefix("bar")}
-          onMouseDown={mouseDownHandle}
-          style={{
-            height: scrollBarHeight,
-            transform: `translateY(${scrollBarTop}px)`,
-          }}
-        />
-      </div>
+      {scrollBarVisible ? (
+        <div className={addClassByPrefix("bar-wrapper")}>
+          <div
+            className={addClassByPrefix("bar")}
+            onMouseDown={mouseDownHandle}
+            style={{
+              height: scrollBarHeight,
+              transform: `translateY(${scrollBarTop}px)`,
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

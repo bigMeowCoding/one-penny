@@ -10,6 +10,9 @@
     right: 0;
     bottom: 0;
     overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   &-bar-wrapper {
     width: 10px;
