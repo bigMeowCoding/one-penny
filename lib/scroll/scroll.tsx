@@ -23,7 +23,11 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     mouseDownYRef = useRef<number>(),
     beginDragRef = useRef<boolean>(),
     dragDeltaRef = useRef<number>();
-
+  function selectStart(e: Event) {
+    if (mouseDownYRef.current) {
+      e.preventDefault();
+    }
+  }
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -34,9 +38,12 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     setScrollBarWidth(scrollbarWidth());
     document.addEventListener("mouseup", mouseUpHandle, false);
     document.addEventListener("mousemove", mouseMoveHandle, false);
+    document.addEventListener("selectstart", selectStart, false);
+
     return () => {
       document.removeEventListener("mouseup", mouseUpHandle, false);
       document.removeEventListener("mousemove", mouseMoveHandle, false);
+      document.removeEventListener("selectstart", selectStart, false);
     };
   }, []);
   const onScroll: UIEventHandler = () => {
