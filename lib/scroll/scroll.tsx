@@ -32,6 +32,12 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
       clientHeight = ref.current.getBoundingClientRect().height;
     setScrollBarHeight((clientHeight * clientHeight) / scrollHeight);
     setScrollBarWidth(scrollbarWidth());
+    document.addEventListener("mouseup", mouseUpHandle, false);
+    document.addEventListener("mousemove", mouseMoveHandle, false);
+    return () => {
+      document.removeEventListener("mouseup", mouseUpHandle, false);
+      document.removeEventListener("mousemove", mouseMoveHandle, false);
+    };
   }, []);
   const onScroll: UIEventHandler = () => {
     if (!ref.current) {
@@ -64,29 +70,27 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     return value;
   }
 
-  const mouseMoveHandle: MouseEventHandler = (e) => {
-    if (beginDragRef.current) {
-      const beginBarTop = mouseDownYRef.current || 0;
-      dragDeltaRef.current = e.clientY - beginBarTop;
-      setScrollBarTop(
-        restrictScrollBarTopValue(
-          (firstBarTopRef.current || 0) + (dragDeltaRef.current || 0)
-        )
-      );
+  const mouseMoveHandle = (e: MouseEvent) => {
+    if (!beginDragRef.current || !ref.current) {
+      return;
     }
+    const beginBarTop = mouseDownYRef.current || 0;
+    dragDeltaRef.current = e.clientY - beginBarTop;
+    const scrollBarTopValue = restrictScrollBarTopValue(
+      (firstBarTopRef.current || 0) + (dragDeltaRef.current || 0)
+    );
+    setScrollBarTop(scrollBarTopValue);
+    const scrollHeight = ref.current.scrollHeight,
+      viewHeight = ref.current.getBoundingClientRect().height;
+    ref.current.scrollTop = (scrollBarTopValue * scrollHeight) / viewHeight;
   };
 
-  const mouseUpHandle: MouseEventHandler = () => {
+  const mouseUpHandle = () => {
     beginDragRef.current = false;
   };
 
   return (
-    <div
-      className={addClassByPrefix("wrapper")}
-      onMouseUp={mouseUpHandle}
-      onMouseMove={mouseMoveHandle}
-      {...rest}
-    >
+    <div className={addClassByPrefix("wrapper")} {...rest}>
       <div
         ref={ref}
         onScroll={onScroll}
