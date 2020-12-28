@@ -11,4 +11,18 @@
     bottom: 0;
     overflow: auto;
   }
+  &-bar-wrapper {
+    width: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 1px solid blue;
+  }
+  &-bar-wrapper &-bar {
+    background: #40a9ff;
+    height: 10px;
+    position: absolute;
+    width:100%;
+  }
 }
