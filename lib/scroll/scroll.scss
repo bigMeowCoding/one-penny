@@ -1,3 +1,5 @@
+@import "../common/styles/variable";
+@import "../common/styles/mixin";
 .zyj-ui-scroll {
   &-wrapper {
     position: relative;
@@ -28,5 +30,15 @@
     width: 6px;
     left: 2px;
     border-radius: 3px;
+  }
+  &-pulling {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    color: $blue-base;
+    align-items: center;
+  }
+  &-pulling &-loading-icon {
+    @include loading-icon();
   }
 }

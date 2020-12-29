@@ -11,17 +11,22 @@ import React, {
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import "./scroll.scss";
 import scrollbarWidth from "../common/utils/scroll-bar-width";
+import Icon from "../icon/icon";
+import classNames from "../common/utils/classNames";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {}
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  onPull?: () => Promise<boolean>;
+}
 const addClassByPrefix = makeClassByPrefix("zyj-ui-scroll");
 
-const Scroll: FC<Props> = ({ className, children, ...rest }) => {
+const Scroll: FC<Props> = ({ className, children, onPull, ...rest }) => {
   const [scrollBarHeight, setScrollBarHeight] = useState<number>(0),
     [scrollBarWidth, setScrollBarWidth] = useState<number>(0),
     ref = useRef<HTMLDivElement>(null),
     [scrollBarVisible, setScrollBarVisible] = useState<boolean>(false),
     [scrollBarTop, setScrollBarTop] = useState<number>(),
     [transLateY, setTranslateY] = useState<number>(0),
+    [pulling, setPulling] = useState<boolean>(false),
     firstBarTopRef = useRef<number>(),
     mouseDownYRef = useRef<number>(),
     beginDragRef = useRef<boolean>(),
@@ -112,7 +117,7 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     beginDragRef.current = false;
   };
 
-  const touchStart: TouchEventHandler = (e) => {
+  const touchStartHandle: TouchEventHandler = (e) => {
     const scrollTop = ref.current?.scrollTop;
     if (scrollTop) {
       return;
@@ -122,7 +127,7 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     moveCountRef.current = 0;
   };
 
-  const touchMove: TouchEventHandler = (e) => {
+  const touchMoveHandle: TouchEventHandler = (e) => {
     if (moveCountRef.current == null) {
       return;
     }
@@ -137,9 +142,26 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     setTranslateY(deltaY);
   };
 
-  const touchEnd: TouchEventHandler = () => {
+  function clearPullingStatus() {
     setTranslateY(0);
+    setPulling(false);
     pullingRef.current = false;
+  }
+
+  const touchEndHandle: TouchEventHandler = () => {
+    setPulling(true);
+    if (onPull) {
+      onPull().then(
+        () => {
+          clearPullingStatus();
+        },
+        () => {
+          clearPullingStatus();
+        }
+      );
+    } else {
+      clearPullingStatus();
+    }
   };
 
   return (
@@ -152,11 +174,22 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
           right: -1 * (scrollBarWidth || 0),
           transform: `translateY(${transLateY}px)`,
         }}
-        onTouchStart={touchStart}
-        onTouchMove={touchMove}
-        onTouchEnd={touchEnd}
+        onTouchStart={touchStartHandle}
+        onTouchMove={touchMoveHandle}
+        onTouchEnd={touchEndHandle}
       >
         {children}
+      </div>
+      <div
+        className={addClassByPrefix("pulling")}
+        style={{ height: transLateY }}
+      >
+        <Icon
+          name="refresh"
+          className={classNames(
+            pulling ? addClassByPrefix("loading-icon") : ""
+          )}
+        />
       </div>
       {scrollBarVisible ? (
         <div className={addClassByPrefix("bar-wrapper")}>
