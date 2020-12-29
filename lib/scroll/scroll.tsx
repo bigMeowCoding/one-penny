@@ -2,6 +2,7 @@ import React, {
   FC,
   HTMLAttributes,
   MouseEventHandler,
+  TouchEventHandler,
   UIEventHandler,
   useEffect,
   useRef,
@@ -20,16 +21,22 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     ref = useRef<HTMLDivElement>(null),
     [scrollBarVisible, setScrollBarVisible] = useState<boolean>(false),
     [scrollBarTop, setScrollBarTop] = useState<number>(),
+    [transLateY, setTranslateY] = useState<number>(0),
     firstBarTopRef = useRef<number>(),
     mouseDownYRef = useRef<number>(),
     beginDragRef = useRef<boolean>(),
     dragDeltaRef = useRef<number>(),
-    timerRef = useRef<number>();
+    timerRef = useRef<number>(),
+    lastTouchYRef = useRef<number>(),
+    pullingRef = useRef<boolean>(),
+    moveCountRef = useRef<number>();
+
   function selectStart(e: Event) {
     if (mouseDownYRef.current) {
       e.preventDefault();
     }
   }
+
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -47,6 +54,7 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
       document.removeEventListener("selectstart", selectStart, false);
     };
   }, []);
+
   const onScroll: UIEventHandler = () => {
     if (!ref.current) {
       return;
@@ -104,13 +112,49 @@ const Scroll: FC<Props> = ({ className, children, ...rest }) => {
     beginDragRef.current = false;
   };
 
+  const touchStart: TouchEventHandler = (e) => {
+    const scrollTop = ref.current?.scrollTop;
+    if (scrollTop) {
+      return;
+    }
+    lastTouchYRef.current = e.touches[0].clientY;
+    pullingRef.current = true;
+    moveCountRef.current = 0;
+  };
+
+  const touchMove: TouchEventHandler = (e) => {
+    if (moveCountRef.current == null) {
+      return;
+    }
+    moveCountRef.current += 1;
+    const deltaY = e.touches[0].clientY - (lastTouchYRef.current || 0);
+    if (moveCountRef.current === 1 && deltaY < 0) {
+      pullingRef.current = false;
+    }
+    if (!pullingRef.current) {
+      return;
+    }
+    setTranslateY(deltaY);
+  };
+
+  const touchEnd: TouchEventHandler = () => {
+    setTranslateY(0);
+    pullingRef.current = false;
+  };
+
   return (
     <div className={addClassByPrefix("wrapper")} {...rest}>
       <div
         ref={ref}
         onScroll={onScroll}
         className={addClassByPrefix("inner")}
-        style={{ right: -1 * (scrollBarWidth || 0) }}
+        style={{
+          right: -1 * (scrollBarWidth || 0),
+          transform: `translateY(${transLateY}px)`,
+        }}
+        onTouchStart={touchStart}
+        onTouchMove={touchMove}
+        onTouchEnd={touchEnd}
       >
         {children}
       </div>
