@@ -4,29 +4,37 @@ import { TreeNode } from "./types";
 import Node from "./tree-node";
 import { addLevel, flatTree } from "./process-tree-data";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
-
-interface Props {
+interface TreeBaseType {
   treeData: TreeNode[];
-  checkAble?: boolean;
-  checkedKeys?: string[];
-  checkedKeysChange?: (keys: string[]) => void;
+}
+type TreeCheckType = {
+  checkAble: boolean;
+  checkedKeysChange: (keys: string[]) => void;
+  checkedKeys: string[];
+} & TreeBaseType;
+type Props = TreeBaseType | TreeCheckType;
+function isCheckedType(tree: {} | TreeCheckType): tree is TreeCheckType {
+  return (tree as TreeCheckType).checkAble;
 }
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-tree");
-const Tree: FC<Props> = ({
-  treeData,
-  checkAble,
-  checkedKeys,
-  checkedKeysChange,
-}) => {
+const Tree: FC<Props> = ({ treeData, children, ...rest }) => {
   const [nodes, setNodes] = useState<TreeNode[]>(treeData),
     [checkedKeysValue, setCheckedKeysValue] = useState<string[]>(
-      checkedKeys || []
-    );
+      (rest as TreeCheckType).checkedKeys || []
+    ),
+    [checkAble, setCheckAble] = useState<boolean>(false);
   useEffect(() => {
     setNodes(flatTree(addLevel(treeData)));
+    if (isCheckedType(rest)) {
+      setCheckAble(true);
+    }
   }, []);
   const onCheck: (key: string, checked: boolean) => void = (key, checked) => {
+    if (!isCheckedType(rest)) {
+      return;
+    }
+    const { checkedKeysChange } = rest;
     let keys;
     if (checked) {
       keys = checkedKeysValue.concat(key);
@@ -34,9 +42,7 @@ const Tree: FC<Props> = ({
       keys = checkedKeysValue.filter((item) => item !== key);
     }
     setCheckedKeysValue(keys);
-    if (checkedKeysChange) {
-      checkedKeysChange(keys);
-    }
+    checkedKeysChange(keys);
   };
   return (
     <div className={addClassByPrefix("")}>

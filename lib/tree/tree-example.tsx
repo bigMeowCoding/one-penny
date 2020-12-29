@@ -52,7 +52,7 @@ const TreeExample: FC = () => {
       <section>
         <h2>example1</h2>
         <div>
-          <Tree treeData={data1} />
+          <Tree treeData={data1}/>
         </div>
       </section>
       <section>
