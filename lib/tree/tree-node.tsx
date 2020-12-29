@@ -1,16 +1,21 @@
 import React from "react";
 import { FC } from "react";
-import Tree from "./tree";
 import { TreeNode } from "./types";
+import "./node.scss";
+import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 
-const Node: FC<TreeNode> = ({ title, key, childNodes }) => {
+const addClassByPrefix = makeClassByPrefix("zyj-ui-node");
+interface Props {
+  nodeData: TreeNode;
+}
+const Node: FC<Props> = ({ nodeData }) => {
   return (
-    <div key={key}>
-      {title}
-
-      {childNodes && childNodes.length > 0 ? (
-        <Tree treeData={childNodes} />
-      ) : null}
+    <div className={addClassByPrefix("")}>
+      <span
+        className={addClassByPrefix("indent")}
+        style={{ width: `${((nodeData.level || 0) - 1) * 8}px` }}
+      />
+      {nodeData.title}
     </div>
   );
 };
