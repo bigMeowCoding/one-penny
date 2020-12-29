@@ -55,6 +55,20 @@ const TreeExample: FC = () => {
           <Tree treeData={data1} />
         </div>
       </section>
+      <section>
+        <h2>example2</h2>
+        <div>
+          <Tree
+            checkAble={true}
+            checkedKeys={["0-0-1"]}
+            treeData={data1}
+            checkedKeysChange={(keys) => {
+                // tslint:disable-next-line:no-console
+              console.log(keys);
+            }}
+          />
+        </div>
+      </section>
     </article>
   );
 };
