@@ -4,6 +4,7 @@ import { TreeNode } from "./types";
 import "./node.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import TreeCheckBox from "./tree-checkbox/tree-checkbox";
+import classNames from "../common/utils/classNames";
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-node");
 interface Props {
@@ -13,6 +14,10 @@ interface Props {
   onCheck: (key: string, checked: boolean) => void;
 }
 const Node: FC<Props> = ({ nodeData, checkedKeys, checkAble, onCheck }) => {
+  const checked =
+    checkAble && Array.isArray(checkedKeys)
+      ? checkedKeys.includes(nodeData.key)
+      : false;
   return (
     <div className={addClassByPrefix("")}>
       <span
@@ -22,15 +27,22 @@ const Node: FC<Props> = ({ nodeData, checkedKeys, checkAble, onCheck }) => {
       {checkAble ? (
         <TreeCheckBox
           id={nodeData.key}
-          checked={
-            checkAble && Array.isArray(checkedKeys)
-              ? checkedKeys.includes(nodeData.key)
-              : false
-          }
+          className={addClassByPrefix("checkbox")}
+          checked={checked}
           onCheck={onCheck}
         />
       ) : null}
-      <span>{nodeData.title}</span>
+      <span
+        className={classNames(
+          addClassByPrefix("title"),
+          checked ? addClassByPrefix("title-selected") : ""
+        )}
+        onClick={() => {
+          onCheck(nodeData.key, !checked);
+        }}
+      >
+        {nodeData.title}
+      </span>
     </div>
   );
 };
