@@ -50,20 +50,33 @@ const TreeExample: FC = () => {
   return (
     <article>
       <section>
-        <h2>example1</h2>
+        <h2>普通</h2>
         <div>
-          <Tree treeData={data1}/>
+          <Tree treeData={data1} />
         </div>
       </section>
       <section>
-        <h2>example2</h2>
+        <h2>单选</h2>
         <div>
           <Tree
             checkAble={true}
             checkedKeys={["0-0-1"]}
             treeData={data1}
             checkedKeysChange={(keys) => {
-                // tslint:disable-next-line:no-console
+              console.log(keys);
+            }}
+          />
+        </div>
+      </section>
+      <section>
+        <h2>多选</h2>
+        <div>
+          <Tree
+            checkAble={true}
+            checkedKeys={["0-0-1"]}
+            treeData={data1}
+            multiply={true}
+            checkedKeysChange={(keys) => {
               console.log(keys);
             }}
           />

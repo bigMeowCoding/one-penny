@@ -3,7 +3,8 @@
   "extends": ["tslint:recommended"],
   "jsRules": {},
   "rules": {
-    "one-variable-per-declaration": false
+    "one-variable-per-declaration": false,
+    "no-console": false
   },
   "rulesDirectory": []
 }
