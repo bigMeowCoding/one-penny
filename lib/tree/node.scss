@@ -1,6 +1,26 @@
+@import "../common/styles/variable";
 .zyj-ui-node {
   display: flex;
+  align-items: center;
   &-indent {
     display: inline-block;
+  }
+  &-checkbox {
+    margin-right: $distance-1;
+  }
+  &-title {
+    padding: 0 4px;
+    cursor: pointer;
+    min-height: 24px;
+    line-height: 24px;
+    &:hover {
+      background: $color-tree-title-hover;
+    }
+    &-selected {
+      background: $color-tree-title-selected;
+      &:hover {
+        background: $color-tree-title-selected;
+      }
+    }
   }
 }
