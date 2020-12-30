@@ -45,6 +45,20 @@
       content: " ";
     }
   }
+  &-indeterminate &-inner {
+    &:after {
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background-color: #1890ff;
+      border: 0;
+      -webkit-transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      content: " ";
+    }
+  }
   &-checked &-inner {
     background-color: $blue-base;
     border-color: $blue-base;

@@ -6,6 +6,7 @@ module.exports = Object.assign({}, config, {
   devServer: {
     open: true,
   },
+  devtool: 'eval-source-map',
   entry: {
     example: "./example/example.tsx",
   },

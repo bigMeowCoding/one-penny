@@ -1,10 +1,10 @@
 import React from "react";
 import { FC } from "react";
 import Tree from "./tree";
-import { TreeNode } from "./types";
+import { TreeNodeProp } from "./types";
 
 const TreeExample: FC = () => {
-  const data1: TreeNode[] = [
+  const data1: TreeNodeProp[] = [
     {
       title: "0-0",
       key: "0-0",
@@ -49,31 +49,31 @@ const TreeExample: FC = () => {
   ];
   return (
     <article>
-      <section>
-        <h2>普通</h2>
-        <div>
-          <Tree treeData={data1} />
-        </div>
-      </section>
-      <section>
-        <h2>单选</h2>
-        <div>
-          <Tree
-            checkAble={true}
-            checkedKeys={["0-0-1"]}
-            treeData={data1}
-            checkedKeysChange={(keys) => {
-              console.log(keys);
-            }}
-          />
-        </div>
-      </section>
+      {/*<section>*/}
+      {/*  <h2>普通</h2>*/}
+      {/*  <div>*/}
+      {/*    <Tree treeData={data1} />*/}
+      {/*  </div>*/}
+      {/*</section>*/}
+      {/*<section>*/}
+      {/*  <h2>单选</h2>*/}
+      {/*  <div>*/}
+      {/*    <Tree*/}
+      {/*      checkAble={true}*/}
+      {/*      checkedKeys={["0-0-1"]}*/}
+      {/*      treeData={data1}*/}
+      {/*      checkedKeysChange={(keys) => {*/}
+      {/*        console.log(keys);*/}
+      {/*      }}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*</section>*/}
       <section>
         <h2>多选</h2>
         <div>
           <Tree
             checkAble={true}
-            checkedKeys={["0-0-1"]}
+            checkedKeys={["0-0-0"]}
             treeData={data1}
             multiply={true}
             checkedKeysChange={(keys) => {

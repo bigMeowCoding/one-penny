@@ -1,4 +1,4 @@
-import { LeafNode, TreeNode } from "./types";
+import { TreeNode } from "./types";
 
 export function addLevel(treeData: TreeNode[], level = 1): TreeNode[] {
   const result: TreeNode[] = [];
@@ -31,7 +31,7 @@ export function flatTree(
     return result;
   }
   for (const node of treeData) {
-    const newNode = { ...node, childNodes: [] };
+    const newNode: TreeNode = { ...node, parentNode: null, childNodes: null };
     newNode.expanded =
       Array.isArray(expandKeys) && expandKeys.includes(newNode.key);
     result.push(newNode);
@@ -46,22 +46,72 @@ export function flatTree(
   return result;
 }
 
-export function addNodeAdditionalProp(
-  nodes: TreeNode[],
-  parent?: TreeNode
-): TreeNode[] {
+export function addNodeLeafParentProp(nodes: TreeNode[]): TreeNode[] {
   const result: TreeNode[] = [];
   for (const node of nodes) {
     const newNode: TreeNode = {
       ...node,
-      parentNode: parent == null ? null : parent,
     };
     if (node.childNodes && node.childNodes.length) {
-      newNode.childNodes = addNodeAdditionalProp(node.childNodes, newNode);
+      newNode.childNodes = addNodeLeafParentProp(node.childNodes);
+      newNode.childNodes.forEach((childNode) => {
+        childNode.parentNode = newNode;
+      });
     } else {
-      (newNode as LeafNode).isLeaf = true;
+      newNode.isLeaf = true;
     }
     result.push(newNode);
   }
   return result;
+}
+
+function checkDown(nodes: TreeNode[]) {
+  nodes.forEach((node) => {
+    node.checked = true;
+    if (Array.isArray(node.childNodes)) {
+      checkDown(node.childNodes);
+    }
+  });
+}
+// FIXME 选中父节点再取消子节点bug
+function checkUp(node: TreeNode) {
+  if (!node) {
+    return;
+  }
+  while (node) {
+    const allChecked = node.childNodes?.every((child: TreeNode) => {
+      return child.checked;
+    });
+    if (allChecked) {
+      node.checked = true;
+      node.indeterminate = false;
+    } else {
+      node.indeterminate = true;
+    }
+    if (!node.parentNode) {
+      return;
+    }
+    node = node.parentNode;
+  }
+}
+
+export function addNodeCheckedProp(
+  nodes: TreeNode[],
+  checkedKeys: string[],
+  isStrict: boolean = false
+): void {
+  for (const node of nodes) {
+    if (checkedKeys.includes(node.key)) {
+      node.checked = true;
+      if (!isStrict) {
+        checkDown(node.childNodes || []);
+        if (node.parentNode) {
+          checkUp(node.parentNode);
+        }
+      }
+    }
+    if (node.childNodes && node.childNodes.length) {
+      addNodeCheckedProp(node.childNodes, checkedKeys, isStrict);
+    }
+  }
 }

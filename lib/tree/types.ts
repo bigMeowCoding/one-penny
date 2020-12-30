@@ -1,13 +1,20 @@
-export interface NodeBase {
+export interface TreeNodeProp {
   title: string;
   key: string;
-  childNodes?: TreeNode[];
+  childNodes?: TreeNode[] | null;
+}
+
+export interface TreeNode {
+  title: string;
+  key: string;
   parentNode?: TreeNode | null;
   level?: number;
-  expanded?:boolean
-}
-export type LeafNode = NodeBase & {
-  isLeaf: boolean;
-};
+  expanded?: boolean;
+  checked?: boolean;
+  indeterminate?: boolean;
+  childNodes?: TreeNode[] | null;
 
-export type TreeNode =  NodeBase| LeafNode;
+  isLeaf?: boolean;
+}
+
+

@@ -1,6 +1,6 @@
 import React from "react";
 import { FC } from "react";
-import { LeafNode, TreeNode } from "./types";
+import { TreeNode } from "./types";
 import "./node.scss";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import TreeCheckBox from "./tree-checkbox/tree-checkbox";
@@ -12,22 +12,18 @@ interface Props {
   nodeData: TreeNode;
   checkAble?: boolean;
   checkedKeys?: string[];
+  checked?: boolean;
   onCheck: (key: string, checked: boolean) => void;
   onExpand?: (key: string) => void;
   onCollapse?: (key: string) => void;
 }
 const Node: FC<Props> = ({
   nodeData,
-  checkedKeys,
   checkAble,
   onCheck,
   onExpand,
   onCollapse,
 }) => {
-  const checked =
-    checkAble && Array.isArray(checkedKeys)
-      ? checkedKeys.includes(nodeData.key)
-      : false;
   return (
     <div className={addClassByPrefix("")}>
       <span
@@ -49,7 +45,7 @@ const Node: FC<Props> = ({
           }
         }}
       >
-        {!(nodeData as LeafNode).isLeaf ? (
+        {!nodeData.isLeaf ? (
           <Icon name={nodeData.expanded ? "down" : "right"} />
         ) : null}
       </span>
@@ -57,18 +53,19 @@ const Node: FC<Props> = ({
       {checkAble ? (
         <TreeCheckBox
           id={nodeData.key}
+          indeterminate={nodeData.indeterminate}
           className={addClassByPrefix("checkbox")}
-          checked={checked}
+          checked={Boolean(nodeData.checked)}
           onCheck={onCheck}
         />
       ) : null}
       <span
         className={classNames(
           addClassByPrefix("title"),
-          checked ? addClassByPrefix("title-selected") : ""
+          nodeData.checked ? addClassByPrefix("title-selected") : ""
         )}
         onClick={() => {
-          onCheck(nodeData.key, !checked);
+          onCheck(nodeData.key, !nodeData.checked);
         }}
       >
         {nodeData.title}

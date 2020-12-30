@@ -6,16 +6,24 @@ import classNames from "../../common/utils/classNames";
 interface Props extends HTMLAttributes<HTMLSpanElement> {
   id: string;
   checked: boolean;
+  indeterminate?: boolean;
   onCheck: (key: string, checked: boolean) => void;
 }
 const addClassByPrefix = makeClassByPrefix("zyj-ui-tree-checkbox");
-const TreeCheckBox: FC<Props> = ({ id, checked, className, onCheck }) => {
+const TreeCheckBox: FC<Props> = ({
+  id,
+  checked,
+  className,
+  onCheck,
+  indeterminate,
+}) => {
   return (
     <span
       className={classNames(
         className,
         addClassByPrefix(""),
-        checked ? addClassByPrefix("checked") : ""
+        indeterminate ? addClassByPrefix("indeterminate") : "",
+        !indeterminate && checked ? addClassByPrefix("checked") : ""
       )}
       onClick={() => {
         onCheck(id, !checked);

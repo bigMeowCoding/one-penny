@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { FC } from "react";
 import { TreeNode } from "./types";
 import Node from "./tree-node";
-import { addLevel, addNodeAdditionalProp, flatTree } from "./process-tree-data";
+import {
+  addLevel,
+  addNodeCheckedProp,
+  addNodeLeafParentProp,
+  flatTree,
+} from "./process-tree-data";
 import makeClassByPrefix from "../common/utils/makeClassByPrefix";
 import { makeNewCheckedKeys } from "./utils/tree-check";
 interface TreeBaseType {
@@ -32,17 +37,28 @@ const Tree: FC<Props> = ({ treeData, children, expandKeys, ...rest }) => {
       expandKeys || []
     ),
     [checkAble, setCheckAble] = useState<boolean>(false);
-
   useEffect(() => {
-    let newTreeData: TreeNode[];
-    newTreeData = addNodeAdditionalProp(treeData);
-    newTreeData = addLevel(newTreeData);
-    newTreeData = flatTree(newTreeData, expandKeysValue);
-    setNodes(newTreeData);
     if (isCheckedType(rest)) {
       setCheckAble(true);
     }
-  }, [expandKeysValue]);
+  }, []);
+  useEffect(() => {
+    let newTreeData: TreeNode[];
+    newTreeData = addLevel(treeData);
+    newTreeData = addNodeLeafParentProp(newTreeData);
+    addNodeCheckedProp(newTreeData, checkedKeysValue);
+    console.log(newTreeData)
+    newTreeData = flatTree(newTreeData, expandKeysValue);
+    setNodes(newTreeData);
+  }, [expandKeysValue, checkedKeysValue]);
+
+  // useEffect(() => {
+  //   let newTreeData: TreeNode[];
+  //   newTreeData = addNodeLeafParentProp(treeData);
+  //   newTreeData = addLevel(newTreeData);
+  //   newTreeData = flatTree(newTreeData, expandKeysValue);
+  //   setNodes(newTreeData);
+  // }, [checkedKeysValue]);
 
   const onCheck: (key: string, checked: boolean) => void = (key, checked) => {
     if (!isCheckedType(rest)) {
@@ -63,12 +79,6 @@ const Tree: FC<Props> = ({ treeData, children, expandKeys, ...rest }) => {
   const collapseHandle = (key: string) => {
     const keys = expandKeysValue.filter((item) => item !== key);
     setExpandKeysValue(keys);
-    // if (keys.length) {
-    //   let newTreeData: TreeNode[];
-    //   newTreeData = flatTree(nodes, keys);
-    //   setNodes(newTreeData);
-    //   // console.log(newTreeData,expandKeysValue)
-    // }
   };
 
   const expandHandle = (key: string) => {
@@ -81,7 +91,6 @@ const Tree: FC<Props> = ({ treeData, children, expandKeys, ...rest }) => {
       {nodes.map((node) => {
         return (
           <Node
-            checkedKeys={checkedKeysValue}
             nodeData={node}
             checkAble={checkAble}
             key={node.key}
