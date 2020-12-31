@@ -12,6 +12,7 @@ import FormExample from "../lib/form/form.example";
 import InputExample from "../lib/input/input-example";
 import ScrollExample from "../lib/scroll/scroll-example";
 import TreeExample from "../lib/tree/tree-example";
+import CitySelectorExample from "../lib/city-selector/city-selector-example";
 ReactDOM.render(
   <HashRouter>
     <Layout className="page">
@@ -48,6 +49,9 @@ ReactDOM.render(
               <li>
                 <NavLink to="/tree">tree</NavLink>
               </li>
+              <li>
+                <NavLink to="/city-selector">city-selector</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -59,6 +63,7 @@ ReactDOM.render(
             <Route path="/input" component={InputExample} />
             <Route path="/scroll" component={ScrollExample} />
             <Route path="/tree" component={TreeExample} />
+            <Route path="/city-selector" component={CitySelectorExample} />
           </Content>
         </Layout>
       </Content>
