@@ -169,3 +169,6 @@ export function getAllChild(node: TreeNode): TreeNode[] {
   });
   return result;
 }
+export function getAllChildKeys(node: TreeNode): string[] {
+  return getAllChild(node).map((item) => item.key);
+}
