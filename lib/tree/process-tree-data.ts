@@ -1,4 +1,4 @@
-import { TreeNode } from "./types";
+import { TreeNode, TreeNodeProp } from "./types";
 
 export function addLevel(treeData: TreeNode[], level = 1): TreeNode[] {
   const result: TreeNode[] = [];
@@ -65,6 +65,34 @@ export function addNodeLeafParentProp(nodes: TreeNode[]): TreeNode[] {
   return result;
 }
 
+export function getParentNodes(
+  treeData: TreeNodeProp[],
+  key: string
+): TreeNodeProp[] {
+  const nodes = addNodeLeafParentProp(treeData);
+  const node = findNode(nodes, key);
+  if (!node) {
+    return [];
+  }
+  const parents: TreeNode[] = [];
+  let parentNode = node.parentNode;
+  while (parentNode) {
+    parents.unshift(parentNode);
+    parentNode = parentNode.parentNode;
+  }
+  return parents;
+}
+
+export function getFistCheckParentNode(
+  parentNodes: TreeNode[],
+  checkedKeys: string[]
+): TreeNode | null {
+  const parentNode = parentNodes.find((node) => {
+    return checkedKeys.includes(node.key);
+  });
+  return parentNode ? parentNode : null;
+}
+
 function checkDown(nodes: TreeNode[]) {
   nodes.forEach((node) => {
     node.checked = true;
@@ -73,7 +101,7 @@ function checkDown(nodes: TreeNode[]) {
     }
   });
 }
-// FIXME 选中父节点再取消子节点bug
+
 function checkUp(node: TreeNode) {
   if (!node) {
     return;
@@ -114,4 +142,30 @@ export function addNodeCheckedProp(
       addNodeCheckedProp(node.childNodes, checkedKeys, isStrict);
     }
   }
+}
+
+export function findNode(nodes: TreeNode[], key: string): TreeNode | null {
+  let stack: TreeNode[] = [...nodes];
+  while (stack.length) {
+    const node = stack.pop();
+    if (node && node.key === key) {
+      return node;
+    }
+    if (node && Array.isArray(node.childNodes)) {
+      stack = stack.concat(node.childNodes);
+    }
+  }
+  return null;
+}
+
+export function getAllChild(node: TreeNode): TreeNode[] {
+  let result: TreeNode[] = [];
+  if (!Array.isArray(node.childNodes)) {
+    return result;
+  }
+  node.childNodes.forEach((childNode) => {
+    result.push(childNode);
+    result = result.concat(getAllChild(childNode));
+  });
+  return result;
 }

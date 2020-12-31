@@ -13,7 +13,6 @@ export interface TreeNode {
   checked?: boolean;
   indeterminate?: boolean;
   childNodes?: TreeNode[] | null;
-
   isLeaf?: boolean;
 }
 
