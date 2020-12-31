@@ -1,5 +1,9 @@
+@import "../common/styles/mixin";
 .zyj-ui-icon {
   width: 1em;
   height: 1em;
   fill: currentColor;
+  &-loading {
+    @include loading-icon;
+  }
 }
