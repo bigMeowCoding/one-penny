@@ -49,25 +49,25 @@ const TreeExample: FC = () => {
   ];
   return (
     <article>
-      {/*<section>*/}
-      {/*  <h2>普通</h2>*/}
-      {/*  <div>*/}
-      {/*    <Tree treeData={data1} />*/}
-      {/*  </div>*/}
-      {/*</section>*/}
-      {/*<section>*/}
-      {/*  <h2>单选</h2>*/}
-      {/*  <div>*/}
-      {/*    <Tree*/}
-      {/*      checkAble={true}*/}
-      {/*      checkedKeys={["0-0-1"]}*/}
-      {/*      treeData={data1}*/}
-      {/*      checkedKeysChange={(keys) => {*/}
-      {/*        console.log(keys);*/}
-      {/*      }}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section>
+        <h2>普通</h2>
+        <div>
+          <Tree treeData={data1} />
+        </div>
+      </section>
+      <section>
+        <h2>单选</h2>
+        <div>
+          <Tree
+            checkAble={true}
+            checkedKeys={["0-0-1"]}
+            treeData={data1}
+            checkedKeysChange={(keys) => {
+              console.log(keys);
+            }}
+          />
+        </div>
+      </section>
       <section>
         <h2>多选</h2>
         <div>
@@ -76,6 +76,19 @@ const TreeExample: FC = () => {
             checkedKeys={["0-0-0"]}
             treeData={data1}
             multiply={true}
+            checkedKeysChange={(keys) => {
+              console.log(keys);
+            }}
+          />
+        </div>
+        <h2>多选(严格模式)</h2>
+        <div>
+          <Tree
+            checkAble={true}
+            checkedKeys={["0-0-0"]}
+            treeData={data1}
+            multiply={true}
+            checkStrictly={true}
             checkedKeysChange={(keys) => {
               console.log(keys);
             }}

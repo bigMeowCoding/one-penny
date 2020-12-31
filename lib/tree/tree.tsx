@@ -22,6 +22,7 @@ interface TreeBaseType {
 
 type TreeCheck = {
   checkAble: boolean;
+  checkStrictly: boolean;
   checkedKeysChange: (keys: string[]) => void;
   checkedKeys: string[];
   multiply: boolean | undefined;
@@ -51,7 +52,7 @@ const Tree: FC<Props> = ({ treeData, children, expandKeys, ...rest }) => {
     let newTreeData: TreeNode[];
     newTreeData = addLevel(treeData);
     newTreeData = addNodeLeafParentProp(newTreeData);
-    addNodeCheckedProp(newTreeData, checkedKeysValue);
+    addNodeCheckedProp(newTreeData, checkedKeysValue, (rest as TreeCheck).checkStrictly);
     newTreeData = flatTree(newTreeData, expandKeysValue);
     setTreeNodes(newTreeData);
   }, [expandKeysValue, checkedKeysValue]);
@@ -60,15 +61,15 @@ const Tree: FC<Props> = ({ treeData, children, expandKeys, ...rest }) => {
     if (!isCheckedType(rest)) {
       return;
     }
-    const { checkedKeysChange } = rest;
+    const { checkedKeysChange, checkStrictly } = rest;
     let keys: string[],
       keysValue = checkedKeysValue.slice(0);
-    if (!checked && !checkedKeysValue.includes(key)) {
+    if (!checkStrictly && !checked && !checkedKeysValue.includes(key)) {
       // 如果操作是取消选中状态并且节点key不在checkedKeys中做特殊处理
       keysValue = unCheckEffectHandle(treeData, key, keysValue);
     }
     keys = makeNewCheckedKeys(checked, keysValue, key, rest.multiply || false);
-    if (checked) {
+    if (!checkStrictly && checked) {
       keys = checkEffectHandle(treeData, key, keys);
     }
     setCheckedKeysValue(keys);
