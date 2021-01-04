@@ -13,23 +13,89 @@ const addClassByPrefix = makeClassByPrefix(
   makeComponentPrefixClass("date-picker")
 );
 
-const Content: FC<{
-  date: Date;
-}> = ({ date }) => {
-  const year = date.getFullYear(),
-    dayjsDate = dayjs(date),
-    month = dayjsDate.get("month") + 1,
-    days: Date[] = [];
-  // 计算出本月第一天和最后一天
+function computeMonthStartEndDate(dayjsDate: dayjs.Dayjs) {
   const monthFirstDate = dayjsDate.set("date", 1).toDate();
   const monthLastDate = dayjsDate
     .set("month", dayjsDate.get("month") + 1)
     .set("date", 1)
     .subtract(1, "day")
     .toDate();
-  // console.log(monthLastDate.toISOString(), monthFirstDate.toISOString());
-    console.log(monthLastDate.getDay())
+  return { monthFirstDate, monthLastDate };
+}
+
+function addPrevAdditionalDays(
+  additionAddDaysCountPrev: number,
+  days: Date[],
+  startDate: dayjs.Dayjs
+) {
+  let n = additionAddDaysCountPrev;
+  while (n) {
+    days.push(startDate.subtract(n, "day").toDate());
+    n--;
+  }
+}
+
+function addSuffixAdditionalDays(
+  additionAddDaysCountSuffix: number,
+  days: Date[],
+  endDate: dayjs.Dayjs
+) {
+  let n = 1;
+  while (n <= additionAddDaysCountSuffix) {
+    days.push(endDate.add(n, "day").toDate());
+    n++;
+  }
+  return n;
+}
+
+function computeAllDays(monthFirstDate: Date, monthLastDate: Date): Date[] {
+  const startDate = dayjs(monthFirstDate),
+    endDate = dayjs(monthLastDate),
+    endDay = endDate.get("date"),
+    startDateWeek = startDate.get("day"),
+    endDateWeek = endDate.get("day"),
+    days: Date[] = [];
+  const additionAddDaysCountPrev = startDateWeek === 0 ? 6 : startDateWeek - 1,
+    additionAddDaysCountSuffix = endDateWeek === 0 ? 0 : 7 - endDateWeek;
+  addPrevAdditionalDays(additionAddDaysCountPrev, days, startDate);
+  addSuffixAdditionalDays(additionAddDaysCountSuffix, days, endDate);
+  let n = 0;
+  while (n < endDay) {
+    days.push(startDate.add(n, "day").toDate());
+    n++;
+  }
+  return days;
+}
+
+function convertDaysDate(days: Date[]) {
+  const result: Date[][] = [];
+  while (days.length) {
+    const temp: Date[] = [];
+    let n = 0;
+    while (n < 7) {
+      const day = days.shift();
+      if (day) {
+        temp.push(day);
+      }
+      n++;
+    }
+    result.push(temp);
+  }
+  return result;
+}
+
+const Content: FC<{
+  date: Date;
+}> = ({ date }) => {
+  const year = date.getFullYear(),
+    dayjsDate = dayjs(date),
+    month = dayjsDate.get("month") + 1;
+  // 计算出本月第一天和最后一天
+  const { monthFirstDate, monthLastDate } = computeMonthStartEndDate(dayjsDate);
   // 将本月的日期全部放入数组
+  const daysList = computeAllDays(monthFirstDate, monthLastDate);
+  const days = convertDaysDate(daysList);
+  console.log(days);
   // 根据本月日期始末补充开头和结尾日期
   return (
     <div className={addClassByPrefix("days")}>
@@ -50,6 +116,17 @@ const Content: FC<{
               })}
             </tr>
           </thead>
+          <tbody>
+            {days.map((dayList) => {
+              return (
+                <tr>
+                  {dayList.map((day) => {
+                    return <td>{dayjs(day).get('date')}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
       <div className={addClassByPrefix("days-footer")}>footer</div>
