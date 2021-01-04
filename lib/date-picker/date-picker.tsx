@@ -18,10 +18,17 @@ const Content: FC<{
 }> = ({ date }) => {
   const year = date.getFullYear(),
     dayjsDate = dayjs(date),
-    month = date.getMonth() + 1,
+    month = dayjsDate.get("month") + 1,
     days: Date[] = [];
-  console.log(dayjsDate, dayjsDate.toJSON(), dayjsDate.constructor);
   // 计算出本月第一天和最后一天
+  const monthFirstDate = dayjsDate.set("date", 1).toDate();
+  const monthLastDate = dayjsDate
+    .set("month", dayjsDate.get("month") + 1)
+    .set("date", 1)
+    .subtract(1, "day")
+    .toDate();
+  // console.log(monthLastDate.toISOString(), monthFirstDate.toISOString());
+    console.log(monthLastDate.getDay())
   // 将本月的日期全部放入数组
   // 根据本月日期始末补充开头和结尾日期
   return (
