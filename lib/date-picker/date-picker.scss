@@ -1,0 +1,28 @@
+@import "../common/styles/variable-styles";
+@import "../common/styles/variable-config";
+
+.#{$project-prefix}-date-picker {
+  &-days {
+    &-header {
+      display: flex;
+      justify-content: center;
+      min-height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid $border-color;
+      &-current-date {
+        font-weight: bold;
+        &-month {
+          margin-left: $distance-1;
+        }
+      }
+    }
+    &-content {
+      table {
+        width: 100%;
+      }
+      th {
+        width: calc(100% / 7);
+      }
+    }
+  }
+}
