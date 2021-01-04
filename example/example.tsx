@@ -14,6 +14,7 @@ import ScrollExample from "../lib/scroll/scroll-example";
 import TreeExample from "../lib/tree/tree-example";
 import CitySelectorExample from "../lib/city-selector/city-selector-example";
 import DropDownExample from "../lib/drop-down/drop-down-example";
+import DatePickerExample from "../lib/date-picker/date-picker-example";
 
 ReactDOM.render(
   <HashRouter>
@@ -57,6 +58,9 @@ ReactDOM.render(
               <li>
                 <NavLink to="/drop-down">drop-down</NavLink>
               </li>
+              <li>
+                <NavLink to="/date-picker">date-picker</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -70,6 +74,7 @@ ReactDOM.render(
             <Route path="/tree" component={TreeExample} />
             <Route path="/city-selector" component={CitySelectorExample} />
             <Route path="/drop-down" component={DropDownExample} />
+            <Route path="/date-picker" component={DatePickerExample} />
           </Content>
         </Layout>
       </Content>

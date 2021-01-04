@@ -52,7 +52,7 @@ const HoverPanel: FC<Props> = ({ children, overlay }) => {
           setLayVisible(true);
         }}
         onMouseOut={() => {
-          setLayVisible(false);
+          // setLayVisible(false);
         }}
       >
         {children}
