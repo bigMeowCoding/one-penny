@@ -1,6 +1,6 @@
 {
   "name": "zyj-ui-react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/lib/index",
   "license": "MIT",
   "types": "dist/lib/index",
