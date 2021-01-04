@@ -1,22 +1,3 @@
 @import "../common/styles/variable";
 .zyj-ui-drop-down {
-  &-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    margin: 0;
-    padding: 4px 0;
-    text-align: left;
-    list-style-type: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border-radius: 2px;
-    outline: none;
-    border: 1px solid $border-color;
-    box-shadow: 0 2px 8px #f0f1f2;
-    &-wrapper {
-
-    }
-  }
 }
