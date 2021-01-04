@@ -10,7 +10,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 
 const addClassByPrefix = makeClassByPrefix(LAYOUT_PREFIX);
 
-export const Layout: FC<Props> = function ({ className, ...rest }) {
+export const Layout: FC<Props> = ({className, ...rest}) => {
   const children = rest.children as ReactElement[];
   const hasAside =
     children.length &&
