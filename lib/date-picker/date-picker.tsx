@@ -90,7 +90,7 @@ const Content: FC<{
   onChange: OnChangeType;
 }> = ({ date, onChange }) => {
   const [dayjsDate, setDayjsDate] = useState<Dayjs>(dayjs(date));
-  const year = date.getFullYear(),
+  const year = dayjsDate.get("year"),
     month = dayjsDate.get("month") + 1;
   // 计算出本月第一天和最后一天
   const { monthFirstDate, monthLastDate } = computeMonthStartEndDate(dayjsDate);
@@ -102,7 +102,18 @@ const Content: FC<{
     <div className={addClassByPrefix("days")}>
       <div className={addClassByPrefix("days-header")}>
         <div>
-          <Icon name="double-arrow-left" />
+          <Icon
+            name="double-arrow-left"
+            onClick={() => {
+              const currentMonth = dayjsDate.get("month");
+              setDayjsDate(
+                dayjsDate
+                  .subtract(1, "year")
+                  .set("month", currentMonth)
+                  .set("date", 1)
+              );
+            }}
+          />
           <Icon
             name="arrow-left"
             onClick={() => {
@@ -123,7 +134,18 @@ const Content: FC<{
               setDayjsDate(dayjsDate.add(1, "month").set("date", 1));
             }}
           />
-          <Icon name="double-arrow-right" />
+          <Icon
+            name="double-arrow-right"
+            onClick={() => {
+              const currentMonth = dayjsDate.get("month");
+              setDayjsDate(
+                dayjsDate
+                  .add(1, "year")
+                  .set("month", currentMonth)
+                  .set("date", 1)
+              );
+            }}
+          />
         </div>
       </div>
       <div className={addClassByPrefix("days-content")}>
