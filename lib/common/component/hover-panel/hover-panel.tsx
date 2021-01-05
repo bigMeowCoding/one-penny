@@ -1,6 +1,7 @@
 import React, {
   HTMLAttributes,
   ReactNode,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -31,9 +32,16 @@ const PanelContent: FC<PanelContentProp> = ({
   const styleProp = props.style
     ? { ...props.style, ...positionStyle }
     : positionStyle;
+  const context = useContext(HoverPanelContext);
   return ReactDOM.createPortal(
     <div className={addClassByPrefix("layer-wrapper")}>
-      <div className={addClassByPrefix("layer")} style={styleProp}>
+      <div
+        className={addClassByPrefix("layer")}
+        onMouseLeave={() => {
+          context.closePanel();
+        }}
+        style={styleProp}
+      >
         {typeof overlay === "function" ? overlay() : overlay}
       </div>
     </div>,
