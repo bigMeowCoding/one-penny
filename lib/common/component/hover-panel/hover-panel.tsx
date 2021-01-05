@@ -1,15 +1,45 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, {
+  HTMLAttributes,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FC } from "react";
 import ReactDOM from "react-dom";
 import makeClassByPrefix from "../../utils/makeClassByPrefix";
 import "./hover-panel.scss";
-interface Props {
+interface Props extends HTMLAttributes<HTMLElement> {
   overlay: (() => ReactNode) | ReactNode;
 }
 type Position = { top: string; left: string };
 const addClassByPrefix = makeClassByPrefix("zyj-ui-hover-panel");
-
-const HoverPanel: FC<Props> = ({ children, overlay }) => {
+interface PanelContentProp extends HTMLAttributes<HTMLElement> {
+  position: Position | null;
+  overlay: ReactNode;
+}
+const PanelContent: FC<PanelContentProp> = ({
+  position,
+  overlay,
+  ...props
+}) => {
+  if (!position) {
+    return null;
+  }
+  const positionStyle = { left: position.left, top: position.top };
+  const styleProp = props.style
+    ? { ...props.style, ...positionStyle }
+    : positionStyle;
+  return ReactDOM.createPortal(
+    <div className={addClassByPrefix("layer-wrapper")}>
+      <div className={addClassByPrefix("layer")} style={styleProp}>
+        {typeof overlay === "function" ? overlay() : overlay}
+      </div>
+    </div>,
+    document.body
+  );
+};
+const HoverPanel: FC<Props> = ({ children, overlay, ...props }) => {
   const [layVisible, setLayVisible] = useState(false),
     targetRef = useRef<HTMLDivElement>(null),
     positionRef = useRef<Position | null>(null);
@@ -27,22 +57,7 @@ const HoverPanel: FC<Props> = ({ children, overlay }) => {
       left: targetRef.current.getBoundingClientRect().left + "px",
     };
   }, []);
-  const panelContent = (position: Position | null) => {
-    if (!position) {
-      return;
-    }
-    return ReactDOM.createPortal(
-      <div className={addClassByPrefix("layer-wrapper")}>
-        <div
-          className={addClassByPrefix("layer")}
-          style={{ left: position.left, top: position.top }}
-        >
-          {typeof overlay === "function" ? overlay() : overlay}
-        </div>
-      </div>,
-      document.body
-    );
-  };
+
   return (
     <>
       <div
@@ -51,13 +66,17 @@ const HoverPanel: FC<Props> = ({ children, overlay }) => {
         onMouseOver={() => {
           setLayVisible(true);
         }}
-        onMouseOut={() => {
-          // setLayVisible(false);
-        }}
+        {...props}
       >
         {children}
       </div>
-      {layVisible ? panelContent(positionRef && positionRef.current) : null}
+      {layVisible ? (
+        <PanelContent
+          overlay={overlay}
+          {...props}
+          position={positionRef.current}
+        />
+      ) : null}
     </>
   );
 };

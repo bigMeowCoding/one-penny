@@ -184,7 +184,9 @@ const Content: FC<{
           </tbody>
         </table>
       </div>
-      <div className={addClassByPrefix("days-footer")}>footer</div>
+      <div className={addClassByPrefix("days-footer")}>
+        <a href="#">今天</a>
+      </div>
     </div>
   );
 };
@@ -194,7 +196,10 @@ const DatePicker: FC<{
 }> = ({ onChange }) => {
   return (
     <>
-      <HoverPanel overlay={<Content date={new Date()} onChange={onChange} />}>
+      <HoverPanel
+        style={{ width: "280px" }}
+        overlay={<Content date={new Date()} onChange={onChange} />}
+      >
         <div style={{ width: "200px" }}>
           <Input />
         </div>
