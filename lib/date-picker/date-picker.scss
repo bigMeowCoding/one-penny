@@ -5,10 +5,11 @@
   &-days {
     &-header {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       min-height: 40px;
       line-height: 40px;
       border-bottom: 1px solid $border-color;
+      align-items: center;
       &-current-date {
         font-weight: bold;
         &-month {

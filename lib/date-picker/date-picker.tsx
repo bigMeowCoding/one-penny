@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FC } from "react";
 import "./date-picker.scss";
 import HoverPanel from "../common/component/hover-panel/hover-panel";
@@ -7,6 +7,7 @@ import dayjs, { Dayjs } from "dayjs";
 import makeClassByPrefix, {
   makeComponentPrefixClass,
 } from "../common/utils/makeClassByPrefix";
+import Icon from "../icon/icon";
 type OnChangeType = (date: Date) => void;
 const weeks = ["一", "二", "三", "四", "五", "六", "日"];
 const addClassByPrefix = makeClassByPrefix(
@@ -58,12 +59,12 @@ function computeAllDays(monthFirstDate: Date, monthLastDate: Date): Dayjs[] {
   const additionAddDaysCountPrev = startDateWeek === 0 ? 6 : startDateWeek - 1,
     additionAddDaysCountSuffix = endDateWeek === 0 ? 0 : 7 - endDateWeek;
   addPrevAdditionalDays(additionAddDaysCountPrev, days, startDate);
-  addSuffixAdditionalDays(additionAddDaysCountSuffix, days, endDate);
   let n = 0;
   while (n < endDay) {
     days.push(startDate.add(n, "day"));
     n++;
   }
+  addSuffixAdditionalDays(additionAddDaysCountSuffix, days, endDate);
   return days;
 }
 
@@ -88,8 +89,8 @@ const Content: FC<{
   date: Date;
   onChange: OnChangeType;
 }> = ({ date, onChange }) => {
+  const [dayjsDate, setDayjsDate] = useState<Dayjs>(dayjs(date));
   const year = date.getFullYear(),
-    dayjsDate = dayjs(date),
     month = dayjsDate.get("month") + 1;
   // 计算出本月第一天和最后一天
   const { monthFirstDate, monthLastDate } = computeMonthStartEndDate(dayjsDate);
@@ -100,11 +101,29 @@ const Content: FC<{
   return (
     <div className={addClassByPrefix("days")}>
       <div className={addClassByPrefix("days-header")}>
+        <div>
+          <Icon name="double-arrow-left" />
+          <Icon
+            name="arrow-left"
+            onClick={() => {
+              setDayjsDate(dayjsDate.subtract(1, "month").set("date", 1));
+            }}
+          />
+        </div>
         <div className={addClassByPrefix("days-header-current-date")}>
           <span>{year}年</span>
           <span className={addClassByPrefix("days-header-current-date-month")}>
             {month}月
           </span>
+        </div>
+        <div>
+          <Icon
+            name="arrow-right"
+            onClick={() => {
+              setDayjsDate(dayjsDate.add(1, "month").set("date", 1));
+            }}
+          />
+          <Icon name="double-arrow-right" />
         </div>
       </div>
       <div className={addClassByPrefix("days-content")}>
