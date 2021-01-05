@@ -170,7 +170,6 @@ const Content: FC<{
                         onClick={() => {
                           onChange(day.toDate());
                           context.closePanel();
-
                         }}
                         className={
                           day.get("month") !== dayjsDate.get("month")
@@ -198,14 +197,31 @@ const Content: FC<{
 const DatePicker: FC<{
   onChange: OnChangeType;
 }> = ({ onChange }) => {
+  const [value, setValue] = useState<string>("");
+  console.log(value);
   return (
     <>
       <HoverPanel
         style={{ width: "280px" }}
-        overlay={<Content date={new Date()} onChange={onChange} />}
+        overlay={
+          <Content
+            date={value?new Date(value):new Date()}
+            onChange={(date) => {
+              const val = dayjs(date).format("YYYY-MM-DD");
+              setValue(val);
+              console.log(val);
+              onChange(date);
+            }}
+          />
+        }
       >
         <div style={{ width: "200px" }}>
-          <Input />
+          <Input
+            value={value}
+            onChange={(val) => {
+              console.log(val);
+            }}
+          />
         </div>
       </HoverPanel>
     </>

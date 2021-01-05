@@ -7,11 +7,18 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-input");
-const Input: FC<Props> = ({ className, placeholder, type, onChange }) => (
+const Input: FC<Props> = ({
+  className,
+  placeholder,
+  type,
+  onChange,
+  ...props
+}) => (
   <input
     type={type}
     placeholder={placeholder}
     onChange={onChange}
+    {...props}
     className={classNames(className, addClassByPrefix(""))}
   />
 );
