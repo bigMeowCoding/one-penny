@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {createRef, useContext, useEffect, useRef, useState} from "react";
 import { FC } from "react";
 import "./date-picker.scss";
 import HoverPanel from "../common/component/hover-panel/hover-panel";
@@ -99,9 +99,22 @@ const Content: FC<{
   const daysList = computeAllDays(monthFirstDate, monthLastDate);
   // 根据本月日期始末补充开头和结尾日期
   const days = convertDaysDate(daysList);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const context = useContext(HoverPanelContext);
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (el) {
+      el.addEventListener(
+        "click",
+        (e) => {
+          e.stopPropagation();
+        },
+        false
+      );
+    }
+  }, []);
   return (
-    <div className={addClassByPrefix("days")}>
+    <div className={addClassByPrefix("days")} ref={wrapperRef}>
       <div className={addClassByPrefix("days-header")}>
         <div>
           <Icon
@@ -170,6 +183,7 @@ const Content: FC<{
                         onClick={() => {
                           onChange(day.toDate());
                           context.closePanel();
+                          console.log("click");
                         }}
                         className={
                           day.get("month") !== dayjsDate.get("month")
@@ -197,34 +211,37 @@ const Content: FC<{
 const DatePicker: FC<{
   onChange: OnChangeType;
 }> = ({ onChange }) => {
-  const [value, setValue] = useState<string>("");
-  console.log(value);
+  const [value, setValue] = useState<string>(""),inputRef = createRef<HTMLInputElement>();
+  useEffect(()=> {
+    inputRef.current?.focus();
+  },[])
   return (
-    <>
-      <HoverPanel
-        style={{ width: "280px" }}
-        overlay={
-          <Content
-            date={value?new Date(value):new Date()}
-            onChange={(date) => {
-              const val = dayjs(date).format("YYYY-MM-DD");
-              setValue(val);
-              console.log(val);
-              onChange(date);
-            }}
-          />
-        }
-      >
-        <div style={{ width: "200px" }}>
-          <Input
-            value={value}
-            onChange={(val) => {
-              console.log(val);
-            }}
-          />
-        </div>
-      </HoverPanel>
-    </>
+    <HoverPanel
+      overlay={
+        <Content
+          date={value ? new Date(value) : new Date()}
+          onChange={(date) => {
+            const val = dayjs(date).format("YYYY-MM-DD");
+            setValue(val);
+            console.log(val);
+            onChange(date);
+          }}
+        />
+      }
+    >
+      <div>
+        <Input
+          value={value}
+          ref={inputRef}
+          onBlur={() => {
+            console.log("blur");
+          }}
+          onChange={(val) => {
+            console.log(val);
+          }}
+        />
+      </div>
+    </HoverPanel>
   );
 };
 
