@@ -23,6 +23,12 @@
       th {
         width: calc(100% / 7);
       }
+      td {
+        color: rgba(0, 0, 0, 0.85);
+        &.other-month {
+          color: rgba(0, 0, 0, 0.25);
+        }
+      }
     }
   }
 }
