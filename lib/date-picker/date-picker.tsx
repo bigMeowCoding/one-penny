@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FC } from "react";
 import "./date-picker.scss";
 import HoverPanel from "../common/component/hover-panel/hover-panel";
@@ -8,6 +8,7 @@ import makeClassByPrefix, {
   makeComponentPrefixClass,
 } from "../common/utils/makeClassByPrefix";
 import Icon from "../icon/icon";
+import { HoverPanelContext } from "../common/config/context";
 type OnChangeType = (date: Date) => void;
 const weeks = ["一", "二", "三", "四", "五", "六", "日"];
 const addClassByPrefix = makeClassByPrefix(
@@ -98,6 +99,7 @@ const Content: FC<{
   const daysList = computeAllDays(monthFirstDate, monthLastDate);
   // 根据本月日期始末补充开头和结尾日期
   const days = convertDaysDate(daysList);
+  const context = useContext(HoverPanelContext);
   return (
     <div className={addClassByPrefix("days")}>
       <div className={addClassByPrefix("days-header")}>
@@ -167,6 +169,8 @@ const Content: FC<{
                         key={dayIndex}
                         onClick={() => {
                           onChange(day.toDate());
+                          context.closePanel();
+
                         }}
                         className={
                           day.get("month") !== dayjsDate.get("month")

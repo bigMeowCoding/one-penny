@@ -9,6 +9,7 @@ import { FC } from "react";
 import ReactDOM from "react-dom";
 import makeClassByPrefix from "../../utils/makeClassByPrefix";
 import "./hover-panel.scss";
+import { HoverPanelContext } from "../../config/context";
 interface Props extends HTMLAttributes<HTMLElement> {
   overlay: (() => ReactNode) | ReactNode;
 }
@@ -59,7 +60,13 @@ const HoverPanel: FC<Props> = ({ children, overlay, ...props }) => {
   }, []);
 
   return (
-    <>
+    <HoverPanelContext.Provider
+      value={{
+        closePanel() {
+          setLayVisible(false);
+        },
+      }}
+    >
       <div
         ref={targetRef}
         className={addClassByPrefix("")}
@@ -77,7 +84,7 @@ const HoverPanel: FC<Props> = ({ children, overlay, ...props }) => {
           position={positionRef.current}
         />
       ) : null}
-    </>
+    </HoverPanelContext.Provider>
   );
 };
 
