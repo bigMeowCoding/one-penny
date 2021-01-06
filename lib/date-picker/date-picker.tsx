@@ -1,4 +1,4 @@
-import React, {createRef, useContext, useEffect, useRef, useState} from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { FC } from "react";
 import "./date-picker.scss";
 import HoverPanel from "../common/component/hover-panel/hover-panel";
@@ -8,7 +8,6 @@ import makeClassByPrefix, {
   makeComponentPrefixClass,
 } from "../common/utils/makeClassByPrefix";
 import Icon from "../icon/icon";
-import { HoverPanelContext } from "../common/config/context";
 type OnChangeType = (date: Date) => void;
 const weeks = ["一", "二", "三", "四", "五", "六", "日"];
 const addClassByPrefix = makeClassByPrefix(
@@ -99,22 +98,9 @@ const Content: FC<{
   const daysList = computeAllDays(monthFirstDate, monthLastDate);
   // 根据本月日期始末补充开头和结尾日期
   const days = convertDaysDate(daysList);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const context = useContext(HoverPanelContext);
-  useEffect(() => {
-    const el = wrapperRef.current;
-    if (el) {
-      el.addEventListener(
-        "click",
-        (e) => {
-          e.stopPropagation();
-        },
-        false
-      );
-    }
-  }, []);
+
   return (
-    <div className={addClassByPrefix("days")} ref={wrapperRef}>
+    <div className={addClassByPrefix("days")}>
       <div className={addClassByPrefix("days-header")}>
         <div>
           <Icon
@@ -180,10 +166,12 @@ const Content: FC<{
                     return (
                       <td
                         key={dayIndex}
-                        onClick={() => {
+                        onClick={(e) => {
                           onChange(day.toDate());
-                          context.closePanel();
-                          console.log("click");
+                          // context.closePanel();
+                          // onFocus();
+                          console.log("click td item");
+                          e.nativeEvent.stopImmediatePropagation();
                         }}
                         className={
                           day.get("month") !== dayjsDate.get("month")
@@ -211,19 +199,28 @@ const Content: FC<{
 const DatePicker: FC<{
   onChange: OnChangeType;
 }> = ({ onChange }) => {
-  const [value, setValue] = useState<string>(""),inputRef = createRef<HTMLInputElement>();
-  useEffect(()=> {
-    inputRef.current?.focus();
-  },[])
+  const [value, setValue] = useState<string>(""),
+    inputRef = createRef<HTMLInputElement>();
+
+  useEffect(() => {
+    document.addEventListener(
+      "click",
+      () => {
+        setLayVisible(false)
+      },
+      false
+    );
+  }, []);
+  const [layVisible, setLayVisible] = useState(false);
   return (
     <HoverPanel
+      layVisible={layVisible}
       overlay={
         <Content
           date={value ? new Date(value) : new Date()}
           onChange={(date) => {
             const val = dayjs(date).format("YYYY-MM-DD");
             setValue(val);
-            console.log(val);
             onChange(date);
           }}
         />
@@ -233,8 +230,15 @@ const DatePicker: FC<{
         <Input
           value={value}
           ref={inputRef}
+          onClick={(e)=> {
+            e.nativeEvent.stopImmediatePropagation();
+          }}
           onBlur={() => {
+            // setLayVisible(false);
             console.log("blur");
+          }}
+          onFocus={() => {
+            setLayVisible(true);
           }}
           onChange={(val) => {
             console.log(val);

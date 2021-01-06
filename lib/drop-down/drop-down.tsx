@@ -9,7 +9,7 @@ interface Props {
 const DropDown: FC<Props> = ({ children, overlay }) => {
   return (
     <>
-      <HoverPanel overlay={overlay}>{children}</HoverPanel>
+      <HoverPanel layVisible={true} overlay={overlay}>{children}</HoverPanel>
     </>
   );
 };

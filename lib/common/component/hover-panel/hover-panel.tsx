@@ -3,15 +3,14 @@ import React, {
   ReactNode,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { FC } from "react";
 import ReactDOM from "react-dom";
 import makeClassByPrefix from "../../utils/makeClassByPrefix";
 import "./hover-panel.scss";
-import { HoverPanelContext } from "../../config/context";
 interface Props extends HTMLAttributes<HTMLElement> {
   overlay: (() => ReactNode) | ReactNode;
+  layVisible: boolean;
 }
 type Position = { top: string; left: string };
 const addClassByPrefix = makeClassByPrefix("zyj-ui-hover-panel");
@@ -44,10 +43,10 @@ const HoverPanel: FC<Props> = ({
   children,
   overlay,
   onMouseOver,
+  layVisible,
   ...props
 }) => {
-  const [layVisible, setLayVisible] = useState(false),
-    targetRef = useRef<HTMLDivElement>(null),
+  const targetRef = useRef<HTMLDivElement>(null),
     positionRef = useRef<Position | null>(null);
   useEffect(() => {
     if (!targetRef.current) {
@@ -61,26 +60,10 @@ const HoverPanel: FC<Props> = ({
         "px",
       left: targetRef.current.getBoundingClientRect().left + "px",
     };
-    document.body.addEventListener('click',()=> {
-        // setLayVisible(false);
-    },false)
   }, []);
   return (
-    <HoverPanelContext.Provider
-      value={{
-        closePanel() {
-          setLayVisible(false);
-        },
-      }}
-    >
-      <div
-        ref={targetRef}
-        className={addClassByPrefix("")}
-        onMouseEnter={() => {
-          setLayVisible(true);
-        }}
-        {...props}
-      >
+    <>
+      <div ref={targetRef} className={addClassByPrefix("")} {...props}>
         {children}
       </div>
       {layVisible ? (
@@ -90,7 +73,7 @@ const HoverPanel: FC<Props> = ({
           position={positionRef.current}
         />
       ) : null}
-    </HoverPanelContext.Provider>
+    </>
   );
 };
 
