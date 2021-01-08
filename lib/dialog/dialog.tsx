@@ -12,7 +12,7 @@ interface Props {
   onCancel?: React.MouseEventHandler;
   onOk?: React.MouseEventHandler;
 }
-const Dialog: FC<Props> = function ({ visible, onCancel, ...props }) {
+const Dialog: FC<Props> = ({ visible, onCancel, ...props }) => {
   if (!visible) {
     return null;
   }
@@ -38,7 +38,7 @@ const Dialog: FC<Props> = function ({ visible, onCancel, ...props }) {
   return ReactDOM.createPortal(dialog, document.body);
 };
 
-export const alert = function (message: string) {
+export const alert = (message: string) => {
   const { close } = modal(message, [
     <button
       onClick={() => {
@@ -50,11 +50,11 @@ export const alert = function (message: string) {
   ]);
 };
 
-export const confirm = function (
+export const confirm = (
   message: string,
   onOk?: () => void,
   onCancel?: () => void
-) {
+) => {
   function cancelHandle() {
     if (onCancel) {
       onCancel();
@@ -78,11 +78,11 @@ export const confirm = function (
   );
 };
 
-export const modal = function (
+export const modal = (
   content: ReactNode,
   buttons?: ReactElement[],
   afterClose?: () => void
-): ModalRef {
+): ModalRef => {
   function close() {
     ReactDOM.render(
       React.cloneElement(dialogComponent, { visible: false }),
@@ -97,7 +97,9 @@ export const modal = function (
       <Dialog
         visible={true}
         onCancel={() => {
-          afterClose && afterClose();
+          if (afterClose) {
+            afterClose();
+          }
           close();
         }}
         onOk={close}

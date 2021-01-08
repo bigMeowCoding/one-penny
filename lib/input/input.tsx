@@ -7,14 +7,16 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const addClassByPrefix = makeClassByPrefix("zyj-ui-input");
-const Input: FC<Props> = function ({ className, placeholder, type, onChange }) {
-  return (
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ className, placeholder, type, onChange, ...props }, ref) => (
     <input
       type={type}
+      ref={ref}
       placeholder={placeholder}
       onChange={onChange}
+      {...props}
       className={classNames(className, addClassByPrefix(""))}
     />
-  );
-};
+  )
+);
 export default Input;

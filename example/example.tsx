@@ -4,7 +4,7 @@ import { HashRouter, NavLink, Route } from "react-router-dom";
 import DialogExample from "../lib/dialog/dialog-example";
 import LayoutExample from "../lib/layout/layout-example";
 import ButtonExample from "../lib/button/button-example";
-import { Aside, Content, Footer, Header, Layout } from "../lib/layout";
+import { Aside, Content, Footer, Header, Layout } from "../lib";
 import "./example.scss";
 import logo from "./logo.png";
 import IconDemo from "../lib/icon/icon-demo";
@@ -13,6 +13,9 @@ import InputExample from "../lib/input/input-example";
 import ScrollExample from "../lib/scroll/scroll-example";
 import TreeExample from "../lib/tree/tree-example";
 import CitySelectorExample from "../lib/city-selector/city-selector-example";
+import DropDownExample from "../lib/drop-down/drop-down-example";
+import DatePickerExample from "../lib/date-picker/date-picker-example";
+
 ReactDOM.render(
   <HashRouter>
     <Layout className="page">
@@ -52,6 +55,12 @@ ReactDOM.render(
               <li>
                 <NavLink to="/city-selector">city-selector</NavLink>
               </li>
+              <li>
+                <NavLink to="/drop-down">drop-down</NavLink>
+              </li>
+              <li>
+                <NavLink to="/date-picker">date-picker</NavLink>
+              </li>
             </ul>
           </Aside>
           <Content className="case-content">
@@ -64,6 +73,8 @@ ReactDOM.render(
             <Route path="/scroll" component={ScrollExample} />
             <Route path="/tree" component={TreeExample} />
             <Route path="/city-selector" component={CitySelectorExample} />
+            <Route path="/drop-down" component={DropDownExample} />
+            <Route path="/date-picker" component={DatePickerExample} />
           </Content>
         </Layout>
       </Content>

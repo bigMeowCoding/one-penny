@@ -1,3 +1,5 @@
+import { CLASS_PREFIX } from "../config/ui";
+
 interface ClassToggle {
   [K: string]: boolean;
 }
@@ -19,4 +21,6 @@ export default function (prefix: string) {
       .join(" ");
   };
 }
-
+export function makeComponentPrefixClass(className: string): string {
+  return [CLASS_PREFIX, className].join("-");
+}

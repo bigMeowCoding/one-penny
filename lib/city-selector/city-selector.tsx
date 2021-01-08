@@ -75,7 +75,12 @@ const CitySelector: FC<Props> = ({ children, cityData, onChange }) => {
   function onClick(city: string) {
     onChange(city);
   }
-
+  function scrollCityIntoViewByLetter(letter: string) {
+    const el = document.body.querySelector(`h4[data-letter="${letter}"]`);
+    if (el) {
+      el.scrollIntoView();
+    }
+  }
   return (
     <>
       <div onClick={clickHandle}>{children}</div>
@@ -85,7 +90,14 @@ const CitySelector: FC<Props> = ({ children, cityData, onChange }) => {
           <h2>全部城市</h2>
           <ol className="fui-citySelect-index">
             {indexList.map((a) => (
-              <li key={a}>{a}</li>
+              <li
+                key={a}
+                onClick={() => {
+                  scrollCityIntoViewByLetter(a);
+                }}
+              >
+                {a}
+              </li>
             ))}
           </ol>
           <div className="cityList">所有城市</div>
