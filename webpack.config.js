@@ -39,7 +39,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist/lib"),
     library: "zyjUI",
-    libraryTarget: "umd",
+    libraryTarget: "commonjs",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
