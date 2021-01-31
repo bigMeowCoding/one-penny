@@ -6,7 +6,10 @@ const IconExample: FC = () => (
   <div>
     <Icon name="wechat" />
     <Icon name="cat" />
-    <Icon name="loading" className="loading-icon" />
+      <Icon name="email" />
+      <Icon name="github" />
+
+      <Icon name="loading" className="loading-icon" />
     <Icon name="pending" className="loading-icon" />
   </div>
 );
