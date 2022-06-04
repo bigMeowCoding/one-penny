@@ -1,52 +1,49 @@
-const path = require("path"),
-  { CleanWebpackPlugin } = require("clean-webpack-plugin");
+import path from 'path'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 module.exports = {
   entry: {
-    index: "./lib/index.tsx",
+    index: './lib/index.tsx',
   },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: "awesome-typescript-loader",
-        exclude: [
-          /node_modules\/(?!(my_main_package\/what_i_need_to_include)\/).*/,
-          /__test__/,
-        ],
+        test: /\.(js|jsx|tsx|ts)$/,
+        loader: 'babel-loader',
+        exclude: [/node_modules/, /__test__/],
       },
       {
         test: /\.svg$/,
-        loader: "svg-sprite-loader",
+        loader: 'svg-sprite-loader',
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        loader: "file-loader",
+        loader: 'file-loader',
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
-          "style-loader",
+          'style-loader',
           // Translates CSS into CommonJS
-          "css-loader",
+          'css-loader',
           // Compiles Sass to CSS
-          "sass-loader",
+          'sass-loader',
         ],
       },
     ],
   },
   output: {
-    path: path.resolve(__dirname, "dist/lib"),
-    library: "zyjUI",
-    libraryTarget: "umd",
+    path: path.resolve(__dirname, 'dist/lib'),
+    library: 'zyjUI',
+    libraryTarget: 'umd',
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   plugins: [
     new CleanWebpackPlugin({
       dangerouslyAllowCleanPatternsOutsideProject: true,
     }),
   ],
-};
+}
