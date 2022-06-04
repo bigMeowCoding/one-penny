@@ -10,7 +10,7 @@ module.exports = {
       {
         test: /\.(js|jsx|tsx|ts)$/,
         loader: 'babel-loader',
-        exclude: [/node_modules/, /__test__/],
+        exclude: /node_modules/,
       },
       {
         test: /\.svg$/,
