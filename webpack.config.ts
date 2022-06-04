@@ -1,7 +1,7 @@
 import path from 'path'
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
-module.exports = {
+export default {
   entry: {
     index: './lib/index.tsx',
   },
