@@ -1,4 +1,4 @@
-import makeClassByPrefix from "../lib/common/utils/makeClassByPrefix";
+import makeClassByPrefix from "../src/common/utils/makeClassByPrefix";
 
 describe("测试给class加前缀功能", () => {
   it("base", () => {

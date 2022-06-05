@@ -3,7 +3,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 export default {
   entry: {
-    index: './lib/index.tsx',
+    index: './src/index.tsx',
   },
   module: {
     rules: [

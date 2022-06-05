@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
-import Highlight, { defaultProps } from "prism-react-renderer";
-import Button from "./lib/button/button";
+import React, { FC, useState } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import Button from './src/button/button';
 interface Props {
   code: string;
 }
@@ -11,16 +11,16 @@ const Demo: FC<Props> = function ({ children, code }) {
     <div>
       <div>{children}</div>
       <Button
-        type="primary"
+        type='primary'
         onClick={() => {
-          setVisible((visible) => !visible);
+          setVisible(visible => !visible);
         }}
       >
-        {visible ? "收起代码" : "展开代码"}
+        {visible ? '收起代码' : '展开代码'}
       </Button>
       <div>
         {visible && (
-          <Highlight {...defaultProps} code={code} language="jsx">
+          <Highlight {...defaultProps} code={code} language='jsx'>
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre className={className} style={style}>
                 {tokens.map((line, i) => (

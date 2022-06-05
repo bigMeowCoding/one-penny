@@ -1,4 +1,4 @@
-import classNames from "../lib/common/utils/classNames";
+import classNames from "../src/common/utils/classNames";
 
 describe("组合class name", () => {
   it("一个class", () => {

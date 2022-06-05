@@ -9,7 +9,6 @@ import {
 import { NativeProps, withNativeProps } from '../utils/native-props';
 import { useShouldRender } from '../utils/should-render';
 import { mergeProps } from '../utils/with-default-props';
-import { defaultProps } from 'prism-react-renderer';
 import { useUnmountedRef } from 'ahooks';
 import { useLockScroll } from '../utils/use-lock-scroll';
 type opacityType = 'default' | 'thin' | 'thick';
@@ -31,6 +30,16 @@ const opacityRecord = {
   default: 0.55,
   thin: 0.35,
   thick: 0.75,
+};
+const defaultProps = {
+  visible: true,
+  destroyOnClose: false,
+  forceRender: false,
+  color: 'black',
+  opacity: 'default',
+  disableBodyScroll: true,
+  getContainer: null,
+  stopPropagation: ['click'],
 };
 const Mask: FC<MaskProps> = p => {
   const props = mergeProps(defaultProps, p);

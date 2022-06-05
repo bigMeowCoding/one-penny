@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, NavLink, Route } from 'react-router-dom';
-import DialogExample from '../lib/dialog/dialog-example';
-import LayoutExample from '../lib/layout/layout-example';
-import ButtonExample from '../lib/button/button-example';
-import { Aside, Content, Footer, Header, Layout } from '../lib';
+import DialogExample from '../src/dialog/dialog-example';
+import LayoutExample from '../src/layout/layout-example';
+import ButtonExample from '../src/button/button-example';
+import { Aside, Content, Footer, Header, Layout } from '../src';
 import './example.scss';
 import logo from './logo.png';
-import IconDemo from '../lib/icon/icon-demo';
-import FormExample from '../lib/form/form.example';
-import InputExample from '../lib/input/input-example';
-import ScrollExample from '../lib/scroll/scroll-example';
-import TreeExample from '../lib/tree/tree-example';
-import CitySelectorExample from '../lib/city-selector/city-selector-example';
-import DropDownExample from '../lib/drop-down/drop-down-example';
-import DatePickerExample from '../lib/date-picker/date-picker-example';
-import ToastExample from '../lib/toast/toast-example';
-import MaskExample from '../lib/mask/mask-example';
+import IconDemo from '../src/icon/icon-demo';
+import FormExample from '../src/form/form.example';
+import InputExample from '../src/input/input-example';
+import ScrollExample from '../src/scroll/scroll-example';
+import TreeExample from '../src/tree/tree-example';
+import CitySelectorExample from '../src/city-selector/city-selector-example';
+import DropDownExample from '../src/drop-down/drop-down-example';
+import DatePickerExample from '../src/date-picker/date-picker-example';
+import ToastExample from '../src/toast/toast-example';
+import MaskExample from '../src/mask/mask-example';
 
 ReactDOM.render(
   <HashRouter>

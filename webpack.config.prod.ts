@@ -1,5 +1,5 @@
-const config = require('./webpack.config')
-module.exports = Object.assign({}, config, {
+import config from './webpack.config';
+export default Object.assign({}, config, {
   mode: 'production',
   externals: {
     react: {
@@ -15,4 +15,4 @@ module.exports = Object.assign({}, config, {
       root: 'ReactDOM',
     },
   },
-})
+});
