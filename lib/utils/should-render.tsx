@@ -1,6 +1,6 @@
 import { useInitialized } from './use-initialized';
 
-export function shouldRender(
+export function useShouldRender(
   active: boolean,
   forceRender?: boolean,
   destroyOnClose?: boolean
