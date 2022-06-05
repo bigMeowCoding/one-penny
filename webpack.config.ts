@@ -1,5 +1,5 @@
-import path from 'path'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
+import path from 'path';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 export default {
   entry: {
@@ -31,6 +31,17 @@ export default {
           'sass-loader',
         ],
       },
+      {
+        test: /\.less$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'less-loader',
+        ],
+      },
     ],
   },
   output: {
@@ -46,4 +57,4 @@ export default {
       dangerouslyAllowCleanPatternsOutsideProject: true,
     }),
   ],
-}
+};
