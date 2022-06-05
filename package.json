@@ -71,6 +71,7 @@
   "dependencies": {
     "@react-spring/web": "^9.4.5",
     "ahooks": "^3.4.1",
+    "antd-mobile-icons": "^0.2.2",
     "css-animation": "^2.0.4",
     "lodash": "^4.17.21",
     "react": "^17.0.1",

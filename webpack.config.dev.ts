@@ -1,6 +1,6 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import config from './webpack.config'
-const plugins = config.plugins || []
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import config from './webpack.config';
+const plugins = config.plugins || [];
 export default Object.assign({}, config, {
   mode: 'development',
   devServer: {
@@ -19,4 +19,4 @@ export default Object.assign({}, config, {
       template: './example/example.html',
     }),
   ],
-})
+});
