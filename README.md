@@ -1,4 +1,33 @@
-[![npm version](https://badge.fury.io/js/zyj-ui-react.svg)](https://badge.fury.io/js/zyj-ui-react)
+# zyj-ui-react
 
-## ui 网址
-https://bigmeowcoding.github.io/zyj-ui-react/example.html#/
+## Getting Started
+
+Install dependencies,
+
+```bash
+$ npm i
+```
+
+Start the dev server,
+
+```bash
+$ npm start
+```
+
+Build documentation,
+
+```bash
+$ npm run docs:build
+```
+
+Run test,
+
+```bash
+$ npm test
+```
+
+Build library via `father-build`,
+
+```bash
+$ npm run build
+```
