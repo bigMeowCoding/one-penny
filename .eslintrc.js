@@ -1,25 +1,25 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es6': true,
-    'amd': true,
-    'node': true,
+  env: {
+    browser: true,
+    es6: true,
+    amd: true,
+    node: true,
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
-  'parser': '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     parser: 'babel-eslint',
     sourceType: 'module',
     allowImportExportEverywhere: true,
   },
-  'plugins': ['@typescript-eslint'],
-  'rules': {
+  plugins: ['@typescript-eslint'],
+  rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
@@ -72,11 +72,11 @@ module.exports = {
   },
   overrides: [
     {
-      'files': ['**/demos/**/*'],
-      'rules': {
+      files: ['**/demos/**/*'],
+      rules: {
         'react/react-in-jsx-scope': 'off',
         'react/display-name': 'off',
       },
     },
   ],
-}
+};

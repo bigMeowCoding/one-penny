@@ -4,7 +4,7 @@ function classNames(...names: (string | undefined | null)[]): string {
     .map((item) => {
       return item?.trim();
     })
-    .join(" ");
+    .join(' ');
 }
 
 export default classNames;

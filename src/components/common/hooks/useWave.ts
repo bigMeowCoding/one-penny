@@ -1,9 +1,9 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { changeWaveBaseColorOnClick } from "../../button/_util";
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { changeWaveBaseColorOnClick } from '../../button/_util';
 
 const useWave: () => [string, MutableRefObject<any>] = () => {
   const ref = useRef<HTMLElement>(null),
-    [waveColor, setWaveColor] = useState("");
+    [waveColor, setWaveColor] = useState('');
 
   useEffect(() => {
     const btnElement = ref.current;

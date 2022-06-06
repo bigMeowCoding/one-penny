@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import Button from "./button";
-import "./button-example.scss";
+import React, { FC } from 'react';
+import Button from './button';
+import './button-example.scss';
 interface Props {}
 
 const ButtonExample: FC<Props> = function () {
@@ -12,7 +12,7 @@ const ButtonExample: FC<Props> = function () {
           <Button
             type="primary"
             onClick={(e) => {
-              console.log("click", e);
+              console.log('click', e);
             }}
           >
             primary
@@ -20,7 +20,7 @@ const ButtonExample: FC<Props> = function () {
           <Button
             type="default"
             onClick={(e) => {
-              console.log("click", e);
+              console.log('click', e);
             }}
           >
             default

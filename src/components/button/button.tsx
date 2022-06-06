@@ -1,16 +1,16 @@
-import React, { FC, useCallback, useEffect } from "react";
-import "./button.scss";
-import classNames from "../common/utils/classNames";
-import Wave from "../common/component/wave/wave";
-import { addButtonClassNamePrefix, makeButtonTypeClassName } from "./_util";
-import { ButtonProps } from "./types";
-import useWave from "../common/hooks/useWave";
-import Icon from "../icon/icon";
+import React, { FC, useCallback, useEffect } from 'react';
+import './button.scss';
+import classNames from '../common/utils/classNames';
+import Wave from '../common/component/wave/wave';
+import { addButtonClassNamePrefix, makeButtonTypeClassName } from './_util';
+import { ButtonProps } from './types';
+import useWave from '../common/hooks/useWave';
+import Icon from '../icon/icon';
 
 const Button: FC<ButtonProps> = function ({
   children,
   className,
-  type = "default",
+  type = 'default',
   defaultType,
   loading,
   ...rest
@@ -23,7 +23,7 @@ const Button: FC<ButtonProps> = function ({
         e.preventDefault();
       }
     },
-    [loading]
+    [loading],
   );
   useEffect(() => {
     const target = ref.current;
@@ -31,31 +31,28 @@ const Button: FC<ButtonProps> = function ({
       return;
     }
     target.addEventListener(
-      "click",
+      'click',
       (e: MouseEvent) => {
         preventLoadingClick(e);
       },
-      false
+      false,
     );
   }, []);
   const buttonNode = (
     <button
       ref={ref}
-      type={defaultType ? defaultType : "button"}
+      type={defaultType ? defaultType : 'button'}
       className={classNames(
         className,
-        addButtonClassNamePrefix(""),
+        addButtonClassNamePrefix(''),
         makeButtonTypeClassName(type),
-        loading ? addButtonClassNamePrefix("loading") : ""
+        loading ? addButtonClassNamePrefix('loading') : '',
       )}
       {...rest}
     >
       {loading ? (
-        <span className={addButtonClassNamePrefix("icon")}>
-          <Icon
-            className={addButtonClassNamePrefix("icon-loading")}
-            name="loading"
-          />
+        <span className={addButtonClassNamePrefix('icon')}>
+          <Icon className={addButtonClassNamePrefix('icon-loading')} name="loading" />
         </span>
       ) : null}
 

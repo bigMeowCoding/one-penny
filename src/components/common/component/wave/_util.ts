@@ -1,7 +1,7 @@
-import { Event } from "css-animation";
+import { Event } from 'css-animation';
 
 export function getAttributeName() {
-  return "ant-click-animating-without-extra-node";
+  return 'ant-click-animating-without-extra-node';
 }
 
 export function onTransitionStart(e: AnimationEvent, node: HTMLDivElement) {
@@ -10,11 +10,8 @@ export function onTransitionStart(e: AnimationEvent, node: HTMLDivElement) {
   }
 }
 
-export function onTransitionEnd(
-  e: AnimationEvent,
-  styleElement: HTMLStyleElement
-) {
-  if (!e || e.animationName !== "fadeEffect") {
+export function onTransitionEnd(e: AnimationEvent, styleElement: HTMLStyleElement) {
+  if (!e || e.animationName !== 'fadeEffect') {
     return;
   }
   resetEffect(e.target as HTMLDivElement);
@@ -28,16 +25,13 @@ export function resetEffect(node: HTMLDivElement) {
     return;
   }
   const attributeName = getAttributeName();
-  node.setAttribute(attributeName, "false"); // edge has bug on `removeAttribute` #14466
+  node.setAttribute(attributeName, 'false'); // edge has bug on `removeAttribute` #14466
 
   Event.removeStartEventListener(node, onTransitionStart);
   Event.removeEndEventListener(node, onTransitionEnd);
 }
 
-export function changeWaveShadowVariable(
-  styleElement: HTMLStyleElement,
-  waveColor: string
-) {
+export function changeWaveShadowVariable(styleElement: HTMLStyleElement, waveColor: string) {
   if (styleElement && waveColor) {
     styleElement.innerHTML = `
       [ant-click-animating-without-extra-node='true']::after {
@@ -52,7 +46,7 @@ export function changeWaveShadowVariable(
 export function waveClickHandle(
   waveElement: HTMLDivElement,
   styleElement: HTMLStyleElement,
-  waveColor: string
+  waveColor: string,
 ): number {
   if (!waveElement) {
     return -1;
@@ -65,7 +59,7 @@ export function waveClickHandle(
       return;
     }
 
-    node.setAttribute(attribute, "true");
+    node.setAttribute(attribute, 'true');
     Event.addStartEventListener(node, (e: AnimationEvent) => {
       changeWaveShadowVariable(styleElement, waveColor);
       onTransitionStart(e, waveElement);
