@@ -11,9 +11,9 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "ten-yuan": ["src/index.ts"],
-      "ten-yuan/src/*": ["src/*"],
-      "ten-yuan/es/*": ["src/*"],
+      "one-penny": ["src/index.ts"],
+      "one-penny/src/*": ["src/*"],
+      "one-penny/es/*": ["src/*"],
       "demos": ["src/demos/index.ts"],
       "testing": ["src/tests/testing"]
     }

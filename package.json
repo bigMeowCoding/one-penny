@@ -1,5 +1,5 @@
 {
-  "name": "ten-yuan",
+  "name": "one-penny",
   "version": "0.0.0",
   "scripts": {
     "start": "dumi dev",
@@ -27,8 +27,8 @@
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
   "typings": "./es/index.d.ts",
-  "unpkg": "./umd/ten-yuan.js",
-  "GravityCDN": "./umd/ten-yuan.js",
+  "unpkg": "./umd/one-penny.js",
+  "GravityCDN": "./umd/one-penny.js",
   "files": [
     "./lib"
   ],

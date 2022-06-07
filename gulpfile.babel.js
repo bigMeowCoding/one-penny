@@ -184,7 +184,7 @@ function umdWebpack() {
       webpackStream(
         {
           output: {
-            filename: 'ten-yuan.js',
+            filename: 'one-penny.js',
             library: {
               type: 'umd',
               name: 'antdMobile',

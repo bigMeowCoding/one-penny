@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'ten-yuan';
+import { Button } from 'one-penny';
 
 const Demo1 = () => {
   return (
