@@ -8,6 +8,16 @@
     "types": ["jest"],
     "strict": true,
     "skipLibCheck": true,
-    "declaration": true
-  }
+    "declaration": true,
+    "baseUrl": "./",
+    "paths": {
+      "ten-yuan": ["src/index.ts"],
+      "ten-yuan/src/*": ["src/*"],
+      "ten-yuan/es/*": ["src/*"],
+      "demos": ["src/demos/index.ts"],
+      "testing": ["src/tests/testing"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib", "es", "dist", ".dumi"]
 }

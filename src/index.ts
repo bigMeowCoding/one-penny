@@ -1,1 +1,2 @@
-export { default as Foo } from './Foo';
+import './global';
+export { default as Button } from './components/button';

@@ -8,11 +8,8 @@ nav:
 
 Demo:
 
-```tsx
-import React from 'react';
-import { Foo } from 'zyj-ui-react';
+<code src="./demos/demo1.tsx"></code>
 
-export default () => <Foo title="First Demo" />;
-```
+---
 
 More skills for writing demo: https://d.umijs.org/guide/basic#write-component-demo
