@@ -1,7 +1,6 @@
-import { CSSProperties, ReactElement } from 'react';
+import React, { CSSProperties, ReactElement } from 'react';
 import classNames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 export interface NativeProps {
   className: string;
   tabIndex?: number;
