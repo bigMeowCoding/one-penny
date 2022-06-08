@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "baseUrl": "./",
+    "noImplicitAny": true,
     "paths": {
       "one-penny": ["src/index.ts"],
       "one-penny/src/*": ["src/*"],

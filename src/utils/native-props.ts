@@ -1,37 +1,31 @@
-import React from 'react';
-import type { CSSProperties, ReactElement } from 'react';
+import { CSSProperties, ReactElement } from 'react';
 import classNames from 'classnames';
-
-export interface NativeProps<S extends string = never> {
-  className?: string;
-  style?: CSSProperties & Partial<Record<S, string>>;
+import isUndefined from 'lodash/isUndefined';
+import React from 'react';
+export interface NativeProps {
+  className: string;
   tabIndex?: number;
+  style?: CSSProperties;
 }
-
-export function withNativeProps<P extends NativeProps>(
-  props: P,
-  element: ReactElement
-) {
-  const p = {
-    ...element.props,
-  };
-  if (props.className) {
-    p.className = classNames(element.props.className, props.className);
-  }
-  if (props.style) {
-    p.style = {
-      ...p.style,
+export function withNativeProps<P extends NativeProps>(p: P, el: ReactElement) {
+  const props = { ...el.props };
+  if (p.style) {
+    props.style = {
       ...props.style,
+      ...p.style,
     };
   }
-  if (props.tabIndex !== undefined) {
-    p.tabIndex = props.tabIndex;
+  props.className = classNames(props.className, p.className);
+  if (!isUndefined(p.tabIndex)) {
+    props.tabIndex = p.tabIndex;
   }
-  for (const key in props) {
-    if (!props.hasOwnProperty(key)) continue;
+  for (const key in p) {
+    if (!p.hasOwnProperty(key)) {
+      continue;
+    }
     if (key.startsWith('data-') || key.startsWith('aria-')) {
-      p[key] = props[key];
+      props[key] = p[key];
     }
   }
-  return React.cloneElement(element, p);
+  return React.cloneElement(el, props);
 }
