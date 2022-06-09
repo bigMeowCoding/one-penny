@@ -1,10 +1,10 @@
 import React, { CSSProperties, ReactElement } from 'react';
 import classNames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-export interface NativeProps {
-  className: string;
+export interface NativeProps<S extends string = never> {
+  className?: string;
   tabIndex?: number;
-  style?: CSSProperties;
+  style?: CSSProperties & Partial<Record<S, string>>;
 }
 export function withNativeProps<P extends NativeProps>(p: P, el: ReactElement) {
   const props = { ...el.props };
