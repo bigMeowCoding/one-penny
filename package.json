@@ -8,20 +8,9 @@
     "build": "gulp",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "prepublishOnly": "npm run build"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
   },
   "main": "./cjs/index.js",
   "module": "./es/index.js",
@@ -52,13 +41,11 @@
     "@types/classnames": "^2.3.1",
     "@types/jest": "^27.0.3",
     "@types/lodash": "^4.14.182",
-    "@umijs/fabric": "^2.8.1",
-    "@umijs/test": "^3.0.5",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "del": "^6.1.1",
     "dumi": "^1.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-config-prettier": "^8.5.0",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
     "gulp": "^4.0.2",
@@ -70,7 +57,7 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "lint-staged": "^10.0.7",
     "postcss-px-multiple": "^0.1.5",
-    "prettier": "^2.2.1",
+    "prettier": "^2.6.2",
     "style-loader": "^3.3.1",
     "through2": "^4.0.2",
     "ts-node": "^10.8.1",
