@@ -1,5 +1,5 @@
 @class-prefix-button: ~'op-button';
-.@{class-prefix-button}{
+.@{class-prefix-button} {
   --color: var(--op-color-white);
 
   --text-color: var(--op-button-text-color, var(--op-color-text));
@@ -12,7 +12,7 @@
   --border-style: var(--op-button-border-style, solid);
   --border-color: var(--op-button-border-color, var(--op-color-border));
 
-  color:var(--text-color);
+  color: var(--text-color);
   background-color: var(--background-color);
   font-size: var(--op-font-size-9);
   display: inline-block;
@@ -20,28 +20,28 @@
   height: auto;
   position: relative;
   line-height: 1.4;
-  padding:7px 12px;
-  margin:0;
+  padding: 7px 12px;
+  margin: 0;
   text-align: center;
-  border:var(--border-width) var(--border-style) var(--border-color);
+  border: var(--border-width) var(--border-style) var(--border-color);
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: opacity ease 0.15s;
   user-select: none;
-  &:focus{
+  &:focus {
     outline: none;
   }
-  &:before{
+  &:before {
     content: '';
     position: absolute;
-    top:0;
-    left:0;
-    width:100%;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     opacity: 0;
     box-sizing: content-box;
     background-color: #000;
-    border:var(--border-width) var(--border-style) #000000;
+    border: var(--border-width) var(--border-style) #000000;
     border-radius: var(--border-radius);
   }
   &:active:before {
