@@ -1,6 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { mergeProps } from 'one-penny/es/utils/with-default-props';
 import { NativeProps, withNativeProps } from 'one-penny/es/utils/native-props';
+import classNames from 'classnames';
 export interface ButtonRef {
   nativeElement: HTMLButtonElement | null;
 }
@@ -32,7 +33,18 @@ export type ButtonProps = {
     | '--border-style'
     | '--border-color'
   >;
-const defaultProps = {};
+const defaultProps = {
+  color: 'default',
+  fill: 'solid',
+  block: false,
+  loading: false,
+  // loadingIcon: <DotLoading color="currentColor" />,
+  type: 'button',
+  shape: 'default',
+  size: 'middle',
+};
+const classPrefix = `op-button`;
+
 const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
   const props = mergeProps(defaultProps, p);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -43,6 +55,11 @@ const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
       },
     };
   });
-  return withNativeProps(props, <button ref={buttonRef}>{props.children}</button>);
+  return withNativeProps(
+    props,
+    <button type={props.type} className={classNames(classPrefix)} ref={buttonRef}>
+      {props.children}
+    </button>,
+  );
 });
 export default Button;
