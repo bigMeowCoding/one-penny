@@ -1,14 +1,62 @@
-import React from 'react';
-import { Button } from 'one-penny';
+import React from 'react'
+import { Button } from 'one-penny'
+import { DemoBlock } from 'demos'
 
-const Demo1 = () => {
+export default () => {
   return (
     <>
-      <Button className={'btn1'} data-333="333" aria-111="111">
-        按钮1
-      </Button>
-    </>
-  );
-};
+      <DemoBlock title='填充模式'>
+        {/*<Space wrap>*/}
+        <Button color='primary' fill='solid'>
+          Solid
+        </Button>
+        <Button color='primary' fill='outline'>
+          Outline
+        </Button>
+        <Button color='primary' fill='none'>
+          None
+        </Button>
+        {/*</Space>*/}
+      </DemoBlock>
 
-export default Demo1;
+      <DemoBlock title='块级按钮'>
+        <Button block color='primary' size='large'>
+          Block Button
+        </Button>
+      </DemoBlock>
+
+      <DemoBlock title='按钮尺寸'>
+        {/*<Space wrap align='center'>*/}
+        <Button size='mini' color='primary'>
+          Mini
+        </Button>
+        <Button size='small' color='primary'>
+          Small
+        </Button>
+        <Button size='middle' color='primary'>
+          Middle
+        </Button>
+        <Button size='large' color='primary'>
+          Large
+        </Button>
+        {/*</Space>*/}
+      </DemoBlock>
+
+      <DemoBlock title='语义按钮'>
+        {/*<Space wrap>*/}
+        <Button
+          onClick={() => {
+            alert('hello.')
+          }}
+        >
+          Default
+        </Button>
+        <Button color='primary'>Primary</Button>
+        <Button color='success'>Success</Button>
+        <Button color='danger'>Danger</Button>
+        <Button color='warning'>Warning</Button>
+        {/*</Space>*/}
+      </DemoBlock>
+    </>
+  )
+}

@@ -1,30 +1,33 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { mergeProps } from 'one-penny/es/utils/with-default-props';
-import { NativeProps, withNativeProps } from 'one-penny/es/utils/native-props';
-import classNames from 'classnames';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import { mergeProps } from 'one-penny/es/utils/with-default-props'
+import { NativeProps, withNativeProps } from 'one-penny/es/utils/native-props'
+import classNames from 'classnames'
 export interface ButtonRef {
-  nativeElement: HTMLButtonElement | null;
+  nativeElement: HTMLButtonElement | null
 }
 type NativeButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
->;
+>
 export type ButtonProps = {
-  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-  fill?: 'solid' | 'outline' | 'none';
-  size?: 'mini' | 'small' | 'middle' | 'large';
-  block?: boolean;
-  loading?: boolean | 'auto';
-  loadingText?: string;
-  loadingIcon?: React.ReactNode;
-  disabled?: boolean;
+  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger'
+  fill?: 'solid' | 'outline' | 'none'
+  size?: 'mini' | 'small' | 'middle' | 'large'
+  block?: boolean
+  loading?: boolean | 'auto'
+  loadingText?: string
+  loadingIcon?: React.ReactNode
+  disabled?: boolean
   onClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => void | Promise<void> | unknown;
-  type?: 'submit' | 'reset' | 'button';
-  shape?: 'default' | 'rounded' | 'rectangular';
-  children?: React.ReactNode;
-} & Pick<NativeButtonProps, 'onMouseDown' | 'onMouseUp' | 'onTouchStart' | 'onTouchEnd'> &
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void | Promise<void> | unknown
+  type?: 'submit' | 'reset' | 'button'
+  shape?: 'default' | 'rounded' | 'rectangular'
+  children?: React.ReactNode
+} & Pick<
+  NativeButtonProps,
+  'onMouseDown' | 'onMouseUp' | 'onTouchStart' | 'onTouchEnd'
+> &
   NativeProps<
     | '--text-color'
     | '--background-color'
@@ -32,7 +35,7 @@ export type ButtonProps = {
     | '--border-width'
     | '--border-style'
     | '--border-color'
-  >;
+  >
 const defaultProps = {
   color: 'default',
   fill: 'solid',
@@ -42,24 +45,42 @@ const defaultProps = {
   type: 'button',
   shape: 'default',
   size: 'middle',
-};
-const classPrefix = `op-button`;
+}
+const classPrefix = `op-button`
 
 const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
-  const props = mergeProps(defaultProps, p);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const props = mergeProps(defaultProps, p)
+  const buttonRef = useRef<HTMLButtonElement | null>(null)
+  const disabled = props.disabled
+
   useImperativeHandle(ref, () => {
     return {
       get nativeElement() {
-        return buttonRef.current;
+        return buttonRef.current
       },
-    };
-  });
+    }
+  })
   return withNativeProps(
     props,
-    <button type={props.type} className={classNames(classPrefix)} ref={buttonRef}>
+    <button
+      type={props.type}
+      className={classNames(
+        classPrefix,
+        props.color ? `${classPrefix}-${props.color}` : null,
+        {
+          [`${classPrefix}-block`]: props.block,
+          [`${classPrefix}-disabled`]: disabled,
+          [`${classPrefix}-fill-outline`]: props.fill === 'outline',
+          [`${classPrefix}-fill-none`]: props.fill === 'none',
+          [`${classPrefix}-mini`]: props.size === 'mini',
+          [`${classPrefix}-small`]: props.size === 'small',
+          [`${classPrefix}-large`]: props.size === 'large',
+        }
+      )}
+      ref={buttonRef}
+    >
       {props.children}
-    </button>,
-  );
-});
-export default Button;
+    </button>
+  )
+})
+export default Button
