@@ -32,5 +32,13 @@ export default defineConfig({
       },
     ],
   },
+  themeConfig: {
+    hd: {
+      rules: [
+        // {mode: 'vw', options: [100, 750]}
+      ],
+    },
+  },
+
   // more config: https://d.umijs.org/config
 })
