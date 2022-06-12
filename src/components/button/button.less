@@ -87,4 +87,29 @@
     display: block;
     width: 100%;
   }
+  &&-mini {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: var(--op-font-size-main);
+    &.@{class-prefix-button}-shape-rounded {
+      padding-left: 9px;
+      padding-right: 9px;
+    }
+  }
+  &&-small {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: var(--op-font-size-7);
+  }
+  &&-large {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    font-size: var(--op-font-size-10);
+  }
+  &&-shape-rounded {
+    --border-radius: 1000px;
+  }
+  &&-shape-rectangle {
+    --border-radius: 0px;
+  }
 }

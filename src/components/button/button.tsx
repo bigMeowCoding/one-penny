@@ -75,7 +75,8 @@ const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
           [`${classPrefix}-mini`]: props.size === 'mini',
           [`${classPrefix}-small`]: props.size === 'small',
           [`${classPrefix}-large`]: props.size === 'large',
-        }
+        },
+        `${classPrefix}-shape-${props.shape}`
       )}
       ref={buttonRef}
     >
