@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'one-penny'
+import { Button, Space } from 'one-penny'
 import { DemoBlock } from 'demos'
 import { SearchOutline } from 'antd-mobile-icons'
 
@@ -8,46 +8,46 @@ export default () => {
     <>
       <DemoBlock title='自定义图标'>
         <Button>
-          {/*<Space>*/}
-          <SearchOutline />
-          <span>搜索</span>
-          {/*</Space>*/}
+          <Space>
+            <SearchOutline />
+            <span>搜索</span>
+          </Space>
         </Button>
       </DemoBlock>
 
       <DemoBlock title='形状'>
-        {/*<Space wrap>*/}
-        <Button shape='default' color='primary'>
-          Default Button
-        </Button>
-        <Button block shape='rounded' color='primary'>
-          Rounded Button
-        </Button>
-        <Button block shape='rectangular' color='primary'>
-          Rectangular Button
-        </Button>
-        {/*</Space>*/}
+        <Space wrap>
+          <Button shape='default' color='primary'>
+            Default Button
+          </Button>
+          <Button block shape='rounded' color='primary'>
+            Rounded Button
+          </Button>
+          <Button block shape='rectangular' color='primary'>
+            Rectangular Button
+          </Button>
+        </Space>
       </DemoBlock>
 
       <DemoBlock title='加载状态'>
-        {/*<Space wrap>*/}
-        <Button loading color='primary' loadingText='正在加载'>
-          Loading
-        </Button>
-        <Button loading>Loading</Button>
-        <Button loading='auto' onClick={async () => {}}>
-          Auto Loading
-        </Button>
-        {/*</Space>*/}
+        <Space wrap>
+          <Button loading color='primary' loadingText='正在加载'>
+            Loading
+          </Button>
+          <Button loading>Loading</Button>
+          <Button loading='auto' onClick={async () => {}}>
+            Auto Loading
+          </Button>
+        </Space>
       </DemoBlock>
 
       <DemoBlock title='禁用状态'>
-        {/*<Space wrap>*/}
-        <Button disabled>Disabled</Button>
-        <Button disabled color='primary'>
-          Disabled
-        </Button>
-        {/*</Space>*/}
+        <Space wrap>
+          <Button disabled>Disabled</Button>
+          <Button disabled color='primary'>
+            Disabled
+          </Button>
+        </Space>
       </DemoBlock>
     </>
   )

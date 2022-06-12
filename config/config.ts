@@ -12,6 +12,38 @@ export default defineConfig({
     // 'antd-mobile/es': process.cwd() + '/src',
     'demos': process.cwd() + '/src/demos/index.ts',
   },
+  resolve: {
+    includes: ['docs', 'src'],
+    passivePreview: true,
+  },
+  metas: [
+    {
+      name: 'viewport',
+      content:
+        'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover',
+    },
+  ],
+  hash: true,
+  scripts: [
+    `if (location.pathname.startsWith('/~demos/')) {
+      document.documentElement.setAttribute('data-is-demo', 'true')
+    }`,
+    `
+    if (!location.port) {
+      // Enable Google Analytics
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-72788897-2');
+    }
+    `,
+    {
+      src: 'https://www.googletagmanager.com/gtag/js?id=UA-72788897-2',
+      async: true,
+    },
+  ],
   navs: [
     {
       title: '组件',
@@ -39,6 +71,5 @@ export default defineConfig({
       ],
     },
   },
-
   // more config: https://d.umijs.org/config
 })

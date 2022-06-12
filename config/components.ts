@@ -1,3 +1,3 @@
 export const components = {
-  basic: ['/components/button'],
-};
+  basic: ['/components/button', '/components/space'],
+}
