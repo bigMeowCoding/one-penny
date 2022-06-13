@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Space } from 'one-penny'
 import { DemoBlock } from 'demos'
 import { SearchOutline } from 'antd-mobile-icons'
+import { sleep } from 'one-penny/es/utils/sleep'
 
 export default () => {
   return (
@@ -35,7 +36,12 @@ export default () => {
             Loading
           </Button>
           <Button loading>Loading</Button>
-          <Button loading='auto' onClick={async () => {}}>
+          <Button
+            loading='auto'
+            onClick={async () => {
+              return sleep(1000)
+            }}
+          >
             Auto Loading
           </Button>
         </Space>

@@ -1,7 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { mergeProps } from 'one-penny/es/utils/with-default-props'
 import { NativeProps, withNativeProps } from 'one-penny/es/utils/native-props'
 import classNames from 'classnames'
+import { DotLoading } from 'antd-mobile'
+import { isPromise } from 'one-penny/src/utils/validate'
 export interface ButtonRef {
   nativeElement: HTMLButtonElement | null
 }
@@ -36,12 +38,12 @@ export type ButtonProps = {
     | '--border-style'
     | '--border-color'
   >
-const defaultProps = {
+const defaultProps: ButtonProps = {
   color: 'default',
   fill: 'solid',
   block: false,
   loading: false,
-  // loadingIcon: <DotLoading color="currentColor" />,
+  loadingIcon: <DotLoading color='currentColor' />,
   type: 'button',
   shape: 'default',
   size: 'middle',
@@ -51,7 +53,9 @@ const classPrefix = `op-button`
 const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
   const props = mergeProps(defaultProps, p)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
-  const disabled = props.disabled
+  const [innerLoading, setInnerLoading] = useState(false)
+  const loading = props.loading === 'auto' ? innerLoading : props.loading
+  const disabled = props.disabled || loading
 
   useImperativeHandle(ref, () => {
     return {
@@ -60,10 +64,26 @@ const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
       },
     }
   })
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = async e => {
+    const onclick = props.onClick
+    if (!onclick) {
+      return
+    }
+    const promise = onclick(e)
+    if (isPromise(promise)) {
+      setInnerLoading(true)
+      await promise.catch(e => {
+        setInnerLoading(false)
+        throw e
+      })
+      setInnerLoading(false)
+    }
+  }
   return withNativeProps(
     props,
     <button
       type={props.type}
+      disabled={props.disabled}
       className={classNames(
         classPrefix,
         props.color ? `${classPrefix}-${props.color}` : null,
@@ -75,12 +95,25 @@ const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
           [`${classPrefix}-mini`]: props.size === 'mini',
           [`${classPrefix}-small`]: props.size === 'small',
           [`${classPrefix}-large`]: props.size === 'large',
+          [`${classPrefix}-loading`]: loading,
         },
         `${classPrefix}-shape-${props.shape}`
       )}
+      onClick={handleClick}
       ref={buttonRef}
+      onMouseDown={props.onMouseDown}
+      onMouseUp={props.onMouseUp}
+      onTouchStart={props.onTouchStart}
+      onTouchEnd={props.onTouchEnd}
     >
-      {props.children}
+      {loading ? (
+        <div className={`${classPrefix}-loading-wrapper`}>
+          {props.loadingIcon}
+          {props.loadingText}
+        </div>
+      ) : (
+        props.children
+      )}
     </button>
   )
 })

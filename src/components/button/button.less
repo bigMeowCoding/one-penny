@@ -112,4 +112,23 @@
   &&-shape-rectangle {
     --border-radius: 0px;
   }
+  &-loading {
+    vertical-align: bottom;
+  }
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    &:active:before {
+      display: none;
+    }
+  }
+  &-loading-wrapper {
+    display: flex;
+    height: 1.4em;
+    align-items: center;
+    justify-content: center;
+    > .adm-loading {
+      opacity: 0.6;
+    }
+  }
 }
