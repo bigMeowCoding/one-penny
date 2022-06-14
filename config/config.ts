@@ -8,6 +8,10 @@ export default defineConfig({
   logo: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
   outputPath: 'docs-dist',
   mode: 'site',
+  exportStatic: {},
+  dynamicImport: {},
+  manifest: {},
+  hash: true,
   alias: {
     // 'antd-mobile/es': process.cwd() + '/src',
     'demos': process.cwd() + '/src/demos/index.ts',
@@ -23,7 +27,6 @@ export default defineConfig({
         'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover',
     },
   ],
-  hash: true,
   scripts: [
     `if (location.pathname.startsWith('/~demos/')) {
       document.documentElement.setAttribute('data-is-demo', 'true')
