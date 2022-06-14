@@ -1,8 +1,7 @@
 import React from 'react'
 import { Button, Space } from 'one-penny'
-import { DemoBlock } from 'demos'
+import { DemoBlock, sleep } from 'demos'
 import { SearchOutline } from 'antd-mobile-icons'
-import { sleep } from 'one-penny/es/utils/sleep'
 
 export default () => {
   return (
