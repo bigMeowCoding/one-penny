@@ -46,11 +46,11 @@ const LocaleSelect: FC<{ location: any }> = ({ location }) => {
     }
   )
 
-  useEffect(() => {
-    if (localeInStorage !== locale) {
-      history.replace(getLocaleTogglePath(localeInStorage))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localeInStorage !== locale) {
+  //     history.replace(getLocaleTogglePath(localeInStorage))
+  //   }
+  // }, [])
 
   return firstDiffLocale ? (
     <div
