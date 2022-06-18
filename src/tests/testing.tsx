@@ -1,8 +1,4 @@
-import {
-  render,
-  RenderOptions,
-  RenderResult,
-} from '@testing-library/react'
+import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import { toHaveNoViolations, axe } from 'jest-axe'
 import type { RunOptions } from 'axe-core'
 import React from 'react'
