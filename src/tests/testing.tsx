@@ -1,6 +1,4 @@
 import {
-  act,
-  fireEvent,
   render,
   RenderOptions,
   RenderResult,
