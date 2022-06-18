@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { mergeProps } from 'one-penny/es/utils/with-default-props'
-import { NativeProps, withNativeProps } from 'one-penny/es/utils/native-props'
+import { mergeProps } from 'one-penny/src/utils/with-default-props'
+import { NativeProps, withNativeProps } from 'one-penny/src/utils/native-props'
 import classNames from 'classnames'
 import { DotLoading } from 'antd-mobile'
 import { isPromise } from 'one-penny/src/utils/validate'
