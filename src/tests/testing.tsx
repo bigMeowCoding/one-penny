@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import { toHaveNoViolations, axe } from 'jest-axe'
 import type { RunOptions } from 'axe-core'
@@ -12,6 +13,7 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
   wrapper?: typeof AllTheProviders
 }
 type TestA11YOptions = TestOptions & { axeOptions?: RunOptions }
+export * from '@testing-library/react'
 export const customRender = (
   ui: UI,
   { wrapper: Wrapper = AllTheProviders, ...options }: TestOptions = {}
