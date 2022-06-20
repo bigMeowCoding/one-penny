@@ -69,6 +69,7 @@ export default {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  setupFiles: ['<rootDir>/src/tests/setup.ts'],
   moduleNameMapper: {
     '\\.(css|less)$': '<rootDir>/src/tests/mocks/style-mock.js',
     '^one-penny/(.+)$': '<rootDir>/$1',
