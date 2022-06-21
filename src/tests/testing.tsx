@@ -29,3 +29,5 @@ export const testA11y = async (
   expect(results).toHaveNoViolations()
 }
 export { customRender as render }
+export const sleep = (time: number) =>
+  new Promise<void>(resolve => setTimeout(resolve, time))
