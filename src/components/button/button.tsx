@@ -71,14 +71,14 @@ const Button = forwardRef<ButtonRef, ButtonProps>((p, ref) => {
     }
     const promise = onclick(e)
     if (isPromise(promise)) {
-      // eslint-disable-next-line no-useless-catch
       try {
         setInnerLoading(true)
         await promise
+        setInnerLoading(false)
       } catch (e) {
+        setInnerLoading(false)
         throw e
       }
-      setInnerLoading(false)
     }
   }
   return withNativeProps(
