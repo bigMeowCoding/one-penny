@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/camelcase': 'off',
     'react/prop-types': 'off',
     'react/jsx-no-target-blank': 'off',
@@ -79,4 +80,4 @@ module.exports = {
       },
     },
   ],
-};
+}
