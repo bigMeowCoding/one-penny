@@ -1,19 +1,19 @@
 module.exports = {
-  semi: false,
-  trailingComma: 'es5',
+  semi: true,
+  trailingComma: "es5",
   tabWidth: 2,
-  singleQuote: true,
+  singleQuote: false,
   bracketSameLine: false,
   jsxSingleQuote: true,
-  quoteProps: 'preserve',
-  arrowParens: 'avoid',
-  proseWrap: 'preserve',
+  quoteProps: "preserve",
+  arrowParens: "avoid",
+  proseWrap: "preserve",
   overrides: [
     {
-      'files': ['*.md'],
-      'options': {
-        embeddedLanguageFormatting: 'off',
+      "files": ["*.md"],
+      "options": {
+        embeddedLanguageFormatting: "off",
       },
     },
   ],
-}
+};
